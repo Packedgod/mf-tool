@@ -1,4 +1,7 @@
 import './globals.css';
+import { Suspense } from 'react';
+import UniverseLauncher from '@/components/UniverseLauncher';
+import UniverseBridge from '@/components/UniverseBridge';
 
 export const metadata={
   title:'ManagerLens — MF Manager Decision Intelligence',
@@ -6,5 +9,13 @@ export const metadata={
 };
 
 export default function RootLayout({children}){
-  return <html lang="en"><body>{children}</body></html>;
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <UniverseLauncher />
+        <Suspense fallback={null}><UniverseBridge /></Suspense>
+      </body>
+    </html>
+  );
 }
