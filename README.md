@@ -1,117 +1,74 @@
-# MF Manager Decision Intelligence Tool
+# ManagerLens — MF Manager Decision Intelligence
 
-This is a **manager-first** live mutual fund analytics tool. The goal is not just to track NAV. The tool is designed to answer:
-
-> How did the mutual fund manager's performance, style, risk-taking and portfolio decisions affect the fund's alpha, drawdown, upside/downside capture and investor outcome?
-
-## Core workflow
-
-1. Select a mutual fund manager from the manager universe.
-2. The tool maps that manager to relevant schemes and decision areas.
-3. It pulls live/historical NAV data from MFapi.in and AMFI-backed sources.
-4. It compares the fund against a selected benchmark or peer proxy.
-5. It calculates alpha, Sharpe, information ratio, beta, tracking error, upside/downside capture, max drawdown and alpha persistence.
-6. It runs what-if scenarios for manager decisions.
+ManagerLens is a manager-first Indian mutual fund analytics tool. It starts with a verified fund-manager directory, maps each manager to a scheme and role, pulls live NAV history from MFapi.in, validates the latest NAV against AMFI where available, builds a disclosed comparison proxy, and calculates manager-tenure-aware performance metrics and counterfactuals.
 
 ## What changed in this rebuild
 
-The previous version was fund-first. This rebuild is **manager-first**:
+- Added a visible directory of 14 verified mutual fund managers and co-managers from official AMC factsheets.
+- Removed brittle first-search-result logic and replaced it with ranked scheme matching and AMFI fallback resolution.
+- Added five-minute server-side caching and stale-data fallback so temporary upstream failures do not blank the dashboard.
+- Changed automatic refresh to a silent 15-minute sync that retains the last good dataset if an upstream source is unavailable.
+- Removed blocking popups and replaced them with one non-intrusive status strip.
+- Added manager-tenure-aware analysis windows.
+- Added official, category, broad-market and defensive proxy standards.
+- Added synthetic 50/50 equity-liquid proxy construction for balanced-advantage analysis.
+- Added data-confidence grading separate from the manager decision score.
+- Rebuilt the interface as a responsive desktop workspace and mobile manager carousel with tabs.
 
-- Added a fund-manager universe.
-- Added manager thesis, decision areas and manager-start-date logic.
-- Added manager-aware analysis start date.
-- Added decision attribution layer.
-- Added passive-replacement and no-alpha style counterfactuals.
-- Added fee-drag, downside-capture, upside-capture and allocation-change what-if modules.
-- Added Yahoo Finance adapters for global symbol search, chart and summary data.
-- Added a source coverage map showing which data source can and cannot provide manager-level data.
-- Improved UI into a guided cockpit instead of basic boxes.
+## Valid source lanes
 
-## Live data sources
+- **MFapi.in:** live Indian scheme search and NAV history.
+- **AMFI NAVAll:** official latest-NAV validation and fallback scheme resolution.
+- **Official AMC factsheets:** manager names, roles, start dates and scheme decision context.
+- **Yahoo Finance:** optional global/index context; never blocks Indian MF analysis.
+- **Google Finance:** manual verification link; not scraped as an unofficial API.
+- **FMP:** optional global ETF/fund information when `FMP_API_KEY` is configured.
 
-### MFapi.in
-Used for Indian scheme search and historical NAV.
+## Metrics
 
-### AMFI
-Used for official latest NAV validation.
-
-### Yahoo Finance
-Used for global symbol search, historical chart data and selected fund/ETF summary modules where coverage exists.
-
-### Google Finance
-Used as a public verification link. There is no stable official free public API exposed for automated extraction, so the app does not pretend otherwise.
-
-### FMP
-Optional global ETF/fund data through `FMP_API_KEY`.
-
-### AMC factsheets / Value Research / Morningstar
-These are the sources needed for full manager roster, manager changes, holdings %, turnover, TER and detailed portfolio-level decision data. The app is designed to plug these in through a permitted parser or licensed data feed.
-
-## Metrics calculated
-
-- CAGR
-- Total return
-- Volatility
+- CAGR and total return
+- Annualised volatility
 - Sharpe ratio
-- Max drawdown
-- Beta
-- Jensen-style annual alpha
-- Active return
-- Tracking error
+- Maximum drawdown
+- Beta and Jensen-style alpha
+- Active return and tracking error
 - Information ratio
-- Upside capture
-- Downside capture
-- Overall capture
+- Upside and downside capture
 - Positive-month hit rate
-- Alpha persistence proxy
-- Decision-quality score
+- Alpha-persistence score
+- Manager value-add versus the selected proxy
+- Data-confidence grade
 
 ## What-if scenarios
 
-- What if the manager simply followed the benchmark?
-- What if alpha was zero?
-- What if expense drag changed?
-- What if downside capture improved?
-- What if upside capture improved?
-- What if a manager changed allocation weight, such as cash deployment, overseas sleeve, sector overweight or equity exposure?
+- Passive benchmark replacement
+- Zero-alpha baseline
+- Allocation-weight decision effect
+- Fee-drag sensitivity
+- Improved downside capture
+- Improved upside capture
 
-## Run locally
+## Local development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open:
+Open `http://localhost:3000`.
+
+## Vercel
+
+Connect the GitHub repository to Vercel. Every push to `main` should trigger a deployment.
+
+Optional FMP variable:
 
 ```text
-http://localhost:3000
-```
-
-## Deploy on Vercel
-
-```bash
-npm install -g vercel
-vercel --prod
-```
-
-## Optional FMP key
-
-Create `.env.local`:
-
-```bash
 FMP_API_KEY=your_key_here
 ```
 
-MFapi and AMFI do not require an API key.
+The core Indian manager analysis does not require the FMP key.
 
-## Important limitation
+## Important interpretation note
 
-Free public Indian endpoints provide strong NAV and scheme-level data, but they do not provide a complete real-time manager roster + holdings + turnover + TER + manager-change history feed for every Indian mutual fund. This tool therefore separates:
-
-- **live numerical analysis** from MFapi/AMFI/Yahoo/FMP, and
-- **manager roster / holdings / decision-source coverage**, which requires AMC factsheets, Value Research, Morningstar, or another licensed/permitted data feed.
-
-This separation is deliberate so the tool remains honest and does not fake manager-level data from NAV-only sources.
-
-This is a research tool, not investment advice.
+Manager-level causality cannot be proven from NAV alone. ManagerLens uses official manager tenure and role records, then evaluates the scheme outcome during that window against transparent proxies. The results are diagnostic estimates, not investment advice or a claim that every return difference was caused by one individual.
