@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getMarketUniverse } from '@/lib/universe';
 import { resolveFundResearch } from '@/lib/fallback-sources';
 import { buildFallbackMomentumFast } from '@/lib/fallback-momentum-fast';
+import { enrichResearchWithOfficialPortfolio } from '@/lib/official-portfolio';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -21,8 +22,8 @@ export async function GET(request) {
       return NextResponse.json({ ok: false, error: 'Fund family not found in the live AMFI universe.' }, { status: 404 });
     }
 
-    const research = await resolveFundResearch(fund);
-    if (!research.ok) {
+    const publicResearch = await resolveFundResearch(fund);
+    if (!publicResearch.ok) {
       return NextResponse.json({
         ok: false,
         error: 'No public fallback research page could be resolved for this fund.',
@@ -30,6 +31,7 @@ export async function GET(request) {
       }, { status: 404 });
     }
 
+    const research = await enrichResearchWithOfficialPortfolio(publicResearch, fund.displayName);
     const intelligence = await buildFallbackMomentumFast(fund, research);
     return NextResponse.json({
       ...intelligence,
@@ -39,7 +41,8 @@ export async function GET(request) {
         fundHouse: fund.fundHouse,
         category: fund.category,
         preferredSchemeCode: fund.preferredSchemeCode
-      }
+      },
+      officialPortfolioFailures: research.officialPortfolioFailures || []
     }, { headers: { 'Cache-Control': 'private, no-store, max-age=0' } });
   } catch (error) {
     return NextResponse.json({
