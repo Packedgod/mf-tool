@@ -12,6 +12,54 @@ const yearsAgo = years => {
   return date.toISOString().slice(0, 10);
 };
 const validCode = value => /^\d{4,9}$/.test(String(value || '').trim());
+const slugify = value => String(value || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+
+function mergeManagerRecords(base, incoming) {
+  const result = [...(base || [])];
+  for (const manager of incoming || []) {
+    if (!manager?.name) continue;
+    const amc = String(manager.amc || '').toLowerCase();
+    const aliases = [manager.name, ...(manager.aliases || [])].map(item => String(item).toLowerCase());
+    const index = result.findIndex(existing => {
+      const existingAmc = String(existing.amc || '').toLowerCase();
+      const existingNames = [existing.name, ...(existing.aliases || [])].map(item => String(item).toLowerCase());
+      const sameAmc = !amc || !existingAmc || amc === existingAmc || amc.includes(existingAmc) || existingAmc.includes(amc);
+      return sameAmc && aliases.some(name => existingNames.includes(name));
+    });
+    const normalised = {
+      id: manager.id || slugify(`${manager.name}-${manager.amc || 'mutual-fund'}`),
+      name: manager.name,
+      aliases: manager.aliases || [],
+      amc: manager.amc || 'Indian Mutual Fund',
+      role: manager.role || 'Fund manager',
+      startDate: manager.startDate || null,
+      startLabel: manager.startLabel || null,
+      style: manager.style || 'Scheme-level manager record resolved from a public fund source.',
+      decisions: manager.decisions || ['Portfolio construction', 'Sector positioning', 'Entry and exit discipline', 'Risk control'],
+      schemeAliases: manager.schemeAliases || [],
+      assignmentStatus: manager.assignmentStatus || 'verified-fund-page',
+      verified: manager.verified !== false,
+      confidence: manager.confidence || 0.85,
+      source: manager.source || null,
+      additionalSources: manager.additionalSources || [],
+      sourceType: manager.sourceType || 'Public fund-page manager record',
+      dynamic: Boolean(manager.dynamic)
+    };
+    if (index < 0) result.push(normalised);
+    else {
+      const existing = result[index];
+      result[index] = {
+        ...existing,
+        ...normalised,
+        id: existing.id || normalised.id,
+        aliases: [...new Set([...(existing.aliases || []), ...(normalised.aliases || [])])],
+        schemeAliases: [...new Set([...(existing.schemeAliases || []), ...(normalised.schemeAliases || [])])],
+        confidence: Math.max(existing.confidence || 0, normalised.confidence || 0)
+      };
+    }
+  }
+  return result.sort((a, b) => a.name.localeCompare(b.name));
+}
 
 async function getJson(url) {
   const response = await fetch(url, { cache: 'no-store' });
@@ -38,6 +86,7 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
   const [managerSearch, setManagerSearch] = useState('');
   const [managerState, setManagerState] = useState('loading');
   const [managerMessage, setManagerMessage] = useState('Loading the current Indian manager registry…');
+  const [bootstrapData, setBootstrapData] = useState(null);
 
   const [exactFunds, setExactFunds] = useState([]);
   const [amcFunds, setAmcFunds] = useState([]);
@@ -94,7 +143,23 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
     ].join(' ').toLowerCase().includes(query));
   }, [managers, managerSearch]);
 
-  const metrics = useMemo(() => computeMetrics(fundSeries, proxySeries, riskFree), [fundSeries, proxySeries, riskFree]);
+  const baseMetrics = useMemo(() => computeMetrics(fundSeries, proxySeries, riskFree), [fundSeries, proxySeries, riskFree]);
+  const metrics = useMemo(() => {
+    const secondary = momentumData?.fundFacts?.riskMetrics || {};
+    const usedFallback = !Number.isFinite(baseMetrics.alphaPct) && Number.isFinite(secondary.alpha)
+      || !Number.isFinite(baseMetrics.sharpe) && Number.isFinite(secondary.sharpe)
+      || !Number.isFinite(baseMetrics.beta) && Number.isFinite(secondary.beta);
+    return {
+      ...baseMetrics,
+      alphaPct: Number.isFinite(baseMetrics.alphaPct) ? baseMetrics.alphaPct : secondary.alpha,
+      beta: Number.isFinite(baseMetrics.beta) ? baseMetrics.beta : secondary.beta,
+      sharpe: Number.isFinite(baseMetrics.sharpe) ? baseMetrics.sharpe : secondary.sharpe,
+      volatilityPct: Number.isFinite(baseMetrics.volatilityPct) ? baseMetrics.volatilityPct : secondary.volatility,
+      warnings: usedFallback
+        ? [...(baseMetrics.warnings || []), 'Some traditional risk metrics use the AdvisorKhoj secondary-source fallback.']
+        : baseMetrics.warnings || []
+    };
+  }, [baseMetrics, momentumData]);
   const score = useMemo(() => calculateManagerScore({
     schemeId: detailedSchemeId || 'generic',
     snapshot: momentumData?.snapshot || null,
@@ -105,18 +170,25 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
 
   useEffect(() => {
     let cancelled = false;
-    getJson('/api/universe?view=managers')
-      .then(data => {
+    const registryPromise = getJson('/api/universe?view=managers');
+    const code = String(initialAmfiCode || '').trim();
+    const bootstrapPromise = validCode(code)
+      ? getJson(`/api/fund-bootstrap?schemeCode=${encodeURIComponent(code)}`).catch(() => null)
+      : Promise.resolve(null);
+
+    Promise.all([registryPromise, bootstrapPromise])
+      .then(([registry, bootstrap]) => {
         if (cancelled) return;
-        const list = data.managers || [];
+        const list = mergeManagerRecords(registry.managers || [], bootstrap?.managers || []);
         setManagers(list);
+        setBootstrapData(bootstrap);
         const desired = String(initialManagerName || '').trim().toLowerCase();
-        const selected = list.find(item => item.name.toLowerCase() === desired || item.aliases?.some(alias => alias.toLowerCase() === desired))
-          || list.find(item => item.id === 'sankaran-naren')
-          || list[0];
+        const desiredManager = list.find(item => item.name.toLowerCase() === desired || item.aliases?.some(alias => alias.toLowerCase() === desired));
+        const bootstrapManager = bootstrap?.managers?.[0] ? list.find(item => item.id === bootstrap.managers[0].id) : null;
+        const selected = desiredManager || bootstrapManager || list.find(item => item.id === 'sankaran-naren') || list[0];
         setManagerId(selected?.id || '');
         setManagerState('ready');
-        setManagerMessage(`${list.length} source-tracked Indian manager records loaded.`);
+        setManagerMessage(`${list.length} source-tracked Indian manager records loaded${bootstrap?.managers?.length ? '; selected fund managers were resolved on demand.' : '.'}`);
       })
       .catch(error => {
         if (!cancelled) {
@@ -125,10 +197,21 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
         }
       });
     return () => { cancelled = true; };
-  }, [initialManagerName]);
+  }, [initialManagerName, initialAmfiCode]);
 
   useEffect(() => {
     if (!managerId) return undefined;
+    const bootstrapManagerMatch = bootstrapData?.managers?.some(item => item.id === managerId);
+    if (bootstrapManagerMatch && bootstrapData?.fund) {
+      setFundState('ready');
+      setExactFunds([bootstrapData.fund]);
+      setAmcFunds([bootstrapData.fund]);
+      setSelectedFundId(bootstrapData.fund.id);
+      setProxyMode('official');
+      setActiveTab('racecard');
+      return undefined;
+    }
+
     let cancelled = false;
     setFundState('loading');
     setExactFunds([]);
@@ -157,7 +240,7 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
         }
       });
     return () => { cancelled = true; };
-  }, [managerId, initialAmfiCode]);
+  }, [managerId, initialAmfiCode, bootstrapData]);
 
   const validateProxyCode = useCallback(async () => {
     if (!validCode(proxyCodeInput)) {
@@ -226,8 +309,25 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
     if (!silent) setMomentumState('syncing');
     setMomentumMessage('Loading official disclosures, Value Research, AdvisorKhoj and live Yahoo price momentum…');
 
+    const addDiscoveredManagers = data => {
+      const discovered = (data.managers || []).map(item => ({
+        ...item,
+        id: item.id || slugify(`${item.name}-${selectedFund.fundHouse}`),
+        amc: item.amc || selectedFund.fundHouse,
+        role: item.role || 'Fund manager',
+        schemeAliases: [...new Set([...(item.schemeAliases || []), selectedFund.displayName, selectedFund.preferredSchemeName].filter(Boolean))],
+        confidence: item.confidence || 0.88,
+        verified: item.verified !== false,
+        dynamic: true,
+        source: item.source || data.sources?.find(source => source.url) || null,
+        sourceType: item.sourceType || 'Value Research Online / AdvisorKhoj fund-page record'
+      }));
+      if (discovered.length) setManagers(previous => mergeManagerRecords(previous, discovered));
+    };
+
     const fallback = async officialError => {
       const data = await getJson(`/api/fund-intelligence?fundId=${encodeURIComponent(selectedFund.id)}&schemeCode=${encodeURIComponent(selectedFund.preferredSchemeCode)}`);
+      addDiscoveredManagers(data);
       setMomentumData(data);
       const coverage = Math.round(data.coverage?.resolvedPct || 0);
       setMomentumState(coverage >= 60 ? 'ready' : 'degraded');
