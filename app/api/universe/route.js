@@ -1,9 +1,53 @@
 import { NextResponse } from "next/server";
 import { getMarketUniverse, searchUniverse } from "@/lib/universe";
-import { FULL_MANAGER_REGISTRY, managerRegistryStats } from "@/lib/manager-registry";
+import {
+  FULL_MANAGER_REGISTRY,
+  fundsForManager,
+  fundsForManagerAmc,
+  managerRegistryStats
+} from "@/lib/manager-registry";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+function publicManager(manager) {
+  return {
+    id: manager.id,
+    name: manager.name,
+    aliases: manager.aliases || [],
+    amc: manager.amc,
+    role: manager.role,
+    startDate: manager.startDate || null,
+    startLabel: manager.startLabel || null,
+    style: manager.style || null,
+    decisions: manager.decisions || [],
+    schemeAliases: manager.schemeAliases || [],
+    assignmentStatus: manager.assignmentStatus || (manager.schemeAliases?.length ? "verified" : "pending-official-factsheet"),
+    verified: manager.verified !== false,
+    confidence: manager.confidence || 0,
+    source: manager.source || null,
+    additionalSources: manager.additionalSources || [],
+    sourceType: manager.sourceType || null,
+    schemeId: manager.schemeId || null
+  };
+}
+
+function compactFund(fund) {
+  return {
+    id: fund.id,
+    canonicalName: fund.canonicalName,
+    displayName: fund.displayName,
+    fundHouse: fund.fundHouse,
+    category: fund.category,
+    preferredSchemeCode: fund.preferredSchemeCode,
+    preferredSchemeName: fund.preferredSchemeName,
+    latestNav: fund.latestNav,
+    navDate: fund.navDate,
+    variants: fund.variants,
+    managers: fund.managers,
+    managerCoverage: fund.managerCoverage
+  };
+}
 
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
@@ -25,27 +69,36 @@ export async function GET(request) {
     if (view === "managers") {
       const query = String(searchParams.get("q") || "").trim().toLowerCase();
       const managers = FULL_MANAGER_REGISTRY
-        .map(manager => ({
-          id: manager.id,
-          name: manager.name,
-          amc: manager.amc,
-          role: manager.role,
-          startDate: manager.startDate || null,
-          startLabel: manager.startLabel || null,
-          style: manager.style || null,
-          decisions: manager.decisions || [],
-          schemeAliases: manager.schemeAliases || [],
-          verified: manager.verified !== false,
-          confidence: manager.confidence || 0,
-          source: manager.source || null,
-          sourceType: manager.sourceType || null
-        }))
-        .filter(manager => !query || [manager.name, manager.amc, manager.role, ...manager.schemeAliases].join(" ").toLowerCase().includes(query));
+        .map(publicManager)
+        .filter(manager => !query || [
+          manager.name,
+          ...manager.aliases,
+          manager.amc,
+          manager.role,
+          ...manager.schemeAliases
+        ].join(" ").toLowerCase().includes(query));
 
       return NextResponse.json({
         ok: true,
         managers,
         stats: managerRegistryStats(),
+        fetchedAt: universe.fetchedAt
+      }, { headers: { "Cache-Control": "private, no-store, max-age=0" } });
+    }
+
+    if (view === "managerFunds") {
+      const managerId = searchParams.get("managerId");
+      const manager = FULL_MANAGER_REGISTRY.find(item => item.id === managerId);
+      if (!manager) return NextResponse.json({ ok: false, error: "Manager not found." }, { status: 404 });
+      const exactFunds = fundsForManager(managerId, universe.families).map(compactFund);
+      const amcFunds = fundsForManagerAmc(managerId, universe.families).map(compactFund);
+      return NextResponse.json({
+        ok: true,
+        manager: publicManager(manager),
+        exactFunds,
+        amcFunds,
+        exactCount: exactFunds.length,
+        amcCount: amcFunds.length,
         fetchedAt: universe.fetchedAt
       }, { headers: { "Cache-Control": "private, no-store, max-age=0" } });
     }
