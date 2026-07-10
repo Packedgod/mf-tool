@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "./custom-code.css";
 
 export const metadata: Metadata = {
   title: "ManagerLens — MF Manager Decision Intelligence",
