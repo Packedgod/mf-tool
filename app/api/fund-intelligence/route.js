@@ -9,6 +9,25 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const maxDuration = 60;
 
+function workbookFirstResearch(research) {
+  const current = research?.current || {};
+  const documents = current.advisorKhoj?.officialDocuments || [];
+  const hasValueResearchHoldings = (current.valueResearch?.holdings || []).length >= 3;
+  if (!hasValueResearchHoldings) return research;
+
+  const workbookDocuments = documents.filter(item => /\.xlsx?(?:$|\?)/i.test(item.url || '') || /portfolio disclosure|excel|spreadsheet/i.test(`${item.text || ''} ${item.type || ''}`));
+  return {
+    ...research,
+    current: {
+      ...current,
+      advisorKhoj: current.advisorKhoj ? {
+        ...current.advisorKhoj,
+        officialDocuments: workbookDocuments.length ? workbookDocuments : documents
+      } : current.advisorKhoj
+    }
+  };
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const fundId = searchParams.get('fundId');
@@ -32,7 +51,8 @@ export async function GET(request) {
       }, { status: 404 });
     }
 
-    const enriched = await enrichResearchWithOfficialPortfolio(publicResearch, fund.displayName);
+    const sourceResearch = workbookFirstResearch(publicResearch);
+    const enriched = await enrichResearchWithOfficialPortfolio(sourceResearch, fund.displayName);
     const research = normalizeResearchHistory(enriched);
     const intelligence = await buildFallbackMomentumFast(fund, research);
     return NextResponse.json({
