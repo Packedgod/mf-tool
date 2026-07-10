@@ -1,366 +1,575 @@
+// @ts-nocheck
 "use client";
 
-import { CSSProperties, useEffect, useMemo, useState } from "react";
-import { managerUniverse, sourceCoverage, whatIfTemplates } from "@/lib/manager-universe";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MANAGERS, getManagerById, getSchemeById, SOURCES } from "@/lib/manager-data";
 import {
-  alignReturns,
+  buildSyntheticProxy,
+  calculateDataConfidence,
   computeMetrics,
   normaliseSeries,
   runAllocationWhatIf,
-  runFeeDragWhatIf,
-  type SeriesPoint
-} from "@/lib/manager-analytics";
+  runFeeWhatIf,
+  simulateCaptureImprovement
+} from "@/lib/analytics";
 
-type FundSeries = { meta: any; data: SeriesPoint[]; source: string; schemeCode?: number };
-type LoadState = "idle" | "loading" | "ready" | "error";
-type ProxyStandard = "declared" | "category" | "broad" | "defensive" | "custom";
+const TABS = [
+  { id: "scorecard", label: "Scorecard" },
+  { id: "decisions", label: "Decision map" },
+  { id: "whatifs", label: "What-if studio" },
+  { id: "sources", label: "Sources & health" }
+];
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
-const yearsAgo = (years: number) => {
+const PROXY_OPTIONS = [
+  { id: "official", label: "Official standard", short: "Official" },
+  { id: "category", label: "Category standard", short: "Category" },
+  { id: "broad", label: "Broad market", short: "Broad" },
+  { id: "defensive", label: "Defensive / cash", short: "Defensive" }
+];
+
+function yearsAgo(years) {
   const date = new Date();
   date.setFullYear(date.getFullYear() - years);
   return date.toISOString().slice(0, 10);
-};
-const fmt = (v?: number, d = 2) => (typeof v === "number" && Number.isFinite(v) ? v.toFixed(d) : "—");
-const pct = (v?: number, d = 2) => (typeof v === "number" && Number.isFinite(v) ? `${v.toFixed(d)}%` : "—");
-const money = (v?: number, d = 2) => (typeof v === "number" && Number.isFinite(v) ? `₹${v.toFixed(d)}` : "—");
+}
 
-function scoreClass(value?: number) {
-  if (value === undefined) return "warn";
+function today() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function formatNumber(value, digits = 2) {
+  return Number.isFinite(value) ? value.toFixed(digits) : "—";
+}
+
+function formatPercent(value, digits = 2) {
+  return Number.isFinite(value) ? `${value.toFixed(digits)}%` : "—";
+}
+
+function formatMoney(value, digits = 2) {
+  return Number.isFinite(value) ? `₹${value.toFixed(digits)}` : "—";
+}
+
+function scoreTone(value) {
+  if (!Number.isFinite(value)) return "muted";
   if (value >= 72) return "good";
-  if (value >= 52) return "warn";
-  return "bad";
+  if (value >= 52) return "watch";
+  return "risk";
 }
 
-function effectiveStart(userStart: string, managerStart?: string) {
-  if (!managerStart) return userStart;
-  return managerStart > userStart ? managerStart : userStart;
+function effectiveStart(userStart, managerStart) {
+  return managerStart && managerStart > userStart ? managerStart : userStart;
 }
 
-function proxyPresets(category: string, declaredBenchmark: string) {
-  const smallCapProxy = "Nifty Smallcap 250 Index Fund Direct Growth";
-  const broadProxy = "Nifty 500 Index Fund Direct Growth";
-  const nifty50Proxy = "Nifty 50 Index Fund Direct Growth";
-  const liquidProxy = "Liquid Fund Direct Growth";
-  const categoryProxy = category.toLowerCase().includes("small")
-    ? smallCapProxy
-    : category.toLowerCase().includes("balanced")
-      ? nifty50Proxy
-      : broadProxy;
-
-  return {
-    declared: {
-      label: "Declared / closest scheme benchmark",
-      query: declaredBenchmark,
-      purpose: "Best default for alpha, information ratio and active-risk checks.",
-      source: "MFapi live NAV proxy + AMFI validation"
-    },
-    category: {
-      label: "Category-standard proxy",
-      query: categoryProxy,
-      purpose: "Compares the manager against a same-category passive/peer yardstick.",
-      source: "MFapi live NAV proxy"
-    },
-    broad: {
-      label: "Broad-market proxy",
-      query: broadProxy,
-      purpose: "Checks if the manager beat a simple diversified market exposure.",
-      source: "MFapi live NAV proxy"
-    },
-    defensive: {
-      label: "Defensive / cash-drag proxy",
-      query: liquidProxy,
-      purpose: "Useful for testing cash calls, hedging and drawdown protection decisions.",
-      source: "MFapi live NAV proxy"
-    }
-  };
+async function postSeries(payload) {
+  const response = await fetch("/api/live/series", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload),
+    cache: "no-store"
+  });
+  const data = await response.json();
+  if (!response.ok || !data.ok) {
+    throw new Error(data.detail || data.error || "Live series request failed");
+  }
+  return data;
 }
 
-function Metric({ label, value, hint }: { label: string; value: string; hint?: string }) {
+function MetricCard({ label, value, hint, tone = "neutral" }) {
   return (
-    <div className="metric">
+    <article className={`metric-card ${tone}`}>
       <span>{label}</span>
       <strong>{value}</strong>
-      {hint ? <div className="footnote">{hint}</div> : null}
-    </div>
+      {hint ? <small>{hint}</small> : null}
+    </article>
   );
 }
 
-function Insight({ title, value, body, tone = "neutral" }: { title: string; value: string; body: string; tone?: "neutral" | "good" | "warn" | "bad" }) {
+function StatusDot({ state }) {
+  return <span className={`status-dot ${state}`} aria-hidden="true" />;
+}
+
+function SourcePill({ label, state, detail }) {
   return (
-    <div className={`insight ${tone}`}>
-      <span>{title}</span>
-      <strong>{value}</strong>
-      <p>{body}</p>
+    <div className="source-pill">
+      <StatusDot state={state} />
+      <div>
+        <strong>{label}</strong>
+        <span>{detail}</span>
+      </div>
     </div>
   );
 }
 
-function simulateCaptureImprovement(fund: SeriesPoint[], benchmark: SeriesPoint[], direction: "upside" | "downside", improvementPct: number) {
-  const aligned = alignReturns(fund, benchmark);
-  if (!aligned.length || !fund[0]) return undefined;
-  let nav = fund[0].nav;
-  for (const item of aligned) {
-    let adjusted = item.fund;
-    if (direction === "downside" && item.benchmark < 0) adjusted = item.fund + Math.abs(item.benchmark) * (improvementPct / 100);
-    if (direction === "upside" && item.benchmark > 0) adjusted = item.fund + item.benchmark * (improvementPct / 100);
-    nav = nav * (1 + adjusted);
+function normaliseForChart(series) {
+  if (!series?.length) return [];
+  const start = series[0].nav;
+  return series.map((point) => ({ date: point.date, value: (point.nav / start) * 100 }));
+}
+
+function alignChartSeries(fund, proxy) {
+  const f = normaliseForChart(fund);
+  const p = normaliseForChart(proxy);
+  const pMap = new Map(p.map((point) => [point.date, point.value]));
+  const rows = f
+    .filter((point) => pMap.has(point.date))
+    .map((point) => ({ date: point.date, fund: point.value, proxy: pMap.get(point.date) }));
+  if (rows.length <= 260) return rows;
+  const step = Math.ceil(rows.length / 260);
+  return rows.filter((_, index) => index % step === 0 || index === rows.length - 1);
+}
+
+function PerformanceChart({ fund, proxy, fundLabel, proxyLabel }) {
+  const rows = useMemo(() => alignChartSeries(fund, proxy), [fund, proxy]);
+  if (rows.length < 2) {
+    return (
+      <div className="chart-empty">
+        <span>Live chart appears after the fund and proxy finish syncing.</span>
+      </div>
+    );
   }
-  return nav - fund[fund.length - 1]?.nav;
+
+  const width = 960;
+  const height = 300;
+  const pad = 26;
+  const values = rows.flatMap((row) => [row.fund, row.proxy]);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+  const toPoint = (value, index) => {
+    const x = pad + (index / (rows.length - 1)) * (width - pad * 2);
+    const y = height - pad - ((value - min) / range) * (height - pad * 2);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  };
+  const fundPoints = rows.map((row, index) => toPoint(row.fund, index)).join(" ");
+  const proxyPoints = rows.map((row, index) => toPoint(row.proxy, index)).join(" ");
+
+  return (
+    <div className="chart-wrap">
+      <div className="chart-legend">
+        <span><i className="legend-fund" />{fundLabel}</span>
+        <span><i className="legend-proxy" />{proxyLabel}</span>
+        <small>Normalised to 100</small>
+      </div>
+      <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Normalised fund and proxy performance chart">
+        <line x1={pad} y1={height - pad} x2={width - pad} y2={height - pad} className="chart-axis" />
+        <polyline points={proxyPoints} className="proxy-line" />
+        <polyline points={fundPoints} className="fund-line" />
+      </svg>
+      <div className="chart-dates"><span>{rows[0].date}</span><span>{rows[rows.length - 1].date}</span></div>
+    </div>
+  );
+}
+
+function ManagerRail({ managers, selectedId, search, onSearch, onSelect }) {
+  return (
+    <aside className="manager-rail" aria-label="Verified mutual fund managers">
+      <div className="rail-heading">
+        <div>
+          <span className="overline">Verified directory</span>
+          <h2>MF managers</h2>
+        </div>
+        <span className="count-badge">{managers.length}</span>
+      </div>
+      <label className="search-field">
+        <span>Search</span>
+        <input value={search} onChange={(event) => onSearch(event.target.value)} placeholder="Manager, AMC, role..." />
+      </label>
+      <div className="manager-list">
+        {managers.map((manager) => (
+          <button
+            type="button"
+            key={manager.id}
+            className={`manager-row ${selectedId === manager.id ? "active" : ""}`}
+            onClick={() => onSelect(manager.id)}
+          >
+            <span className="avatar">{manager.name.split(/\s+/).map((part) => part[0]).slice(0, 2).join("")}</span>
+            <span className="manager-copy">
+              <strong>{manager.name}</strong>
+              <small>{manager.role}</small>
+              <em>{manager.amc}</em>
+            </span>
+          </button>
+        ))}
+      </div>
+    </aside>
+  );
 }
 
 export default function Home() {
-  const [selectedManagerId, setSelectedManagerId] = useState(managerUniverse[0].id);
-  const [selectedSchemeIndex, setSelectedSchemeIndex] = useState(0);
+  const [selectedManagerId, setSelectedManagerId] = useState(MANAGERS[0].id);
   const [managerSearch, setManagerSearch] = useState("");
+  const [proxyStandard, setProxyStandard] = useState("official");
+  const [activeTab, setActiveTab] = useState("scorecard");
   const [startDate, setStartDate] = useState(yearsAgo(10));
-  const [endDate, setEndDate] = useState(todayIso());
+  const [endDate, setEndDate] = useState(today());
   const [riskFree, setRiskFree] = useState(6.5);
-  const [liveRefresh, setLiveRefresh] = useState(true);
-  const [loadState, setLoadState] = useState<LoadState>("idle");
-  const [status, setStatus] = useState("Select a manager, choose a proxy standard, then load live analysis.");
-  const [fund, setFund] = useState<FundSeries | null>(null);
-  const [benchmark, setBenchmark] = useState<FundSeries | null>(null);
-  const [lastUpdated, setLastUpdated] = useState<string>("");
-  const [proxyStandard, setProxyStandard] = useState<ProxyStandard>("declared");
-  const [customBenchmarkQuery, setCustomBenchmarkQuery] = useState("");
-  const [allocation, setAllocation] = useState({ startingNav: 100, weightDeltaPct: 10, spreadPct: 5, cost: 0 });
+  const [fundSeries, setFundSeries] = useState([]);
+  const [proxySeries, setProxySeries] = useState([]);
+  const [fundSource, setFundSource] = useState(null);
+  const [proxySources, setProxySources] = useState([]);
+  const [health, setHealth] = useState({ mfapi: "checking", amfi: "checking", checkedAt: null });
+  const [syncState, setSyncState] = useState("idle");
+  const [syncMessage, setSyncMessage] = useState("Waiting for first live sync.");
+  const [lastGoodAt, setLastGoodAt] = useState(null);
+  const [autoRefresh, setAutoRefresh] = useState(true);
+  const [allocationWeight, setAllocationWeight] = useState(10.66);
+  const [relativeSpread, setRelativeSpread] = useState(5);
+  const [implementationCost, setImplementationCost] = useState(0);
   const [feeDelta, setFeeDelta] = useState(0.4);
   const [captureImprove, setCaptureImprove] = useState(10);
-  const [yahooSymbol, setYahooSymbol] = useState("VTSAX");
-  const [yahooOutput, setYahooOutput] = useState<any>(null);
+  const [yahooSymbol, setYahooSymbol] = useState("^NSEI");
+  const [yahooData, setYahooData] = useState(null);
+  const [fmpSymbol, setFmpSymbol] = useState("SPY");
+  const [fmpData, setFmpData] = useState(null);
+  const requestSequence = useRef(0);
 
-  const selectedManager = managerUniverse.find((manager) => manager.id === selectedManagerId) || managerUniverse[0];
-  const selectedScheme = selectedManager.schemes[selectedSchemeIndex] || selectedManager.schemes[0];
-  const proxyOptions = proxyPresets(selectedScheme.category, selectedScheme.benchmarkQuery);
-  const selectedProxyQuery = proxyStandard === "custom"
-    ? customBenchmarkQuery || selectedScheme.benchmarkQuery
-    : proxyOptions[proxyStandard].query;
-  const selectedProxyMeta = proxyStandard === "custom"
-    ? { label: "Custom verified proxy", purpose: "Use a user-specified proxy only if it exists in MFapi/AMFI/Yahoo/FMP coverage.", source: "User-selected valid-source query" }
-    : proxyOptions[proxyStandard];
-  const analysisStart = effectiveStart(startDate, selectedManager.managerStartDate);
+  const selectedManager = getManagerById(selectedManagerId);
+  const selectedScheme = getSchemeById(selectedManager.schemeId);
+  const selectedProxy = selectedScheme.proxies[proxyStandard] || selectedScheme.proxies.official;
+  const analysisStart = effectiveStart(startDate, selectedManager.startDate);
 
-  const visibleManagers = managerUniverse.filter((manager) => {
-    const text = [manager.name, manager.amc, manager.style, manager.schemes.map((s) => s.schemeName).join(" ")].join(" ").toLowerCase();
-    return !managerSearch || text.includes(managerSearch.toLowerCase());
-  });
+  const filteredManagers = useMemo(() => {
+    const query = managerSearch.trim().toLowerCase();
+    if (!query) return MANAGERS;
+    return MANAGERS.filter((manager) => [manager.name, manager.amc, manager.role, manager.style].join(" ").toLowerCase().includes(query));
+  }, [managerSearch]);
 
-  const filteredFund = useMemo(() => (fund?.data || []).filter((point) => point.date >= analysisStart && point.date <= endDate), [fund, analysisStart, endDate]);
-  const filteredBenchmark = useMemo(() => (benchmark?.data || []).filter((point) => point.date >= analysisStart && point.date <= endDate), [benchmark, analysisStart, endDate]);
-  const metrics = useMemo(() => computeMetrics(filteredFund, filteredBenchmark, riskFree), [filteredFund, filteredBenchmark, riskFree]);
-  const allocationResult = runAllocationWhatIf(allocation.startingNav, allocation.weightDeltaPct, allocation.spreadPct, allocation.cost);
-  const feeDragResult = runFeeDragWhatIf(metrics.endNav, metrics.years, feeDelta);
-  const downsideImprovement = simulateCaptureImprovement(filteredFund, filteredBenchmark, "downside", captureImprove);
-  const upsideImprovement = simulateCaptureImprovement(filteredFund, filteredBenchmark, "upside", captureImprove);
+  const metrics = useMemo(() => computeMetrics(fundSeries, proxySeries, riskFree), [fundSeries, proxySeries, riskFree]);
+  const confidence = useMemo(
+    () => calculateDataConfidence({
+      fund: fundSeries,
+      benchmark: proxySeries,
+      sourceHealth: health,
+      proxyQuality: selectedProxy.quality,
+      managerStartDate: selectedManager.startDate
+    }),
+    [fundSeries, proxySeries, health, selectedProxy.quality, selectedManager.startDate]
+  );
 
-  async function searchScheme(query: string) {
-    const res = await fetch(`/api/mfapi/search?q=${encodeURIComponent(query)}`, { cache: "no-store" });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "MFapi search failed");
-    const result = data.results?.[0];
-    if (!result) throw new Error(`No live MFapi/AMFI proxy found for ${query}. Try another standard or custom proxy.`);
-    return result as { schemeCode: number; schemeName: string };
-  }
+  const allocationScenario = useMemo(
+    () => runAllocationWhatIf(metrics.endNav || 100, allocationWeight, relativeSpread, implementationCost),
+    [metrics.endNav, allocationWeight, relativeSpread, implementationCost]
+  );
+  const feeScenario = useMemo(() => runFeeWhatIf(metrics.endNav, metrics.years, feeDelta), [metrics.endNav, metrics.years, feeDelta]);
+  const downsideScenario = useMemo(
+    () => simulateCaptureImprovement(fundSeries, proxySeries, "downside", captureImprove),
+    [fundSeries, proxySeries, captureImprove]
+  );
+  const upsideScenario = useMemo(
+    () => simulateCaptureImprovement(fundSeries, proxySeries, "upside", captureImprove),
+    [fundSeries, proxySeries, captureImprove]
+  );
 
-  async function loadHistory(code: number) {
-    const params = new URLSearchParams({ code: String(code), startDate: analysisStart, endDate });
-    const res = await fetch(`/api/mfapi/history?${params.toString()}`, { cache: "no-store" });
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || "History fetch failed");
-    return { meta: data.meta || {}, data: normaliseSeries(data.data || []), source: data.source || "MFapi.in", schemeCode: code };
-  }
-
-  async function loadManagerAnalysis() {
-    setLoadState("loading");
-    setStatus(`Pulling live data for ${selectedManager.name} using ${selectedProxyMeta.label}...`);
+  const checkHealth = useCallback(async () => {
     try {
-      const schemeResult = await searchScheme(selectedScheme.schemeQuery);
-      const benchmarkResult = await searchScheme(selectedProxyQuery);
-      const [fundSeries, benchmarkSeries] = await Promise.all([loadHistory(schemeResult.schemeCode), loadHistory(benchmarkResult.schemeCode)]);
-      setFund(fundSeries);
-      setBenchmark(benchmarkSeries);
-      setLastUpdated(new Date().toLocaleString());
-      setLoadState("ready");
-      setStatus(`Live analysis loaded. Proxy standard: ${selectedProxyMeta.label}.`);
-    } catch (error) {
-      setLoadState("error");
-      setStatus(error instanceof Error ? error.message : String(error));
+      const response = await fetch("/api/live/health", { cache: "no-store" });
+      const data = await response.json();
+      setHealth({ mfapi: data.mfapi || "degraded", amfi: data.amfi || "degraded", checkedAt: data.checkedAt || new Date().toISOString() });
+    } catch {
+      setHealth({ mfapi: "degraded", amfi: "degraded", checkedAt: new Date().toISOString() });
     }
-  }
+  }, []);
 
-  async function loadYahoo(resource: "search" | "chart" | "summary") {
-    setYahooOutput({ loading: true });
+  const loadLiveAnalysis = useCallback(async ({ silent = false } = {}) => {
+    const sequence = ++requestSequence.current;
+    if (!silent) setSyncState("syncing");
+    setSyncMessage(`Syncing ${selectedScheme.name} against ${selectedProxy.label}…`);
+
     try {
-      const url = resource === "search"
-        ? `/api/yahoo/search?q=${encodeURIComponent(yahooSymbol)}`
-        : resource === "chart"
-          ? `/api/yahoo/chart?symbol=${encodeURIComponent(yahooSymbol)}&range=5y&interval=1d`
-          : `/api/yahoo/summary?symbol=${encodeURIComponent(yahooSymbol)}`;
-      const res = await fetch(url, { cache: "no-store" });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Yahoo request failed");
-      setYahooOutput(data);
+      const fundPromise = postSeries({ queries: selectedScheme.schemeQueries, startDate: analysisStart, endDate });
+      const proxyPromises = selectedProxy.components.map((component) =>
+        postSeries({ queries: component.queries, startDate: analysisStart, endDate })
+      );
+      const [fundResult, proxyResults] = await Promise.all([fundPromise, Promise.all(proxyPromises)]);
+      if (sequence !== requestSequence.current) return;
+
+      const fund = normaliseSeries(fundResult.data);
+      const components = proxyResults.map((result) => normaliseSeries(result.data));
+      const weights = selectedProxy.components.map((component) => component.weight);
+      const synthetic = buildSyntheticProxy(components, weights);
+      if (fund.length < 3 || synthetic.length < 3) throw new Error("The live sources returned insufficient overlapping NAV history.");
+
+      setFundSeries(fund);
+      setProxySeries(synthetic);
+      setFundSource(fundResult.source);
+      setProxySources(proxyResults.map((result) => result.source));
+      setLastGoodAt(new Date());
+      setSyncState(fundResult.source?.stale || proxyResults.some((result) => result.source?.stale) ? "stale" : "ready");
+      setSyncMessage(
+        fundResult.source?.stale || proxyResults.some((result) => result.source?.stale)
+          ? "Upstream source was temporarily unavailable; last valid cached data is retained."
+          : "Live MFapi history loaded and cross-checked against AMFI where available."
+      );
     } catch (error) {
-      setYahooOutput({ error: error instanceof Error ? error.message : String(error) });
+      if (sequence !== requestSequence.current) return;
+      setSyncState(fundSeries.length ? "degraded" : "error");
+      setSyncMessage(
+        fundSeries.length
+          ? `Live refresh failed, so the last good dataset remains on screen. ${error.message}`
+          : `No live dataset is available yet. ${error.message}`
+      );
     }
-  }
+  }, [selectedScheme, selectedProxy, analysisStart, endDate, fundSeries.length]);
 
   useEffect(() => {
-    if (!liveRefresh || loadState !== "ready") return;
-    const timer = window.setInterval(() => {
-      void loadManagerAnalysis();
-    }, 5 * 60 * 1000);
-    return () => window.clearInterval(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [liveRefresh, loadState, selectedManagerId, selectedSchemeIndex, analysisStart, endDate, proxyStandard, customBenchmarkQuery]);
+    checkHealth();
+    const timer = window.setTimeout(() => loadLiveAnalysis({ silent: true }), 250);
+    return () => window.clearTimeout(timer);
+  }, [selectedManagerId, proxyStandard, analysisStart, endDate]);
 
-  const passiveLabel = metrics.managerValueAddNav === undefined ? "Needs benchmark" : metrics.managerValueAddNav >= 0 ? "Manager added value" : "Manager lagged proxy";
-  const googleFinanceLink = `https://www.google.com/finance/search?q=${encodeURIComponent(selectedScheme.schemeName)}`;
+  useEffect(() => {
+    if (!autoRefresh) return undefined;
+    const timer = window.setInterval(() => {
+      if (document.visibilityState === "visible") {
+        checkHealth();
+        loadLiveAnalysis({ silent: true });
+      }
+    }, 15 * 60 * 1000);
+    return () => window.clearInterval(timer);
+  }, [autoRefresh, checkHealth, loadLiveAnalysis]);
+
+  useEffect(() => {
+    const lever = selectedScheme.decisionLevers[0];
+    setAllocationWeight(lever?.defaultWeightPct || 10);
+  }, [selectedScheme.id]);
+
+  async function loadYahooValidation() {
+    setYahooData({ loading: true });
+    try {
+      const response = await fetch(`/api/live/yahoo?symbol=${encodeURIComponent(yahooSymbol)}&range=1y&interval=1d`, { cache: "no-store" });
+      const data = await response.json();
+      setYahooData(data);
+    } catch (error) {
+      setYahooData({ ok: false, error: error.message });
+    }
+  }
+
+  async function loadFmpValidation(resource = "info") {
+    setFmpData({ loading: true });
+    try {
+      const response = await fetch(`/api/live/fmp?symbol=${encodeURIComponent(fmpSymbol)}&resource=${resource}`, { cache: "no-store" });
+      setFmpData(await response.json());
+    } catch (error) {
+      setFmpData({ ok: false, error: error.message });
+    }
+  }
+
+  const officialGoogleLink = `https://www.google.com/finance/search?q=${encodeURIComponent(selectedScheme.name)}`;
+  const managerValueTone = Number.isFinite(metrics.managerValueAddNav) ? (metrics.managerValueAddNav >= 0 ? "good" : "risk") : "neutral";
 
   return (
-    <main className="shell app-frame">
-      <section className="hero manager-hero">
-        <div className="card hero-main">
-          <div className="eyebrow">Fund manager decision intelligence</div>
-          <h1>Choose a manager. Choose a standard. Compare cleanly.</h1>
-          <p>
-            The dashboard now uses toggleable proxy standards so every manager can be judged against the same type of benchmark:
-            declared benchmark, category proxy, broad-market proxy, defensive/cash proxy or a custom verified proxy.
-          </p>
-          <div className="inline-actions" style={{ marginTop: 18 }}>
-            <button onClick={loadManagerAnalysis} disabled={loadState === "loading"}>{loadState === "loading" ? "Pulling live data..." : "Load live manager analysis"}</button>
-            <button className="secondary" onClick={() => setLiveRefresh((value) => !value)}>{liveRefresh ? "Live refresh on" : "Live refresh off"}</button>
-          </div>
+    <div className="app-shell">
+      <header className="topbar">
+        <div className="brand">
+          <span className="brand-mark">M</span>
+          <div><strong>ManagerLens</strong><small>Mutual fund decision intelligence</small></div>
         </div>
-        <div className="card kpis compact-kpis">
-          <div className="kpi"><span>Manager</span><strong>{selectedManager.name}</strong></div>
-          <div className="kpi"><span>Proxy standard</span><strong>{selectedProxyMeta.label}</strong></div>
-          <div className="kpi"><span>Score</span><strong>{metrics.decisionQualityScore !== undefined ? `${metrics.decisionQualityScore.toFixed(0)}/100` : "Pending"}</strong></div>
+        <div className="top-actions">
+          <div className={`sync-badge ${syncState}`}><StatusDot state={syncState} /><span>{syncState === "syncing" ? "Syncing" : syncState === "ready" ? "Live" : syncState === "stale" ? "Cached" : syncState === "degraded" ? "Degraded" : syncState === "error" ? "Offline" : "Starting"}</span></div>
+          <button className="ghost-button" type="button" onClick={() => setAutoRefresh((value) => !value)}>{autoRefresh ? "Auto-sync on" : "Auto-sync off"}</button>
+          <button className="primary-button" type="button" onClick={() => loadLiveAnalysis()} disabled={syncState === "syncing"}>Refresh now</button>
         </div>
-      </section>
+      </header>
 
-      <section className="card panel status-card">
-        <div className="section-head"><div><h2>Live source lock</h2><p className="muted">{status}</p></div><span className={`badge ${loadState === "ready" ? "good" : loadState === "error" ? "bad" : "warn"}`}>{lastUpdated ? `updated ${lastUpdated}` : loadState}</span></div>
-        <div className="source-strip">
-          {sourceCoverage.map((source) => <div className="source-chip" key={source.source}><strong>{source.source}</strong><span>{source.live === true ? "live source" : source.live === false ? "verification link" : "connector required"}</span></div>)}
-        </div>
-      </section>
+      <div className="workspace">
+        <ManagerRail
+          managers={filteredManagers}
+          selectedId={selectedManagerId}
+          search={managerSearch}
+          onSearch={setManagerSearch}
+          onSelect={(id) => {
+            setSelectedManagerId(id);
+            setActiveTab("scorecard");
+          }}
+        />
 
-      <section className="grid two dashboard-grid" style={{ marginTop: 18 }}>
-        <div className="card panel manager-panel">
-          <div className="section-head"><div><h2>1. Manager</h2><p className="muted">Start with the decision-maker, then load live fund and proxy data.</p></div><span className="badge">{visibleManagers.length} available</span></div>
-          <div className="field"><label>Search manager, AMC or strategy</label><input value={managerSearch} onChange={(e) => setManagerSearch(e.target.value)} placeholder="Rajeev, SBI, downside, flexi cap..." /></div>
-          <div className="manager-grid tidy-manager-grid">
-            {visibleManagers.map((manager) => (
-              <button key={manager.id} className={`manager-card ${manager.id === selectedManagerId ? "active" : ""}`} onClick={() => { setSelectedManagerId(manager.id); setSelectedSchemeIndex(0); setFund(null); setBenchmark(null); }}>
-                <span className="mini-label">{manager.amc}</span>
-                <strong>{manager.name}</strong>
-                <p>{manager.style}</p>
-                <span className={`badge ${manager.confidence === "high" ? "good" : "warn"}`}>confidence: {manager.confidence}</span>
-              </button>
-            ))}
-          </div>
-        </div>
+        <main className="main-panel">
+          <section className="manager-hero-card">
+            <div className="manager-primary">
+              <div className="manager-title-row">
+                <span className="large-avatar">{selectedManager.name.split(/\s+/).map((part) => part[0]).slice(0, 2).join("")}</span>
+                <div>
+                  <span className="overline">{selectedManager.amc}</span>
+                  <h1>{selectedManager.name}</h1>
+                  <p>{selectedManager.role} · {selectedManager.startLabel}</p>
+                </div>
+              </div>
+              <p className="manager-style">{selectedManager.style}</p>
+              <div className="decision-tags">
+                {selectedManager.decisions.map((decision) => <span key={decision}>{decision}</span>)}
+              </div>
+            </div>
+            <div className="hero-score">
+              <span>Decision-quality score</span>
+              <strong className={scoreTone(metrics.decisionQualityScore)}>{Number.isFinite(metrics.decisionQualityScore) ? Math.round(metrics.decisionQualityScore) : "—"}</strong>
+              <small>Confidence {confidence.grade} · {confidence.score}/100</small>
+            </div>
+          </section>
 
-        <div className="card panel proxy-panel">
-          <div className="section-head"><div><h2>2. Proxy standard</h2><p className="muted">Toggle the standard used for alpha, IR, capture ratios and manager value-add.</p></div><span className="badge">{selectedProxyMeta.source}</span></div>
-          <div className="proxy-grid">
-            {(Object.keys(proxyOptions) as Array<Exclude<ProxyStandard, "custom">>).map((key) => (
-              <button key={key} className={`proxy-card ${proxyStandard === key ? "active" : ""}`} onClick={() => setProxyStandard(key)}>
-                <strong>{proxyOptions[key].label}</strong>
-                <span>{proxyOptions[key].purpose}</span>
-                <small>{proxyOptions[key].query}</small>
-              </button>
-            ))}
-            <button className={`proxy-card ${proxyStandard === "custom" ? "active" : ""}`} onClick={() => setProxyStandard("custom")}>
-              <strong>Custom verified proxy</strong>
-              <span>Use only if the scheme/symbol exists in MFapi, AMFI, Yahoo or FMP coverage.</span>
-              <small>{customBenchmarkQuery || "Enter custom query below"}</small>
-            </button>
-          </div>
-          <div className="field" style={{ marginTop: 12 }}><label>Custom proxy query</label><input value={customBenchmarkQuery} onChange={(e) => { setCustomBenchmarkQuery(e.target.value); setProxyStandard("custom"); }} placeholder="Example: Nifty 50 Index Fund Direct Growth" /></div>
-        </div>
-      </section>
+          <section className={`sync-notice ${syncState}`}>
+            <div><StatusDot state={syncState} /><span>{syncMessage}</span></div>
+            <small>{lastGoodAt ? `Last good sync: ${lastGoodAt.toLocaleString()}` : "No successful sync yet"}</small>
+          </section>
 
-      <section className="card panel" style={{ marginTop: 18 }}>
-        <div className="section-head"><div><h2>3. Manager thesis & analysis window</h2><p className="muted">{selectedManager.thesis}</p></div><span className="badge">manager start {selectedManager.managerStartDate || "unknown"}</span></div>
-        <div className="scheme-picker">
-          {selectedManager.schemes.map((scheme, index) => <button key={scheme.schemeName} className={`scheme-pill ${index === selectedSchemeIndex ? "active" : ""}`} onClick={() => setSelectedSchemeIndex(index)}>{scheme.schemeName}</button>)}
-        </div>
-        <div className="decision-list compact-decision-list">
-          {selectedManager.decisionsToTrack.map((item) => <div className="decision-item" key={item}>↳ {item}</div>)}
-        </div>
-        <div className="grid three compact-grid controls-grid">
-          <div className="field"><label>Analysis start</label><input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} /></div>
-          <div className="field"><label>Effective manager-aware start</label><input value={analysisStart} readOnly /></div>
-          <div className="field"><label>End date</label><input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} /></div>
-          <div className="field"><label>Risk-free rate %</label><input type="number" value={riskFree} onChange={(e) => setRiskFree(Number(e.target.value))} /></div>
-          <div className="field"><label>Selected fund query</label><input value={selectedScheme.schemeQuery} readOnly /></div>
-          <div className="field"><label>Selected proxy query</label><input value={selectedProxyQuery} readOnly /></div>
-        </div>
-      </section>
+          <section className="control-deck">
+            <div className="control-block proxy-control">
+              <span className="control-label">Comparison standard</span>
+              <div className="segmented-control" role="group" aria-label="Proxy standard">
+                {PROXY_OPTIONS.map((option) => (
+                  <button key={option.id} type="button" className={proxyStandard === option.id ? "active" : ""} onClick={() => setProxyStandard(option.id)}>{option.short}</button>
+                ))}
+              </div>
+              <div className="proxy-summary">
+                <strong>{selectedProxy.label}</strong>
+                <span>{selectedProxy.description}</span>
+                <small>Proxy quality: {selectedProxy.quality} · {selectedScheme.benchmarkName}</small>
+              </div>
+            </div>
+            <div className="control-block date-control">
+              <label><span>From</span><input type="date" value={startDate} onChange={(event) => setStartDate(event.target.value)} /></label>
+              <label><span>Manager-aware start</span><input type="date" value={analysisStart} readOnly /></label>
+              <label><span>To</span><input type="date" value={endDate} onChange={(event) => setEndDate(event.target.value)} /></label>
+              <label><span>Risk-free %</span><input type="number" step="0.1" value={riskFree} onChange={(event) => setRiskFree(Number(event.target.value))} /></label>
+            </div>
+          </section>
 
-      <section className="card panel" style={{ marginTop: 18 }}>
-        <div className="section-head"><div><h2>4. Manager scorecard</h2><p className="muted">Fund: {fund?.meta?.scheme_name || selectedScheme.schemeName} · Proxy: {benchmark?.meta?.scheme_name || selectedProxyQuery}</p></div><span className={`badge ${scoreClass(metrics.decisionQualityScore)}`}>{metrics.decisionQualityScore !== undefined ? `${metrics.decisionQualityScore.toFixed(0)}/100` : "score pending"}</span></div>
-        <div className="metrics manager-metrics">
-          <Metric label="CAGR" value={pct(metrics.cagrPct)} hint={`${metrics.startDate || "—"} to ${metrics.endDate || "—"}`} />
-          <Metric label="Alpha" value={pct(metrics.alphaPct)} hint="Jensen-style annual alpha" />
-          <Metric label="Information ratio" value={fmt(metrics.informationRatio)} hint="Active return / tracking error" />
-          <Metric label="Sharpe" value={fmt(metrics.sharpe)} />
-          <Metric label="Downside capture" value={pct(metrics.downCapturePct)} />
-          <Metric label="Upside capture" value={pct(metrics.upCapturePct)} />
-          <Metric label="Beta" value={fmt(metrics.beta)} />
-          <Metric label="Max drawdown" value={pct(metrics.maxDrawdownPct)} />
-          <Metric label="Tracking error" value={pct(metrics.trackingErrorPct)} />
-          <Metric label="Alpha persistence" value={metrics.alphaPersistenceScore !== undefined ? `${metrics.alphaPersistenceScore.toFixed(0)}/100` : "—"} />
-        </div>
-        <div style={{ marginTop: 18 }}><div className="section-head" style={{ marginBottom: 6 }}><span className="footnote">Decision-quality score</span><span className={`badge ${scoreClass(metrics.decisionQualityScore)}`}>{metrics.decisionQualityScore !== undefined ? `${metrics.decisionQualityScore.toFixed(0)}/100` : "needs live proxy"}</span></div><div className="bar" style={{ "--w": `${Math.max(0, Math.min(100, metrics.decisionQualityScore || 0))}%` } as CSSProperties}><span /></div></div>
-        {metrics.warnings.map((warning) => <div className="warning" key={warning}>{warning}</div>)}
-      </section>
+          <nav className="tabbar" aria-label="Analysis sections">
+            {TABS.map((tab) => <button type="button" key={tab.id} className={activeTab === tab.id ? "active" : ""} onClick={() => setActiveTab(tab.id)}>{tab.label}</button>)}
+          </nav>
 
-      <section className="grid two dashboard-grid" style={{ marginTop: 18 }}>
-        <div className="card panel">
-          <div className="section-head"><div><h2>5. Decision attribution</h2><p className="muted">All attribution uses the currently selected proxy standard.</p></div><span className="badge">{selectedProxyMeta.label}</span></div>
-          <div className="insight-grid">
-            <Insight title="Passive replacement" value={passiveLabel} body={metrics.managerValueAddNav !== undefined ? `Estimated NAV value-add versus selected proxy: ${money(metrics.managerValueAddNav)} per unit.` : "Load a live proxy to estimate manager value-add."} tone={metrics.managerValueAddNav === undefined ? "warn" : metrics.managerValueAddNav >= 0 ? "good" : "bad"} />
-            <Insight title="Downside discipline" value={pct(metrics.downCapturePct)} body="Lower downside capture suggests better defensive calls during proxy-negative periods." tone={metrics.downCapturePct === undefined ? "warn" : metrics.downCapturePct < 90 ? "good" : metrics.downCapturePct < 110 ? "warn" : "bad"} />
-            <Insight title="Active efficiency" value={fmt(metrics.informationRatio)} body="Information ratio checks whether active risk is being converted into active return." tone={metrics.informationRatio === undefined ? "warn" : metrics.informationRatio > 0.35 ? "good" : metrics.informationRatio > 0 ? "warn" : "bad"} />
-            <Insight title="Skill vs luck proxy" value={metrics.alphaPersistenceScore !== undefined ? `${metrics.alphaPersistenceScore.toFixed(0)}/100` : "—"} body="Splits active return into first-half and second-half windows to test persistence." tone={metrics.alphaPersistenceScore === undefined ? "warn" : metrics.alphaPersistenceScore > 70 ? "good" : metrics.alphaPersistenceScore > 45 ? "warn" : "bad"} />
-          </div>
-        </div>
+          {activeTab === "scorecard" ? (
+            <section className="tab-content">
+              <PerformanceChart fund={fundSeries} proxy={proxySeries} fundLabel={selectedScheme.name} proxyLabel={selectedProxy.label} />
+              <div className="metric-grid">
+                <MetricCard label="CAGR" value={formatPercent(metrics.cagrPct)} hint={`${metrics.startDate || "—"} to ${metrics.endDate || "—"}`} />
+                <MetricCard label="Annual alpha" value={formatPercent(metrics.alphaPct)} hint="Jensen-style, proxy dependent" tone={Number.isFinite(metrics.alphaPct) ? (metrics.alphaPct >= 0 ? "good" : "risk") : "neutral"} />
+                <MetricCard label="Information ratio" value={formatNumber(metrics.informationRatio)} hint="Active return per unit of active risk" tone={Number.isFinite(metrics.informationRatio) ? (metrics.informationRatio > 0 ? "good" : "risk") : "neutral"} />
+                <MetricCard label="Sharpe ratio" value={formatNumber(metrics.sharpe)} hint="Return efficiency versus total risk" />
+                <MetricCard label="Downside capture" value={formatPercent(metrics.downCapturePct)} hint="Below 100 can indicate protection" tone={Number.isFinite(metrics.downCapturePct) ? (metrics.downCapturePct < 100 ? "good" : "watch") : "neutral"} />
+                <MetricCard label="Upside capture" value={formatPercent(metrics.upCapturePct)} hint="Participation in positive proxy days" />
+                <MetricCard label="Maximum drawdown" value={formatPercent(metrics.maxDrawdownPct)} hint="Worst peak-to-trough NAV decline" tone="risk" />
+                <MetricCard label="Tracking error" value={formatPercent(metrics.trackingErrorPct)} hint="Annualised active-risk dispersion" />
+                <MetricCard label="Beta" value={formatNumber(metrics.beta)} hint="Sensitivity to selected proxy" />
+                <MetricCard label="Alpha persistence" value={Number.isFinite(metrics.alphaPersistenceScore) ? `${Math.round(metrics.alphaPersistenceScore)}/100` : "—"} hint="Consistency across four sub-periods" />
+              </div>
+              {metrics.warnings?.length ? <div className="inline-warning">{metrics.warnings.join(" ")}</div> : null}
+            </section>
+          ) : null}
 
-        <div className="card panel">
-          <div className="section-head"><div><h2>6. What-if studio</h2><p className="muted">Counterfactuals update against the selected proxy standard.</p></div></div>
-          <div className="template-list">{whatIfTemplates.map((item) => <div className="template-item" key={item.id}><strong>{item.name}</strong><span>{item.description}</span></div>)}</div>
-          <div className="big-result"><span className="footnote">Passive terminal NAV</span><strong>{metrics.passiveTerminalNav !== undefined ? money(metrics.passiveTerminalNav) : "Needs live proxy"}</strong><p className="footnote">Estimated terminal NAV if the fund followed the selected proxy from the same manager-aware start date.</p></div>
-        </div>
-      </section>
+          {activeTab === "decisions" ? (
+            <section className="tab-content decision-layout">
+              <div className="decision-overview">
+                <span className="overline">Decision attribution</span>
+                <h2>How the manager changed the outcome</h2>
+                <p>These signals use the selected manager-tenure window and the currently toggled proxy standard. They are diagnostic estimates, not claims that every return difference was caused by one individual.</p>
+              </div>
+              <div className="insight-grid">
+                <MetricCard label="Manager value-add per NAV unit" value={formatMoney(metrics.managerValueAddNav)} hint={`Versus ${selectedProxy.label}`} tone={managerValueTone} />
+                <MetricCard label="Passive terminal NAV" value={formatMoney(metrics.passiveTerminalNav)} hint="Counterfactual terminal NAV using proxy" />
+                <MetricCard label="Active return" value={formatPercent(metrics.activeReturnPct)} hint="Annualised fund return minus proxy" tone={Number.isFinite(metrics.activeReturnPct) ? (metrics.activeReturnPct >= 0 ? "good" : "risk") : "neutral"} />
+                <MetricCard label="Positive-month hit rate" value={formatPercent(metrics.positiveMonthHitRatePct)} hint="Share of positive fund months" />
+              </div>
+              <div className="decision-lever-grid">
+                {selectedScheme.decisionLevers.map((lever) => (
+                  <article key={lever.id} className="lever-card">
+                    <span>{lever.label}</span>
+                    <strong>{lever.defaultWeightPct}% default test weight</strong>
+                    <p>{lever.description}</p>
+                  </article>
+                ))}
+              </div>
+              <article className="method-card">
+                <h3>Interpretation logic</h3>
+                <ol>
+                  <li>Restrict history to the selected manager’s verified start date.</li>
+                  <li>Normalise fund and proxy data to the same date window.</li>
+                  <li>Measure active return, active risk, capture asymmetry and drawdown.</li>
+                  <li>Separate outcome quality from data confidence so weak coverage cannot masquerade as skill.</li>
+                </ol>
+              </article>
+            </section>
+          ) : null}
 
-      <section className="grid two dashboard-grid" style={{ marginTop: 18 }}>
-        <div className="card panel">
-          <h2>Scenario controls</h2>
-          <div className="scenario-grid">
-            <div className="field"><label>Starting NAV</label><input type="number" value={allocation.startingNav} onChange={(e) => setAllocation({ ...allocation, startingNav: Number(e.target.value) })} /></div>
-            <div className="field"><label>Weight change %</label><input type="number" value={allocation.weightDeltaPct} onChange={(e) => setAllocation({ ...allocation, weightDeltaPct: Number(e.target.value) })} /></div>
-            <div className="field"><label>Relative spread %</label><input type="number" value={allocation.spreadPct} onChange={(e) => setAllocation({ ...allocation, spreadPct: Number(e.target.value) })} /></div>
-            <div className="field"><label>Cost per unit ₹</label><input type="number" value={allocation.cost} onChange={(e) => setAllocation({ ...allocation, cost: Number(e.target.value) })} /></div>
-          </div>
-          <div className="insight-grid" style={{ marginTop: 14 }}>
-            <Insight title="Allocation decision effect" value={money(allocationResult.navEffect)} body={`Ending NAV: ${money(allocationResult.endingNav)} · Effect: ${pct(allocationResult.effectPct)}`} tone={allocationResult.navEffect >= 0 ? "good" : "bad"} />
-            <Insight title="Fee-drag sensitivity" value={feeDragResult !== undefined ? money(feeDragResult) : "—"} body={`Terminal NAV impact if TER changes by ${feeDelta}% for the selected period.`} tone={feeDragResult !== undefined && feeDragResult < 0 ? "bad" : "warn"} />
-            <Insight title="Downside capture what-if" value={downsideImprovement !== undefined ? money(downsideImprovement) : "—"} body={`NAV gain if downside-period losses improved by ${captureImprove}% of proxy loss.`} tone="good" />
-            <Insight title="Upside capture what-if" value={upsideImprovement !== undefined ? money(upsideImprovement) : "—"} body={`NAV gain if upside participation improved by ${captureImprove}% of proxy upside.`} tone="good" />
-          </div>
-          <div className="grid two compact-grid" style={{ marginTop: 12 }}><div className="field"><label>Fee delta %</label><input type="number" value={feeDelta} onChange={(e) => setFeeDelta(Number(e.target.value))} /></div><div className="field"><label>Capture improvement %</label><input type="number" value={captureImprove} onChange={(e) => setCaptureImprove(Number(e.target.value))} /></div></div>
-        </div>
+          {activeTab === "whatifs" ? (
+            <section className="tab-content">
+              <div className="whatif-header">
+                <div><span className="overline">Counterfactual lab</span><h2>Test a manager decision without rewriting history</h2></div>
+                <span className="confidence-chip">Uses {selectedProxy.label}</span>
+              </div>
+              <div className="scenario-controls">
+                <label><span>Decision weight %</span><input type="number" step="0.1" value={allocationWeight} onChange={(event) => setAllocationWeight(Number(event.target.value))} /></label>
+                <label><span>Relative return spread %</span><input type="number" step="0.1" value={relativeSpread} onChange={(event) => setRelativeSpread(Number(event.target.value))} /></label>
+                <label><span>Implementation cost ₹</span><input type="number" step="0.01" value={implementationCost} onChange={(event) => setImplementationCost(Number(event.target.value))} /></label>
+                <label><span>Fee delta % p.a.</span><input type="number" step="0.05" value={feeDelta} onChange={(event) => setFeeDelta(Number(event.target.value))} /></label>
+                <label><span>Capture improvement %</span><input type="number" step="1" value={captureImprove} onChange={(event) => setCaptureImprove(Number(event.target.value))} /></label>
+              </div>
+              <div className="whatif-grid">
+                <article className="whatif-card featured"><span>Allocation decision</span><strong>{formatMoney(allocationScenario.navEffect)}</strong><p>Approximate NAV effect from changing {allocationWeight}% of exposure when the selected sleeve outperforms or underperforms by {relativeSpread}%.</p><small>Ending NAV: {formatMoney(allocationScenario.endingNav)} · {formatPercent(allocationScenario.effectPct)}</small></article>
+                <article className="whatif-card"><span>Passive replacement</span><strong>{formatMoney(metrics.passiveTerminalNav)}</strong><p>Estimated terminal NAV if the manager simply followed the selected comparison standard.</p></article>
+                <article className="whatif-card"><span>Fee-drag sensitivity</span><strong>{formatMoney(feeScenario)}</strong><p>Estimated terminal NAV change from a {feeDelta}% annual expense-ratio difference.</p></article>
+                <article className="whatif-card"><span>Better downside capture</span><strong>{formatMoney(downsideScenario)}</strong><p>Estimated NAV gain if losses improved by {captureImprove}% of proxy-negative moves.</p></article>
+                <article className="whatif-card"><span>Better upside capture</span><strong>{formatMoney(upsideScenario)}</strong><p>Estimated NAV gain if participation improved by {captureImprove}% of proxy-positive moves.</p></article>
+                <article className="whatif-card"><span>Zero-alpha baseline</span><strong>{formatMoney(metrics.passiveTerminalNav)}</strong><p>Uses the selected standard as the no-active-skill counterfactual.</p></article>
+              </div>
+            </section>
+          ) : null}
 
-        <div className="card panel">
-          <div className="section-head"><div><h2>Yahoo / Google / FMP validation lane</h2><p className="muted">Only the pre-specified source lanes are exposed. Google Finance is kept as a verification link, not scraped as a fake API.</p></div></div>
-          <div className="grid three compact-grid"><div className="field"><label>Yahoo symbol/search</label><input value={yahooSymbol} onChange={(e) => setYahooSymbol(e.target.value.toUpperCase())} /></div><div className="field"><label>Google Finance lookup</label><a className="link-button" href={googleFinanceLink} target="_blank" rel="noreferrer">Open Google Finance</a></div><div className="field"><label>Actions</label><div className="inline-actions"><button onClick={() => loadYahoo("search")}>Yahoo search</button><button className="secondary" onClick={() => loadYahoo("summary")}>Summary</button><button className="secondary" onClick={() => loadYahoo("chart")}>Chart</button></div></div></div>
-          <div className="data-panel"><div className="data-row"><pre>{yahooOutput ? JSON.stringify(yahooOutput, null, 2).slice(0, 7000) : "Yahoo/FMP output appears here. MFapi and AMFI power the Indian live manager analysis."}</pre></div></div>
-        </div>
-      </section>
-    </main>
+          {activeTab === "sources" ? (
+            <section className="tab-content sources-layout">
+              <div className="source-health-grid">
+                <SourcePill label="MFapi.in" state={health.mfapi} detail="Primary Indian scheme search and NAV history" />
+                <SourcePill label="AMFI NAVAll" state={health.amfi} detail="Official latest-NAV validation and fallback resolution" />
+                <SourcePill label="AMC factsheet" state="online" detail={`Manager roster verified as of ${selectedManager.source.asOf}`} />
+                <SourcePill label="Yahoo Finance" state={yahooData?.ok ? "online" : "optional"} detail="Optional global market context; never blocks Indian MF analysis" />
+                <SourcePill label="Google Finance" state="optional" detail="Manual verification link; no unofficial scraping" />
+                <SourcePill label="FMP" state={fmpData?.configured ? (fmpData.ok ? "online" : "degraded") : "optional"} detail="Optional global ETF/fund information with API key" />
+              </div>
+
+              <div className="provenance-grid">
+                <article className="provenance-card">
+                  <span className="overline">Manager record</span>
+                  <h3>{selectedManager.source.label}</h3>
+                  <p>{selectedManager.name} is included because the role and tenure were verified from the official AMC factsheet, not inferred from NAV data.</p>
+                  <a href={selectedManager.source.url} target="_blank" rel="noreferrer">Open official factsheet</a>
+                </article>
+                <article className="provenance-card">
+                  <span className="overline">Live fund series</span>
+                  <h3>{fundSource?.schemeName || selectedScheme.name}</h3>
+                  <p>Resolved by {fundSource?.resolvedBy || "MFapi/AMFI live resolver"}. AMFI validation: {fundSource?.amfiStatus || "pending"}.</p>
+                  <a href={SOURCES.mfapi.url} target="_blank" rel="noreferrer">Open MFapi documentation</a>
+                </article>
+                <article className="provenance-card">
+                  <span className="overline">Proxy construction</span>
+                  <h3>{selectedProxy.label}</h3>
+                  <p>{selectedProxy.components.length === 1 ? "Single investable proxy series." : `Synthetic proxy built from ${selectedProxy.components.length} live components with fixed disclosed weights.`}</p>
+                  <small>{proxySources.map((source) => source?.schemeName).filter(Boolean).join(" + ") || "Pending live sync"}</small>
+                </article>
+              </div>
+
+              <div className="validation-lab">
+                <div className="validation-panel">
+                  <h3>Yahoo Finance context</h3>
+                  <p>Optional and non-blocking. Use for indices or global symbols, not for the Indian manager roster.</p>
+                  <div className="inline-form"><input value={yahooSymbol} onChange={(event) => setYahooSymbol(event.target.value)} placeholder="^NSEI" /><button type="button" onClick={loadYahooValidation}>Validate</button></div>
+                  <pre>{yahooData ? JSON.stringify(yahooData, null, 2).slice(0, 3000) : "No Yahoo validation loaded."}</pre>
+                </div>
+                <div className="validation-panel">
+                  <h3>FMP global fund context</h3>
+                  <p>Optional. Requires FMP_API_KEY in Vercel environment variables.</p>
+                  <div className="inline-form"><input value={fmpSymbol} onChange={(event) => setFmpSymbol(event.target.value.toUpperCase())} placeholder="SPY" /><button type="button" onClick={() => loadFmpValidation("info")}>Fund info</button><button type="button" onClick={() => loadFmpValidation("holdings")}>Holdings</button></div>
+                  <pre>{fmpData ? JSON.stringify(fmpData, null, 2).slice(0, 3000) : "No FMP validation loaded."}</pre>
+                </div>
+              </div>
+
+              <div className="official-links">
+                <a href={officialGoogleLink} target="_blank" rel="noreferrer">Verify on Google Finance</a>
+                <a href={SOURCES.amfiNav.url} target="_blank" rel="noreferrer">Open AMFI NAV feed</a>
+                <button type="button" onClick={checkHealth}>Recheck source health</button>
+              </div>
+            </section>
+          ) : null}
+        </main>
+      </div>
+    </div>
   );
 }
