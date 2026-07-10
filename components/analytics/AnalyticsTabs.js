@@ -20,15 +20,29 @@ export const TABS = [
   ['sources', 'Sources']
 ];
 
+function AllocationStrip({ title, rows }) {
+  if (!rows?.length) return null;
+  return (
+    <article className="allocation-strip">
+      <span>{title}</span>
+      <div>{rows.map(item => <b key={item.name}>{item.name}<em>{pct(item.weight)}</em></b>)}</div>
+    </article>
+  );
+}
+
 export default function AnalyticsTabs({ data }) {
   const {
     activeTab, score, fundSeries, proxySeries, fundSource, selectedFund, proxyName,
     momentumData, metrics, manager, exactAssignment
   } = data;
-  const sourceList = [manager?.source, ...(manager?.additionalSources || [])].filter(item => item?.url);
+  const managerSources = [manager?.source, ...(manager?.additionalSources || [])].filter(item => item?.url);
+  const researchSources = (momentumData?.sources || []).filter(item => item?.url);
   const sectors = momentumData?.sectors || momentumData?.snapshot?.sectorWeights || [];
+  const holdings = momentumData?.holdings || [];
   const entries = momentumData?.entries || [];
   const exits = momentumData?.exits || [];
+  const baselineOnly = Boolean(momentumData?.coverage?.baselineEstablished && !entries.length && !exits.length);
+  const sourceLabel = momentumData?.snapshot?.factsheetLabel || researchSources.map(item => item.name).join(' + ') || 'Public research fallback';
 
   if (activeTab === 'racecard') {
     return (
@@ -43,11 +57,16 @@ export default function AnalyticsTabs({ data }) {
   if (activeTab === 'sectors') {
     return (
       <section className="tab-content">
-        <div className="section-heading"><div><span className="eyebrow">Sector positioning</span><h2>Was the manager in the right sectors at the right time?</h2></div><b>{momentumData?.snapshot?.factsheetLabel || 'Awaiting normalised official factsheet'}</b></div>
+        <div className="section-heading"><div><span className="eyebrow">Sector positioning</span><h2>Was the manager in the right sectors at the right time?</h2></div><b>{sourceLabel}</b></div>
+        {momentumData?.snapshot?.sectorBasis ? <div className="coverage-note sector-basis"><strong>Coverage basis:</strong> {momentumData.snapshot.sectorBasis}</div> : null}
         {sectors.length ? (
-          <div className="sector-table-wrap"><table><thead><tr><th>Sector</th><th>Fund weight</th><th>1M</th><th>3M</th><th>6M</th></tr></thead><tbody>{sectors.map(item => <tr key={item.sector}><td>{item.sector}</td><td>{pct(item.weight)}</td><td>{pct(item.return1mPct)}</td><td>{pct(item.return3mPct)}</td><td>{pct(item.return6mPct)}</td></tr>)}</tbody></table></div>
-        ) : <div className="coverage-note">This fund is live in the universe, but its holdings and sector tables have not yet passed the official-factsheet normalisation checks. No sector information is invented.</div>}
-        <div className="holding-grid">{(momentumData?.holdings || []).map(item => <article key={item.name}><span>{item.sector}</span><strong>{item.name}</strong><small>{pct(item.weight)} portfolio weight</small><div><b>3M {pct(item.return3mPct)}</b><b>6M {pct(item.return6mPct)}</b></div></article>)}</div>
+          <div className="sector-table-wrap"><table><thead><tr><th>Sector</th><th>Fund weight</th><th>1M</th><th>3M</th><th>6M</th><th>Source status</th></tr></thead><tbody>{sectors.map(item => <tr key={item.sector}><td>{item.sector}</td><td>{pct(item.weight)}</td><td>{pct(item.return1mPct)}</td><td className={scoreTone(50 + (item.return3mPct || 0) * 2)}>{pct(item.return3mPct)}</td><td>{pct(item.return6mPct)}</td><td>{item.ok ? 'Live price matched' : 'Weight only'}</td></tr>)}</tbody></table></div>
+        ) : <div className="coverage-note">Value Research, AdvisorKhoj and official disclosures were checked, but no usable sector or top-holdings table was returned for this fund.</div>}
+        <div className="portfolio-composition-grid">
+          <AllocationStrip title="Asset allocation" rows={momentumData?.snapshot?.assetAllocation || momentumData?.fundFacts?.assetAllocation} />
+          <AllocationStrip title="Market-cap mix" rows={momentumData?.snapshot?.marketCap || momentumData?.fundFacts?.marketCap} />
+        </div>
+        {holdings.length ? <div className="holding-grid">{holdings.map(item => <article key={item.name}><span>{item.sector || 'Sector not classified'}</span><strong>{item.name}</strong><small>{pct(item.weight)} portfolio weight</small><div><b>1M {pct(item.return1mPct)}</b><b>3M {pct(item.return3mPct)}</b><b>6M {pct(item.return6mPct)}</b></div></article>)}</div> : null}
       </section>
     );
   }
@@ -55,16 +74,17 @@ export default function AnalyticsTabs({ data }) {
   if (activeTab === 'timing') {
     return (
       <section className="tab-content">
-        <div className="section-heading"><div><span className="eyebrow">Trade timing</span><h2>Entries, exits and peak proximity</h2></div><b>Official monthly disclosures only</b></div>
+        <div className="section-heading"><div><span className="eyebrow">Trade timing</span><h2>Entries, exits and peak proximity</h2></div><b>{baselineOnly ? 'First comparison baseline established' : 'Latest source-snapshot comparison'}</b></div>
+        {baselineOnly ? <div className="coverage-note"><strong>Timing baseline created.</strong> The current Value Research/AdvisorKhoj holdings are now the reference snapshot. New entries, complete exits and peak-proximity checks will appear after the next distinct portfolio refresh instead of being fabricated from one month of data.</div> : null}
         <div className="timing-columns">
-          <div><h3>Entries</h3>{entries.length ? entries.map(item => <article className="event-card" key={item.name}><div><strong>{item.name}</strong><span>{item.sector}</span></div><b className={item.ok ? scoreTone(50 + (item.returnSinceEventPct || 0) * 2) : 'neutral'}>{item.ok ? pct(item.returnSinceEventPct) : 'Unresolved'}</b><p>{item.ok ? `Approximate entry price ${num(item.eventPrice)} on ${item.eventPriceDate}; ${pct(item.peakProximityPct)} of the local peak.` : item.error}</p></article>) : <div className="coverage-note">No verified monthly entry list is available for this manager–fund selection yet.</div>}</div>
-          <div><h3>Exits</h3>{exits.length ? exits.map(item => <article className="event-card" key={item.name}><div><strong>{item.name}</strong><span>{item.sector}</span></div><b className={item.ok ? scoreTone(50 - (item.postEventReturnPct || 0) * 2) : 'neutral'}>{item.ok ? `${pct(item.peakProximityPct)} of peak` : 'Unresolved'}</b><p>{item.ok ? `Post-exit move ${pct(item.postEventReturnPct)} from approximate exit price ${num(item.eventPrice)} on ${item.eventPriceDate}.` : item.error}</p></article>) : <div className="coverage-note">No verified monthly exit list is available for this manager–fund selection yet.</div>}</div>
+          <div><h3>New / increased positions</h3>{entries.length ? entries.map(item => <article className="event-card" key={item.name}><div><strong>{item.name}</strong><span>{item.sector}</span></div><b className={item.ok ? scoreTone(50 + (item.returnSinceEventPct || 0) * 2) : 'neutral'}>{item.ok ? pct(item.returnSinceEventPct) : 'Unresolved'}</b><p>{item.ok ? `Approximate observation price ${num(item.eventPrice)} on ${item.eventPriceDate}; ${pct(item.peakProximityPct)} of the local peak.` : item.error}</p></article>) : <div className="current-book"><span>Current disclosed top holdings</span>{holdings.slice(0, 8).map(item => <p key={item.name}><strong>{item.name}</strong><b>{pct(item.weight)}</b></p>)}</div>}</div>
+          <div><h3>Exited positions</h3>{exits.length ? exits.map(item => <article className="event-card" key={item.name}><div><strong>{item.name}</strong><span>{item.sector}</span></div><b className={item.ok ? scoreTone(50 - (item.postEventReturnPct || 0) * 2) : 'neutral'}>{item.ok ? `${pct(item.peakProximityPct)} of peak` : 'Unresolved'}</b><p>{item.ok ? `Post-exit move ${pct(item.postEventReturnPct)} from approximate exit price ${num(item.eventPrice)} on ${item.eventPriceDate}.` : item.error}</p></article>) : <div className="coverage-note">No confirmed exit can be calculated until two distinct source snapshots exist. This is shown as missing evidence, not as a neutral-success event.</div>}</div>
         </div>
         <div className="turnover-panel">
           <div><span>Equity turnover</span><strong>{pct(momentumData?.snapshot?.turnover?.equityPct)}</strong></div>
-          <div><span>Total turnover</span><strong>{pct(momentumData?.snapshot?.turnover?.totalPct)}</strong></div>
+          <div><span>Source snapshots</span><strong>{baselineOnly ? '1' : entries.length || exits.length ? '2+' : '—'}</strong></div>
           <div><span>Turnover score</span><strong>{Math.round(score.factors.turnoverEfficiency.score)}</strong></div>
-          <p>{score.factors.turnoverEfficiency.detail || 'Turnover awaits the latest official factsheet.'}</p>
+          <p>{score.factors.turnoverEfficiency.detail || 'Turnover awaits a public fund page or official factsheet.'}</p>
         </div>
       </section>
     );
@@ -83,21 +103,25 @@ export default function AnalyticsTabs({ data }) {
           <MetricCard label="Maximum drawdown" value={pct(metrics.maxDrawdownPct)} note="Worst peak-to-trough decline" />
           <MetricCard label="Alpha persistence" value={Number.isFinite(metrics.alphaPersistenceScore) ? `${Math.round(metrics.alphaPersistenceScore)}/100` : '—'} note="Four-window consistency" />
           <MetricCard label="Manager value-add" value={money(metrics.managerValueAddNav)} note="Ending NAV difference versus proxy" />
+          {momentumData?.fundFacts?.riskMetrics?.alpha !== undefined ? <MetricCard label="AdvisorKhoj alpha" value={pct(momentumData.fundFacts.riskMetrics.alpha)} note="Secondary-source cross-check" /> : null}
+          {momentumData?.fundFacts?.riskMetrics?.sharpe !== undefined ? <MetricCard label="AdvisorKhoj Sharpe" value={num(momentumData.fundFacts.riskMetrics.sharpe)} note="Secondary-source cross-check" /> : null}
         </div>
         <div className="factor-grid compact">{TRADITIONAL_KEYS.map(key => <FactorRow key={key} factorKey={key} factor={score.factors[key]} />)}</div>
       </section>
     );
   }
 
+  const allSources = [...managerSources.map(item => ({ name: item.label, type: 'Manager / assignment source', url: item.url, asOf: item.asOf })), ...researchSources];
+  const uniqueSources = [...new Map(allSources.filter(item => item.url).map(item => [item.url, item])).values()];
   return (
     <section className="tab-content">
       <div className="section-heading"><div><span className="eyebrow">Data provenance</span><h2>Manager identity, fund code and analytics sources</h2></div><b>{manager?.confidence ? `${Math.round(manager.confidence * 100)}% manager-record confidence` : 'Pending'}</b></div>
       <div className="source-grid">
-        {sourceList.map(source => <article key={source.url}><span>Manager / assignment source</span><strong>{source.label}</strong><small>As of {source.asOf || 'current'}</small><a href={source.url} target="_blank" rel="noreferrer">Open source</a></article>)}
+        {uniqueSources.map(source => <article key={source.url}><span>{source.type || 'Research source'}</span><strong>{source.name}</strong><small>As of {source.asOf || 'current'}</small><a href={source.url} target="_blank" rel="noreferrer">Open source</a></article>)}
         <article><span>Fund universe</span><strong>AMFI NAVAll</strong><small>Scheme code {selectedFund?.preferredSchemeCode || 'pending'}</small><a href="https://portal.amfiindia.com/spages/NAVAll.txt" target="_blank" rel="noreferrer">Open AMFI feed</a></article>
         <article><span>NAV history</span><strong>MFapi.in</strong><small>Live scheme history and code resolution</small><a href="https://www.mfapi.in/docs/" target="_blank" rel="noreferrer">Open documentation</a></article>
       </div>
-      <div className="coverage-note">{exactAssignment ? 'This manager–fund link is matched to a source-tracked scheme alias.' : 'The manager is current and searchable, but the selected fund is an AMC fallback rather than a verified assignment. It is not represented as an exact mandate until an official factsheet is ingested.'}</div>
+      <div className="coverage-note">{exactAssignment ? 'This manager–fund link is matched to a source-tracked scheme alias.' : 'The manager is current and searchable, but the selected fund is an AMC fallback rather than a verified assignment. Value Research and AdvisorKhoj manager records are used for verification when available.'}</div>
     </section>
   );
 }
