@@ -3,6 +3,7 @@ import { getMarketUniverse } from '@/lib/universe';
 import { resolveFundResearch } from '@/lib/fallback-sources';
 import { buildFallbackMomentumFast } from '@/lib/fallback-momentum-fast';
 import { enrichResearchWithOfficialPortfolio } from '@/lib/official-portfolio';
+import { normalizeResearchHistory } from '@/lib/normalize-research-history';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -26,12 +27,13 @@ export async function GET(request) {
     if (!publicResearch.ok) {
       return NextResponse.json({
         ok: false,
-        error: 'No public fallback research page could be resolved for this fund.',
+        error: 'No Value Research Online or AdvisorKhoj fund record could be resolved.',
         sourcesAttempted: ['Value Research Online', 'AdvisorKhoj']
       }, { status: 404 });
     }
 
-    const research = await enrichResearchWithOfficialPortfolio(publicResearch, fund.displayName);
+    const enriched = await enrichResearchWithOfficialPortfolio(publicResearch, fund.displayName);
+    const research = normalizeResearchHistory(enriched);
     const intelligence = await buildFallbackMomentumFast(fund, research);
     return NextResponse.json({
       ...intelligence,
@@ -42,12 +44,16 @@ export async function GET(request) {
         category: fund.category,
         preferredSchemeCode: fund.preferredSchemeCode
       },
+      researchPolicy: {
+        managerAndPortfolio: ['Value Research Online', 'AdvisorKhoj'],
+        navAndPriceEnrichment: ['AMFI', 'MFapi.in', 'Yahoo Finance']
+      },
       officialPortfolioFailures: research.officialPortfolioFailures || []
     }, { headers: { 'Cache-Control': 'private, no-store, max-age=0' } });
   } catch (error) {
     return NextResponse.json({
       ok: false,
-      error: 'The public research fallback could not be loaded.',
+      error: 'Value Research Online and AdvisorKhoj intelligence could not be loaded.',
       detail: error instanceof Error ? error.message : String(error)
     }, { status: 503, headers: { 'Cache-Control': 'no-store' } });
   }
