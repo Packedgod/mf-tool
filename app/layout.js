@@ -1,4 +1,5 @@
 import './globals.css';
+import './universe.css';
 import { Suspense } from 'react';
 import UniverseLauncher from '@/components/UniverseLauncher';
 import UniverseBridge from '@/components/UniverseBridge';
