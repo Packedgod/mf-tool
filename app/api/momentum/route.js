@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getMomentumSnapshot, SECTOR_MARKET_SYMBOLS } from "@/lib/momentum-data";
+import { getExtendedMomentumSnapshot } from "@/lib/extended-momentum-data";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -21,7 +22,7 @@ async function fetchWithTimeout(url, timeoutMs = 9000) {
       signal: controller.signal,
       headers: {
         accept: "application/json,text/plain,*/*",
-        "user-agent": "ManagerLens/0.5 momentum-research"
+        "user-agent": "ManagerLens/0.8 momentum-research"
       }
     });
   } finally {
@@ -174,7 +175,7 @@ function classifyRegime(broad, sectors) {
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const schemeId = searchParams.get("schemeId")?.trim();
-  const snapshot = getMomentumSnapshot(schemeId);
+  const snapshot = getMomentumSnapshot(schemeId) || getExtendedMomentumSnapshot(schemeId);
   if (!snapshot) return NextResponse.json({ ok: false, error: "Momentum snapshot is not configured for this scheme." }, { status: 404 });
 
   const sectorRequests = snapshot.sectorWeights.map(item => ({ sector: item.sector, weight: item.weight, symbol: SECTOR_MARKET_SYMBOLS[item.sector] })).filter(item => item.symbol);
@@ -207,6 +208,9 @@ export async function GET(request) {
       coverageNote: snapshot.coverageNote,
       netEquityPct: snapshot.netEquityPct,
       grossEquityPct: snapshot.grossEquityPct,
+      assetAllocation: snapshot.assetAllocation || [],
+      marketCap: snapshot.marketCap || [],
+      sectorBasis: "Official AMC factsheet sector and portfolio disclosure",
       factsheetUrl: snapshot.factsheetUrl,
       factsheetLabel: snapshot.factsheetLabel
     },
@@ -222,7 +226,8 @@ export async function GET(request) {
       resolvedPct: uniqueSymbols.length ? resolved / uniqueSymbols.length * 100 : 0,
       sectorSeries: sectors.filter(item => item.ok).length,
       entrySeries: entries.filter(item => item.ok).length,
-      exitSeries: exits.filter(item => item.ok).length
+      exitSeries: exits.filter(item => item.ok).length,
+      baselineEstablished: !snapshot.entries.length && !snapshot.exits.length
     },
     sources: [
       { name: snapshot.factsheetLabel, type: "Official AMC factsheet", url: snapshot.factsheetUrl, asOf: snapshot.asOf },
