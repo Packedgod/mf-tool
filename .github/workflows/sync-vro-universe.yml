@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "scripts/sync-vro-universe.mjs"
+      - "scripts/sync-vro-sitemap-universe.mjs"
       - ".github/workflows/sync-vro-universe.yml"
       - "package.json"
 
