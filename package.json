@@ -1,25 +1,15 @@
 {
-  "name": "mf-live-manager-analytics",
-  "version": "0.3.0",
+  "name": "managerlens",
+  "version": "0.4.0",
   "private": true,
-  "description": "Live manager-first mutual fund analytics using verified AMC records, MFapi.in and AMFI.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "start": "next start"
   },
   "dependencies": {
     "next": "14.2.35",
     "react": "18.3.1",
     "react-dom": "18.3.1"
-  },
-  "devDependencies": {
-    "@types/node": "20.14.10",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
-    "typescript": "5.5.3",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.35"
   }
 }
