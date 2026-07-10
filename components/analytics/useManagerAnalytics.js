@@ -101,7 +101,7 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
     market: momentumData,
     traditional: metrics
   }), [detailedSchemeId, momentumData, metrics]);
-  const provisional = !detailedSchemeId || score.coveragePct < 60;
+  const provisional = score.coveragePct < 60;
 
   useEffect(() => {
     let cancelled = false;
@@ -217,28 +217,42 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
       setLastRefresh(new Date());
     } catch (error) {
       setNavState(fundSeries.length && proxySeries.length ? 'degraded' : 'error');
-      setNavMessage(`${fundSeries.length && proxySeries.length ? 'The last valid chart remains visible. ' : ''}${error.message}`);
+      setNavMessage(`${fundSeries.length && proxySeries.length ? 'The last valid chart remains visible. ' : ''}${error.message} Portfolio facts will still be attempted through Value Research and AdvisorKhoj.`);
     }
   }, [selectedFund, proxyMode, proxyCode, selectedProxy, analysisStart, endDate, fundSeries.length, proxySeries.length]);
 
   const loadMomentumData = useCallback(async ({ silent = false } = {}) => {
     if (!selectedFund) return;
-    if (!detailedSchemeId) {
-      setMomentumData(null);
-      setMomentumState('coverage');
-      setMomentumMessage('The fund and manager are available, but detailed holdings, turnover and entry/exit history have not yet been normalised from the latest official factsheet. Momentum factors remain provisional.');
-      return;
-    }
     if (!silent) setMomentumState('syncing');
-    try {
-      const data = await getJson(`/api/momentum?schemeId=${encodeURIComponent(detailedSchemeId)}`);
+    setMomentumMessage('Loading official disclosures, Value Research, AdvisorKhoj and live Yahoo price momentum…');
+
+    const fallback = async officialError => {
+      const data = await getJson(`/api/fund-intelligence?fundId=${encodeURIComponent(selectedFund.id)}&schemeCode=${encodeURIComponent(selectedFund.preferredSchemeCode)}`);
       setMomentumData(data);
-      setMomentumState(data.coverage?.resolvedPct >= 60 ? 'ready' : 'degraded');
-      setMomentumMessage(`Detailed momentum data resolved for ${Math.round(data.coverage?.resolvedPct || 0)}% of requested symbols.`);
+      const coverage = Math.round(data.coverage?.resolvedPct || 0);
+      setMomentumState(coverage >= 60 ? 'ready' : 'degraded');
+      setMomentumMessage(`${officialError ? 'Official structured snapshot was unavailable; ' : ''}portfolio intelligence loaded through ${data.sources?.map(item => item.name).filter((name, index, list) => list.indexOf(name) === index).join(', ') || 'public fallbacks'} with ${coverage}% factor coverage.`);
       setLastRefresh(new Date());
+    };
+
+    try {
+      if (detailedSchemeId) {
+        try {
+          const data = await getJson(`/api/momentum?schemeId=${encodeURIComponent(detailedSchemeId)}`);
+          setMomentumData(data);
+          setMomentumState(data.coverage?.resolvedPct >= 60 ? 'ready' : 'degraded');
+          setMomentumMessage(`Official-factsheet momentum data resolved for ${Math.round(data.coverage?.resolvedPct || 0)}% of requested symbols.`);
+          setLastRefresh(new Date());
+          return;
+        } catch (officialError) {
+          await fallback(officialError);
+          return;
+        }
+      }
+      await fallback(null);
     } catch (error) {
       setMomentumState(momentumData ? 'degraded' : 'error');
-      setMomentumMessage(`${momentumData ? 'The last valid momentum data remains visible. ' : ''}${error.message}`);
+      setMomentumMessage(`${momentumData ? 'The last valid portfolio dataset remains visible. ' : ''}${error.message}`);
     }
   }, [selectedFund, detailedSchemeId, momentumData]);
 
