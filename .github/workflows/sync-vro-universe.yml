@@ -28,15 +28,24 @@ jobs:
         with:
           node-version: 20
       - run: npm install --no-audit --no-fund
-      - run: npm run sync:vro
-      - name: Commit updated public research universe
+      - name: Run public universe sync
+        id: universe_sync
         run: |
-          if git diff --quiet -- data/vro-universe.generated.js; then
+          set +e
+          npm run sync:vro > data/vro-sync-diagnostics.txt 2>&1
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          echo "Exit code: $code" >> data/vro-sync-diagnostics.txt
+          tail -n 200 data/vro-sync-diagnostics.txt
+          exit 0
+      - name: Commit updated public research universe or diagnostics
+        run: |
+          if git diff --quiet -- data/vro-universe.generated.js data/vro-sync-diagnostics.txt; then
             echo "No Value Research universe changes"
             exit 0
           fi
           git config user.name "managerlens-bot"
           git config user.email "managerlens-bot@users.noreply.github.com"
-          git add data/vro-universe.generated.js
+          git add data/vro-universe.generated.js data/vro-sync-diagnostics.txt
           git commit -m "Refresh Value Research manager and fund universe"
           git push
