@@ -1,12 +1,13 @@
 {
   "name": "managerlens",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "sync:managers": "node scripts/sync-manager-registry.mjs"
+    "sync:managers": "node scripts/sync-manager-registry.mjs",
+    "sync:vro": "node scripts/sync-vro-universe.mjs"
   },
   "dependencies": {
     "next": "14.2.35",
