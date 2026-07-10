@@ -44,9 +44,9 @@ function publicManager(manager, fund) {
     style: manager.style || 'Scheme-level manager record resolved from a public fund source.',
     decisions: manager.decisions || ['Portfolio construction', 'Sector positioning', 'Entry and exit discipline', 'Risk control'],
     schemeAliases: [...new Set([...(manager.schemeAliases || []), fund.displayName, fund.preferredSchemeName].filter(Boolean))],
-    assignmentStatus: 'verified-fund-page',
+    assignmentStatus: manager.assignmentStatus || 'verified-fund-page',
     verified: manager.verified !== false,
-    confidence: manager.confidence || 0.85,
+    confidence: Number.isFinite(manager.confidence) ? manager.confidence : 0.85,
     source: manager.source || null,
     additionalSources: manager.additionalSources || [],
     sourceType: manager.sourceType || 'Public fund-page manager record',
@@ -86,11 +86,27 @@ export async function GET(request) {
       }, fund));
     }
 
+    const verifiedManagerCount = managers.length;
+    if (!managers.length) {
+      managers = [publicManager({
+        id: `pending-manager-${fund.preferredSchemeCode}`,
+        name: 'Manager verification pending',
+        amc: fund.fundHouse,
+        role: 'Fund remains available while manager sources are checked',
+        style: 'No manager identity is inferred or copied from another scheme.',
+        decisions: ['Manager identity pending', 'Official factsheet check', 'Value Research check', 'AdvisorKhoj check'],
+        assignmentStatus: 'pending-source-resolution',
+        verified: false,
+        confidence: 0,
+        sourceType: 'No verified manager source returned yet'
+      }, fund)];
+    }
+
     return NextResponse.json({
       ok: true,
       fund: compactFund(fund),
       managers,
-      managerCoverage: managers.length ? 'resolved' : 'pending-source-resolution',
+      managerCoverage: verifiedManagerCount ? 'resolved' : 'pending-source-resolution',
       sources: research?.current?.sources || [],
       fetchedAt: new Date().toISOString()
     }, { headers: { 'Cache-Control': 'private, no-store, max-age=0' } });
