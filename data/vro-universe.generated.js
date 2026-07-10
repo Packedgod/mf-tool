@@ -2,9 +2,9 @@
 // Public fund facts only; premium/locked content is not collected.
 export const VRO_MANAGER_REGISTRY = [
   {
-    "id": "kinjal-desai-360-one",
+    "id": "kinjal-desai-nippon-india-mutual-fund",
     "name": "Kinjal Desai",
-    "amc": "360 ONE",
+    "amc": "Nippon India Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -28,9 +28,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "amber-singhania-360-one",
+    "id": "amber-singhania-nippon-india-mutual-fund",
     "name": "Amber Singhania",
-    "amc": "360 ONE",
+    "amc": "Nippon India Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -54,9 +54,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "swapnil-p-mayekar-360-one",
+    "id": "swapnil-p-mayekar-motilal-oswal-mutual-fund",
     "name": "Swapnil P Mayekar",
-    "amc": "360 ONE",
+    "amc": "Motilal Oswal Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -79,9 +79,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "rakesh-shetty-360-one",
+    "id": "rakesh-shetty-motilal-oswal-mutual-fund",
     "name": "Rakesh Shetty",
-    "amc": "360 ONE",
+    "amc": "Motilal Oswal Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -105,9 +105,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "dishant-mehta-360-one",
+    "id": "dishant-mehta-motilal-oswal-mutual-fund",
     "name": "Dishant Mehta",
-    "amc": "360 ONE",
+    "amc": "Motilal Oswal Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -130,9 +130,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "bhavesh-jain-360-one",
+    "id": "bhavesh-jain-edelweiss-mutual-fund",
     "name": "Bhavesh Jain",
-    "amc": "360 ONE",
+    "amc": "Edelweiss Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -157,9 +157,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "bharat-lahoti-360-one",
+    "id": "bharat-lahoti-edelweiss-mutual-fund",
     "name": "Bharat Lahoti",
-    "amc": "360 ONE",
+    "amc": "Edelweiss Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -184,9 +184,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "siddharth-srivastava-360-one",
+    "id": "siddharth-srivastava-mirae-asset-mutual-fund",
     "name": "Siddharth Srivastava",
-    "amc": "360 ONE",
+    "amc": "Mirae Asset Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -209,9 +209,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "sonal-gupta-360-one",
+    "id": "sonal-gupta-hsbc-mutual-fund",
     "name": "Sonal Gupta",
-    "amc": "360 ONE",
+    "amc": "HSBC Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -234,9 +234,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "alok-singh-360-one",
+    "id": "alok-singh-bank-of-india-mutual-fund",
     "name": "Alok Singh",
-    "amc": "360 ONE",
+    "amc": "Bank of India Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -259,9 +259,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "nav-bhardwaj-360-one",
+    "id": "nav-bhardwaj-bank-of-india-mutual-fund",
     "name": "Nav Bhardwaj",
-    "amc": "360 ONE",
+    "amc": "Bank of India Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -284,9 +284,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "mihir-vora-360-one",
+    "id": "mihir-vora-trust-mutual-fund",
     "name": "Mihir Vora",
-    "amc": "360 ONE",
+    "amc": "TRUST Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -309,9 +309,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "saurabh-kataria-360-one",
+    "id": "saurabh-kataria-trust-mutual-fund",
     "name": "Saurabh Kataria",
-    "amc": "360 ONE",
+    "amc": "TRUST Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -334,9 +334,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "aakash-manghani-360-one",
+    "id": "aakash-manghani-trust-mutual-fund",
     "name": "Aakash Manghani",
-    "amc": "360 ONE",
+    "amc": "TRUST Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -359,9 +359,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "arjun-khanna-360-one",
+    "id": "arjun-khanna-kotak-mahindra-mutual-fund",
     "name": "Arjun Khanna",
-    "amc": "360 ONE",
+    "amc": "Kotak Mahindra Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -385,9 +385,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "nikhil-satam-360-one",
+    "id": "nikhil-satam-groww-mutual-fund",
     "name": "Nikhil Satam",
-    "amc": "360 ONE",
+    "amc": "Groww Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -410,9 +410,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "aakash-ashokkumar-chauhan-360-one",
+    "id": "aakash-ashokkumar-chauhan-groww-mutual-fund",
     "name": "Aakash Ashokkumar Chauhan",
-    "amc": "360 ONE",
+    "amc": "Groww Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -435,9 +435,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "shashi-kumar-360-one",
+    "id": "shashi-kumar-groww-mutual-fund",
     "name": "Shashi Kumar",
-    "amc": "360 ONE",
+    "amc": "Groww Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -460,9 +460,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "abhishek-bisen-360-one",
+    "id": "abhishek-bisen-kotak-mahindra-mutual-fund",
     "name": "Abhishek Bisen",
-    "amc": "360 ONE",
+    "amc": "Kotak Mahindra Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -485,9 +485,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "ashutosh-shirwaikar-360-one",
+    "id": "ashutosh-shirwaikar-navi-mutual-fund",
     "name": "Ashutosh Shirwaikar",
-    "amc": "360 ONE",
+    "amc": "Navi Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -510,9 +510,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "mehul-dama-360-one",
+    "id": "mehul-dama-aditya-birla-sun-life-mutual-fund",
     "name": "Mehul Dama",
-    "amc": "360 ONE",
+    "amc": "Aditya Birla Sun Life Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -535,9 +535,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "priya-sridhar-360-one",
+    "id": "priya-sridhar-aditya-birla-sun-life-mutual-fund",
     "name": "Priya Sridhar",
-    "amc": "360 ONE",
+    "amc": "Aditya Birla Sun Life Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -560,9 +560,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "sharmila-d-silva-360-one",
+    "id": "sharmila-d-silva-icici-prudential-mutual-fund",
     "name": "Sharmila D'Silva",
-    "amc": "360 ONE",
+    "amc": "ICICI Prudential Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -585,9 +585,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "nitya-mishra-360-one",
+    "id": "nitya-mishra-icici-prudential-mutual-fund",
     "name": "Nitya Mishra",
-    "amc": "360 ONE",
+    "amc": "ICICI Prudential Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -610,9 +610,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "sandeep-manam-360-one",
+    "id": "sandeep-manam-franklin-templeton-mutual-fund",
     "name": "Sandeep Manam",
-    "amc": "360 ONE",
+    "amc": "Franklin Templeton Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -635,9 +635,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "shyam-sundar-sriram-360-one",
+    "id": "shyam-sundar-sriram-franklin-templeton-mutual-fund",
     "name": "Shyam Sundar Sriram",
-    "amc": "360 ONE",
+    "amc": "Franklin Templeton Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -660,9 +660,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "abhisek-bahinipati-360-one",
+    "id": "abhisek-bahinipati-invesco-mutual-fund",
     "name": "Abhisek Bahinipati",
-    "amc": "360 ONE",
+    "amc": "Invesco Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -685,9 +685,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "satish-ramanathan-360-one",
+    "id": "satish-ramanathan-jm-financial-mutual-fund",
     "name": "Satish Ramanathan",
-    "amc": "360 ONE",
+    "amc": "JM Financial Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -710,9 +710,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "asit-bhandarkar-360-one",
+    "id": "asit-bhandarkar-jm-financial-mutual-fund",
     "name": "Asit Bhandarkar",
-    "amc": "360 ONE",
+    "amc": "JM Financial Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -735,9 +735,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "ruchi-fozdar-360-one",
+    "id": "ruchi-fozdar-jm-financial-mutual-fund",
     "name": "Ruchi Fozdar",
-    "amc": "360 ONE",
+    "amc": "JM Financial Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -760,9 +760,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "deepak-gupta-360-one",
+    "id": "deepak-gupta-jm-financial-mutual-fund",
     "name": "Deepak Gupta",
-    "amc": "360 ONE",
+    "amc": "JM Financial Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -785,9 +785,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "krishnaa-narayan-360-one",
+    "id": "krishnaa-narayan-axis-mutual-fund",
     "name": "Krishnaa Narayan",
-    "amc": "360 ONE",
+    "amc": "Axis Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -810,9 +810,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "kaivalya-nadkarni-360-one",
+    "id": "kaivalya-nadkarni-dsp-mutual-fund",
     "name": "Kaivalya Nadkarni",
-    "amc": "360 ONE",
+    "amc": "DSP Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -836,9 +836,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "varun-sharma-360-one",
+    "id": "varun-sharma-motilal-oswal-mutual-fund",
     "name": "Varun Sharma",
-    "amc": "360 ONE",
+    "amc": "Motilal Oswal Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -861,9 +861,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "ajay-khandelwal-360-one",
+    "id": "ajay-khandelwal-motilal-oswal-mutual-fund",
     "name": "Ajay Khandelwal",
-    "amc": "360 ONE",
+    "amc": "Motilal Oswal Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -886,9 +886,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "bhalchandra-shinde-360-one",
+    "id": "bhalchandra-shinde-motilal-oswal-mutual-fund",
     "name": "Bhalchandra Shinde",
-    "amc": "360 ONE",
+    "amc": "Motilal Oswal Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -911,9 +911,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "pratik-dharmshi-360-one",
+    "id": "pratik-dharmshi-union-mutual-fund",
     "name": "Pratik Dharmshi",
-    "amc": "360 ONE",
+    "amc": "Union Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -936,9 +936,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "gaurav-chopra-360-one",
+    "id": "gaurav-chopra-union-mutual-fund",
     "name": "Gaurav Chopra",
-    "amc": "360 ONE",
+    "amc": "Union Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -961,9 +961,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "dhimant-shah-360-one",
+    "id": "dhimant-shah-iti-mutual-fund",
     "name": "Dhimant Shah",
-    "amc": "360 ONE",
+    "amc": "ITI Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -986,9 +986,9 @@ export const VRO_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "alok-ranjan-360-one",
+    "id": "alok-ranjan-iti-mutual-fund",
     "name": "Alok Ranjan",
-    "amc": "360 ONE",
+    "amc": "ITI Mutual Fund",
     "role": "Fund manager",
     "style": "Scheme-level public manager record from Value Research Online.",
     "decisions": [
@@ -1015,6 +1015,67 @@ export const VRO_MANAGER_REGISTRY = [
 export const VRO_FUND_INTELLIGENCE = {
   "nippon india taiwan equity fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/41838/nippon-india-taiwan-equity-fund-direct-plan/",
+        "fundName": "Nippon India Taiwan Equity Fund - Direct Plan",
+        "fundHouse": "Nippon India Mutual Fund",
+        "managers": [
+          {
+            "name": "Kinjal Desai",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Amber Singhania",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 1192,
+        "nav": 36.04,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Kinjal Desai",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Amber Singhania",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 1192,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/41838/nippon-india-taiwan-equity-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1073,11 +1134,81 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "motilal oswal nasdaq 100 fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/38228/motilal-oswal-nasdaq-100-fof-direct-plan/",
+        "fundName": "Motilal Oswal Nasdaq 100 FOF - Direct Plan",
+        "fundHouse": "Motilal Oswal Mutual Fund",
+        "managers": [
+          {
+            "name": "Swapnil P Mayekar",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Rakesh Shetty",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Dishant Mehta",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 8267,
+        "nav": 68.5589,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 3,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Swapnil P Mayekar",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Rakesh Shetty",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Dishant Mehta",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 8267,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/38228/motilal-oswal-nasdaq-100-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1146,11 +1277,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "edelweiss emerging markets opportunities equity offshore fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/27119/edelweiss-emerging-markets-opportunities-equity-offshore-fund-direct-plan/",
+        "fundName": "Edelweiss Emerging Markets Opportunities Equity Offshore Fund - Direct Plan",
+        "fundHouse": "Edelweiss Mutual Fund",
+        "managers": [
+          {
+            "name": "Bhavesh Jain",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Bharat Lahoti",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 259,
+        "nav": 31.2882,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Bhavesh Jain",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Bharat Lahoti",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 259,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/27119/edelweiss-emerging-markets-opportunities-equity-offshore-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1209,11 +1400,61 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "mirae asset global x artificial intelligence technology etf fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/42458/mirae-asset-global-x-artificial-intelligence-technology-etf-fof-direct-plan/",
+        "fundName": "Mirae Asset Global X Artificial Intelligence & Technology ETF FoF - Direct Plan",
+        "fundHouse": "Mirae Asset Mutual Fund",
+        "managers": [
+          {
+            "name": "Siddharth Srivastava",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 517,
+        "nav": 35.751,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 1,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Siddharth Srivastava",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 517,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/42458/mirae-asset-global-x-artificial-intelligence-technology-etf-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1262,11 +1503,61 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "hsbc global emerging markets fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/17037/hsbc-global-emerging-markets-fund-direct-plan/",
+        "fundName": "HSBC Global Emerging Markets Fund - Direct Plan",
+        "fundHouse": "HSBC Mutual Fund",
+        "managers": [
+          {
+            "name": "Sonal Gupta",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 492,
+        "nav": 37.888,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 1,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Sonal Gupta",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 492,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/17037/hsbc-global-emerging-markets-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1315,11 +1606,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "bank of india small cap fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/38283/bank-of-india-small-cap-fund-direct-plan/",
+        "fundName": "Bank of India Small Cap Fund - Direct Plan",
+        "fundHouse": "Bank of India Mutual Fund",
+        "managers": [
+          {
+            "name": "Alok Singh",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Nav Bhardwaj",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 2572,
+        "nav": 61.38,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Alok Singh",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Nav Bhardwaj",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 2572,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/38283/bank-of-india-small-cap-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1378,11 +1729,81 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "trustmf small cap fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/44593/trustmf-small-cap-fund-direct-plan/",
+        "fundName": "TRUSTMF Small Cap Fund - Direct Plan",
+        "fundHouse": "TRUST Mutual Fund",
+        "managers": [
+          {
+            "name": "Mihir Vora",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Saurabh Kataria",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Aakash Manghani",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 2476,
+        "nav": 13.18,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 3,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Mihir Vora",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Saurabh Kataria",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Aakash Manghani",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 2476,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/44593/trustmf-small-cap-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1451,11 +1872,61 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "kotak global emerging market overseas equity omni fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/17439/kotak-global-emerging-market-overseas-equity-omni-fof-direct-plan/",
+        "fundName": "Kotak Global Emerging Market Overseas Equity Omni FoF - Direct Plan",
+        "fundHouse": "Kotak Mahindra Mutual Fund",
+        "managers": [
+          {
+            "name": "Arjun Khanna",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 1767,
+        "nav": 42.955,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 1,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Arjun Khanna",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 1767,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/17439/kotak-global-emerging-market-overseas-equity-omni-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1504,11 +1975,81 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "groww bse power etf fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/45373/groww-bse-power-etf-fof-direct-plan/",
+        "fundName": "Groww BSE Power ETF FOF - Direct Plan",
+        "fundHouse": "Groww Mutual Fund",
+        "managers": [
+          {
+            "name": "Nikhil Satam",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Aakash Ashokkumar Chauhan",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Shashi Kumar",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 32,
+        "nav": 11.8305,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 3,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Nikhil Satam",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Aakash Ashokkumar Chauhan",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Shashi Kumar",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 32,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/45373/groww-bse-power-etf-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1577,11 +2118,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "edelweiss greater china equity offshore fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/17132/edelweiss-greater-china-equity-offshore-fund-direct-plan/",
+        "fundName": "Edelweiss Greater China Equity Offshore Fund - Direct Plan",
+        "fundHouse": "Edelweiss Mutual Fund",
+        "managers": [
+          {
+            "name": "Bhavesh Jain",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Bharat Lahoti",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 3104,
+        "nav": 74.016,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Bhavesh Jain",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Bharat Lahoti",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 3104,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/17132/edelweiss-greater-china-equity-offshore-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1640,11 +2241,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "kotak us specific equity passive fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/41260/kotak-us-specific-equity-passive-fof-direct-plan/",
+        "fundName": "Kotak US Specific Equity Passive FoF - Direct Plan",
+        "fundHouse": "Kotak Mahindra Mutual Fund",
+        "managers": [
+          {
+            "name": "Abhishek Bisen",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Arjun Khanna",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 4588,
+        "nav": 28.7275,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Abhishek Bisen",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Arjun Khanna",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 4588,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/41260/kotak-us-specific-equity-passive-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1703,11 +2364,61 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "navi nasdaq100 us specific equity passive fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/42135/navi-nasdaq100-us-specific-equity-passive-fof-direct-plan/",
+        "fundName": "Navi Nasdaq100 US Specific Equity Passive FoF - Direct Plan",
+        "fundHouse": "Navi Mutual Fund",
+        "managers": [
+          {
+            "name": "Ashutosh Shirwaikar",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 1287,
+        "nav": 25.2933,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 1,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Ashutosh Shirwaikar",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 1287,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/42135/navi-nasdaq100-us-specific-equity-passive-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1756,11 +2467,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "aditya birla sun life us equity passive fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/41797/aditya-birla-sun-life-us-equity-passive-fof-direct-plan/",
+        "fundName": "Aditya Birla Sun Life US Equity Passive FoF - Direct Plan",
+        "fundHouse": "Aditya Birla Sun Life Mutual Fund",
+        "managers": [
+          {
+            "name": "Mehul Dama",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Priya Sridhar",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 534,
+        "nav": 23.2314,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Mehul Dama",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Priya Sridhar",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 534,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/41797/aditya-birla-sun-life-us-equity-passive-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1819,11 +2590,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "icici prudential nasdaq 100 index fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/41744/icici-prudential-nasdaq-100-index-fund-direct-plan/",
+        "fundName": "ICICI Prudential NASDAQ 100 Index Fund - Direct Plan",
+        "fundHouse": "ICICI Prudential Mutual Fund",
+        "managers": [
+          {
+            "name": "Sharmila D'Silva",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Nitya Mishra",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 3611,
+        "nav": 24.6669,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Sharmila D'Silva",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Nitya Mishra",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 3611,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/41744/icici-prudential-nasdaq-100-index-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1882,11 +2713,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "franklin asian equity fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/15977/franklin-asian-equity-fund-direct-plan/",
+        "fundName": "Franklin Asian Equity Fund - Direct Plan",
+        "fundHouse": "Franklin Templeton Mutual Fund",
+        "managers": [
+          {
+            "name": "Sandeep Manam",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Shyam Sundar Sriram",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 979,
+        "nav": 49.2388,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Sandeep Manam",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Shyam Sundar Sriram",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 979,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/15977/franklin-asian-equity-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1945,11 +2836,61 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "invesco india invesco eqqq nasdaq 100 etf fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/42218/invesco-india-invesco-eqqq-nasdaq-100-etf-fof-direct-plan/",
+        "fundName": "Invesco India - Invesco EQQQ NASDAQ-100 ETF FoF - Direct Plan",
+        "fundHouse": "Invesco Mutual Fund",
+        "managers": [
+          {
+            "name": "Abhisek Bahinipati",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 487,
+        "nav": 26.491,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 1,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Abhisek Bahinipati",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 487,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/42218/invesco-india-invesco-eqqq-nasdaq-100-etf-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -1998,11 +2939,91 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "jm small cap fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/44313/jm-small-cap-fund-direct-plan/",
+        "fundName": "JM Small Cap Fund - Direct Plan",
+        "fundHouse": "JM Financial Mutual Fund",
+        "managers": [
+          {
+            "name": "Satish Ramanathan",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Asit Bhandarkar",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Ruchi Fozdar",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Deepak Gupta",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 730,
+        "nav": 11.7056,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 4,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Satish Ramanathan",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Asit Bhandarkar",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Ruchi Fozdar",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Deepak Gupta",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 730,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/44313/jm-small-cap-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2081,11 +3102,61 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "axis nasdaq 100 us specific equity passive fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/42633/axis-nasdaq-100-us-specific-equity-passive-fof-direct-plan/",
+        "fundName": "Axis NASDAQ 100 US Specific Equity Passive FoF - Direct Plan",
+        "fundHouse": "Axis Mutual Fund",
+        "managers": [
+          {
+            "name": "Krishnaa Narayan",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 225,
+        "nav": 29.959,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 1,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Krishnaa Narayan",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 225,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/42633/axis-nasdaq-100-us-specific-equity-passive-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2134,11 +3205,61 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "dsp global clean energy overseas equity omni fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/17012/dsp-global-clean-energy-overseas-equity-omni-fof-direct-plan/",
+        "fundName": "DSP Global Clean Energy Overseas Equity Omni FoF - Direct Plan",
+        "fundHouse": "DSP Mutual Fund",
+        "managers": [
+          {
+            "name": "Kaivalya Nadkarni",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 122,
+        "nav": 31.0663,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 1,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Kaivalya Nadkarni",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 122,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/17012/dsp-global-clean-energy-overseas-equity-omni-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2187,11 +3308,91 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "motilal oswal small cap fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/43945/motilal-oswal-small-cap-fund-direct-plan/",
+        "fundName": "Motilal Oswal Small Cap Fund - Direct Plan",
+        "fundHouse": "Motilal Oswal Mutual Fund",
+        "managers": [
+          {
+            "name": "Varun Sharma",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Ajay Khandelwal",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Rakesh Shetty",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Bhalchandra Shinde",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 7179,
+        "nav": 16.791,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 4,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Varun Sharma",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Ajay Khandelwal",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Rakesh Shetty",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Bhalchandra Shinde",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 7179,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/43945/motilal-oswal-small-cap-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2270,11 +3471,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "edelweiss us technology equity fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/40665/edelweiss-us-technology-equity-fof-direct-plan/",
+        "fundName": "Edelweiss US Technology Equity FoF - Direct Plan",
+        "fundHouse": "Edelweiss Mutual Fund",
+        "managers": [
+          {
+            "name": "Bhavesh Jain",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Bharat Lahoti",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 4557,
+        "nav": 42.2188,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Bhavesh Jain",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Bharat Lahoti",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 4557,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/40665/edelweiss-us-technology-equity-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2333,11 +3594,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "union small cap fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/26860/union-small-cap-fund-direct-plan/",
+        "fundName": "Union Small Cap Fund - Direct Plan",
+        "fundHouse": "Union Mutual Fund",
+        "managers": [
+          {
+            "name": "Pratik Dharmshi",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Gaurav Chopra",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 2268,
+        "nav": 63.53,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Pratik Dharmshi",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Gaurav Chopra",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 2268,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/26860/union-small-cap-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2396,11 +3717,61 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "dsp us specific equity omni fof": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/17006/dsp-us-specific-equity-omni-fof-direct-plan/",
+        "fundName": "DSP US Specific Equity Omni FoF - Direct Plan",
+        "fundHouse": "DSP Mutual Fund",
+        "managers": [
+          {
+            "name": "Kaivalya Nadkarni",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 1323,
+        "nav": 103.5833,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 1,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Kaivalya Nadkarni",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 1323,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/17006/dsp-us-specific-equity-omni-fof-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2449,11 +3820,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "iti small cap fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/40532/iti-small-cap-fund-direct-plan/",
+        "fundName": "ITI Small Cap Fund - Direct Plan",
+        "fundHouse": "ITI Mutual Fund",
+        "managers": [
+          {
+            "name": "Dhimant Shah",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Alok Ranjan",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 3034,
+        "nav": 36.4612,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Dhimant Shah",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Alok Ranjan",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 3034,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/40532/iti-small-cap-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2512,11 +3943,71 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   },
   "nippon india japan equity fund": {
     "current": {
+      "fetchedAt": "2026-07-10T13:59:47.253Z",
+      "valueResearch": {
+        "ok": true,
+        "provider": "Value Research Online",
+        "url": "https://www.valueresearchonline.com/funds/27691/nippon-india-japan-equity-fund-direct-plan/",
+        "fundName": "Nippon India Japan Equity Fund - Direct Plan",
+        "fundHouse": "Nippon India Mutual Fund",
+        "managers": [
+          {
+            "name": "Kinjal Desai",
+            "startDate": null,
+            "startLabel": null
+          },
+          {
+            "name": "Amber Singhania",
+            "startDate": null,
+            "startLabel": null
+          }
+        ],
+        "aumCr": 332,
+        "nav": 30.8545,
+        "navDate": "10-Jul-2026",
+        "holdings": [],
+        "assetAllocation": [],
+        "marketCap": [],
+        "rawCoverage": {
+          "managers": 2,
+          "holdings": 0,
+          "assetAllocation": 0,
+          "marketCap": 0
+        }
+      },
+      "advisorKhoj": null,
+      "managers": [
+        {
+          "name": "Kinjal Desai",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Amber Singhania",
+          "startDate": null,
+          "startLabel": null
+        }
+      ],
+      "holdings": [],
+      "sectors": [],
+      "assetAllocation": [],
+      "marketCap": [],
+      "aumCr": 332,
+      "riskMetrics": null,
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Manager, holdings, turnover and fund facts",
+          "url": "https://www.valueresearchonline.com/funds/27691/nippon-india-japan-equity-fund-direct-plan/",
+          "asOf": "10-Jul-2026"
+        }
+      ]
+    },
+    "previous": {
       "fetchedAt": "2026-07-10T13:55:20.836Z",
       "valueResearch": {
         "ok": true,
@@ -2575,14 +4066,14 @@ export const VRO_FUND_INTELLIGENCE = {
           "asOf": "10-Jul-2026"
         }
       ]
-    },
-    "previous": null
+    }
   }
 };
 
 export const VRO_UNIVERSE_META = {
-  "generatedAt": "2026-07-10T13:55:20.836Z",
-  "fundHousesScanned": 51,
+  "generatedAt": "2026-07-10T13:59:47.253Z",
+  "selectorPagesScanned": 51,
+  "fundHousesResolvedFromFundPages": 19,
   "fundPagesDiscovered": 25,
   "fundsScanned": 25,
   "managers": 40,
