@@ -4,6 +4,12 @@ on:
   workflow_dispatch:
   schedule:
     - cron: "25 3 * * 1"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/sync-manager-registry.mjs"
+      - ".github/workflows/sync-manager-universe.yml"
+      - "package.json"
 
 permissions:
   contents: write
