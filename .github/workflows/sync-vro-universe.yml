@@ -3,7 +3,7 @@ name: Sync Value Research universe
 on:
   workflow_dispatch:
   schedule:
-    - cron: "*/5 * * * *"
+    - cron: "40 2 * * 1,4"
   push:
     branches: [main]
     paths:
