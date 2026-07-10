@@ -1,12 +1,11 @@
 import './globals.css';
 import './universe.css';
-import { Suspense } from 'react';
+import './all-manager.css';
 import UniverseLauncher from '@/components/UniverseLauncher';
-import UniverseBridge from '@/components/UniverseBridge';
 
 export const metadata={
-  title:'ManagerLens — MF Manager Decision Intelligence',
-  description:'Live manager-first mutual fund analytics using MFapi.in, AMFI and verified AMC manager records.'
+  title:'ManagerLens — Indian MF Manager Decision Intelligence',
+  description:'India-wide manager-first mutual fund analytics using AMFI, MFapi.in, Yahoo Finance and source-tracked AMC manager records.'
 };
 
 export default function RootLayout({children}){
@@ -15,7 +14,6 @@ export default function RootLayout({children}){
       <body>
         {children}
         <UniverseLauncher />
-        <Suspense fallback={null}><UniverseBridge /></Suspense>
       </body>
     </html>
   );
