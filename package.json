@@ -1,8 +1,8 @@
 {
   "name": "mf-live-manager-analytics",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "Live mutual fund analytics tool using MFapi.in, AMFI and optional FMP API for current and historical fund data.",
+  "description": "Live manager-first mutual fund analytics using verified AMC records, MFapi.in and AMFI.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "14.2.5",
+    "next": "14.2.35",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
@@ -20,6 +20,6 @@
     "@types/react-dom": "18.3.0",
     "typescript": "5.5.3",
     "eslint": "8.57.0",
-    "eslint-config-next": "14.2.5"
+    "eslint-config-next": "14.2.35"
   }
 }
