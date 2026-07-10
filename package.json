@@ -1,15 +1,19 @@
 {
   "name": "managerlens",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "sync:managers": "node scripts/sync-manager-registry.mjs"
   },
   "dependencies": {
     "next": "14.2.35",
     "react": "18.3.1",
     "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "pdf-parse": "1.1.1"
   }
 }
