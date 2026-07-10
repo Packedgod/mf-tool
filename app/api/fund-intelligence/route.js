@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getMarketUniverse } from '@/lib/universe';
-import { buildFallbackMomentum, resolveFundResearch } from '@/lib/fallback-sources';
+import { resolveFundResearch } from '@/lib/fallback-sources';
+import { buildFallbackMomentumFast } from '@/lib/fallback-momentum-fast';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -28,7 +29,7 @@ export async function GET(request) {
       }, { status: 404 });
     }
 
-    const intelligence = await buildFallbackMomentum(fund, research);
+    const intelligence = await buildFallbackMomentumFast(fund, research);
     return NextResponse.json({
       ...intelligence,
       fund: {
