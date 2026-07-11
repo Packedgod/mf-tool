@@ -6,18 +6,40 @@ import { enrichResearchWithOfficialPortfolio } from '@/lib/official-portfolio';
 import { normalizeResearchHistory } from '@/lib/normalize-research-history';
 import { resolveAdvisorKhojDocuments } from '@/lib/resolve-research-documents';
 import { refreshValueResearchPortfolio } from '@/lib/value-research-live-portfolio';
+import { repairValueResearchFundMatch } from '@/lib/repair-vro-fund-match';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const maxDuration = 60;
 
-const ENGINE_VERSION = '1.1.1-source-identity-validated';
+const ENGINE_VERSION = '1.2.0-live-fund-identity';
 const FUND_ALIASES = [
   { pattern: /kotak\s+midcap/i, aliases: ['Kotak Emerging Equity Fund', 'Kotak Emerging Equity Scheme'] },
   { pattern: /axis\s+large\s+cap/i, aliases: ['Axis Bluechip Fund'] },
   { pattern: /hdfc\s+large\s+cap/i, aliases: ['HDFC Top 100 Fund'] },
   { pattern: /nippon\s+india\s+large\s+cap/i, aliases: ['Reliance Large Cap Fund'] },
   { pattern: /bandhan\s+large\s+cap/i, aliases: ['IDFC Large Cap Fund'] }
+];
+const AMC_MARKERS = [
+  { id: 'ppfas', match: /ppfas|parag\s*parikh/i, markers: ['ppfas', 'parag parikh', 'parag-parikh'] },
+  { id: 'kotak', match: /kotak/i, markers: ['kotak'] },
+  { id: 'axis', match: /axis/i, markers: ['axis', 'axismf'] },
+  { id: 'hdfc', match: /hdfc/i, markers: ['hdfc'] },
+  { id: 'sbi', match: /\bsbi\b|state bank/i, markers: ['sbimf', 'sbi'] },
+  { id: 'icici', match: /icici/i, markers: ['icici', 'icicipru'] },
+  { id: 'nippon', match: /nippon|reliance/i, markers: ['nippon', 'reliance'] },
+  { id: 'bandhan', match: /bandhan|idfc/i, markers: ['bandhan', 'idfc'] },
+  { id: 'aditya-birla', match: /aditya birla|birla sun life/i, markers: ['aditya birla', 'adityabirla', 'birla'] },
+  { id: 'tata', match: /\btata\b/i, markers: ['tata'] },
+  { id: 'mirae', match: /mirae/i, markers: ['mirae'] },
+  { id: 'motilal', match: /motilal/i, markers: ['motilal'] },
+  { id: 'quant', match: /\bquant\b/i, markers: ['quant'] },
+  { id: 'franklin', match: /franklin/i, markers: ['franklin'] },
+  { id: 'invesco', match: /invesco/i, markers: ['invesco'] },
+  { id: 'canara', match: /canara/i, markers: ['canara'] },
+  { id: 'dsp', match: /\bdsp\b/i, markers: ['dsp'] },
+  { id: 'edelweiss', match: /edelweiss/i, markers: ['edelweiss'] },
+  { id: 'uti', match: /\buti\b/i, markers: ['uti'] }
 ];
 
 function canonicalHolding(value) {
@@ -119,32 +141,71 @@ function sanitiseResearch(research) {
   };
 }
 
+function targetAmcGroup(fundHouse) {
+  return AMC_MARKERS.find(item => item.match.test(fundHouse || '')) || null;
+}
+
+function filterAdvisorDocuments(documents, targetGroup) {
+  if (!targetGroup) return documents || [];
+  return (documents || []).filter(document => {
+    const source = decodeURIComponent(`${document.url || ''} ${document.text || ''}`).toLowerCase();
+    const targetPresent = targetGroup.markers.some(marker => source.includes(marker));
+    const foreignPresent = AMC_MARKERS.some(group => group.id !== targetGroup.id && group.markers.some(marker => source.includes(marker)));
+    const generic = /all[\s_-]*schemes|monthly[\s_-]*portfolio[\s_-]*(report|statement)|complete[\s_-]*portfolio/i.test(source);
+    return targetPresent || (generic && !foreignPresent) || !foreignPresent;
+  });
+}
+
 function validateAdvisorKhojIdentity(research, fund) {
   if (!research?.ok || !research.current?.advisorKhoj) return research;
   const advisor = research.current.advisorKhoj;
-  const source = decodeURIComponent(`${advisor.url || ''} ${advisor.fundName || ''} ${advisor.fundHouse || ''}`);
-  const amcScore = overlap(source, fund.fundHouse);
-  const fundScore = Math.max(overlap(source, fund.displayName), overlap(source, fund.preferredSchemeName), ...(fund.researchAliases || []).map(alias => overlap(source, alias)));
-  const targetBrand = words(fund.fundHouse)[0];
-  const sourceWords = words(source);
-  const brandPresent = targetBrand && sourceWords.includes(targetBrand);
-  if (brandPresent || amcScore >= 0.34 || fundScore >= 0.45) return research;
+  const targetGroup = targetAmcGroup(fund.fundHouse);
+  const pageSource = decodeURIComponent(`${advisor.url || ''} ${advisor.fundName || ''} ${advisor.fundHouse || ''}`).toLowerCase();
+  const targetMarkerPresent = targetGroup?.markers.some(marker => pageSource.includes(marker)) || false;
+  const amcScore = overlap(pageSource, fund.fundHouse);
+  const fundScore = Math.max(overlap(pageSource, fund.displayName), overlap(pageSource, fund.preferredSchemeName), ...(fund.researchAliases || []).map(alias => overlap(pageSource, alias)));
+  const pageHasForeignAmc = AMC_MARKERS.some(group => group.id !== targetGroup?.id && group.markers.some(marker => pageSource.includes(marker)));
+  const accepted = !pageHasForeignAmc && (targetMarkerPresent || amcScore >= 0.3 || fundScore >= 0.38);
 
+  if (!accepted) {
+    return {
+      ...research,
+      current: {
+        ...research.current,
+        advisorKhoj: null,
+        sectors: research.current.valueResearch?.sectors || [],
+        sources: (research.current.sources || []).filter(item => item.name !== 'AdvisorKhoj')
+      },
+      advisorIdentityRejection: {
+        rejected: true,
+        requestedFund: fund.displayName,
+        requestedFundHouse: fund.fundHouse,
+        returnedUrl: advisor.url,
+        amcScore,
+        fundScore,
+        pageHasForeignAmc
+      }
+    };
+  }
+
+  const filteredDocuments = filterAdvisorDocuments(advisor.officialDocuments, targetGroup);
   return {
     ...research,
     current: {
       ...research.current,
-      advisorKhoj: null,
-      sectors: research.current.valueResearch?.sectors || [],
-      sources: (research.current.sources || []).filter(item => item.name !== 'AdvisorKhoj')
+      advisorKhoj: {
+        ...advisor,
+        fundHouse: fund.fundHouse,
+        officialDocuments: filteredDocuments
+      }
     },
-    advisorIdentityRejection: {
-      rejected: true,
-      requestedFund: fund.displayName,
-      requestedFundHouse: fund.fundHouse,
-      returnedUrl: advisor.url,
+    advisorIdentityValidation: {
+      accepted: true,
+      targetGroup: targetGroup?.id || null,
       amcScore,
-      fundScore
+      fundScore,
+      documentsBefore: advisor.officialDocuments?.length || 0,
+      documentsAfter: filteredDocuments.length
     }
   };
 }
@@ -178,7 +239,8 @@ export async function GET(request) {
 
     const researchFund = withResearchAliases(selectedFund);
     const resolvedResearch = await resolveFundResearch(researchFund);
-    const identityChecked = validateAdvisorKhojIdentity(resolvedResearch, researchFund);
+    const repairedValueResearch = await repairValueResearchFundMatch(resolvedResearch, researchFund);
+    const identityChecked = validateAdvisorKhojIdentity(repairedValueResearch, researchFund);
     const exactResearch = await refreshValueResearchPortfolio(identityChecked);
     const publicResearch = sanitiseResearch(exactResearch);
     if (!publicResearch.ok) {
@@ -207,8 +269,10 @@ export async function GET(request) {
         fund: { id: selectedFund.id, displayName: selectedFund.displayName, fundHouse: selectedFund.fundHouse, preferredSchemeCode: selectedFund.preferredSchemeCode },
         diagnostics: {
           ...publicResearch.diagnostics,
+          valueResearchIdentity: publicResearch.valueResearchIdentity,
           exactValueResearchPortfolio: publicResearch.exactValueResearchPortfolio,
           advisorIdentityRejection: publicResearch.advisorIdentityRejection,
+          advisorIdentityValidation: publicResearch.advisorIdentityValidation,
           registryMatch: publicResearch.registryMatch,
           documentResolution: resolvedDocuments.documentResolution,
           officialPortfolioFailures: research.officialPortfolioFailures || []
@@ -223,9 +287,11 @@ export async function GET(request) {
       researchPolicy: { managerAndPortfolio: ['Value Research Online', 'AdvisorKhoj'], navAndPriceEnrichment: ['AMFI', 'MFapi.in', 'Yahoo Finance'] },
       sourceDiagnostics: {
         registryMatch: publicResearch.registryMatch,
+        valueResearchIdentity: publicResearch.valueResearchIdentity,
         research: publicResearch.diagnostics,
         exactValueResearchPortfolio: publicResearch.exactValueResearchPortfolio,
         advisorIdentityRejection: publicResearch.advisorIdentityRejection,
+        advisorIdentityValidation: publicResearch.advisorIdentityValidation,
         documents: resolvedDocuments.documentResolution,
         holdings: holdingCount,
         sectors: sectorCount,
