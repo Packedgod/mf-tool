@@ -29,13 +29,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
       - name: Install
         id: install
         continue-on-error: true
         run: npm install --no-audit --no-fund > /tmp/install.log 2>&1
       - name: Build
         id: build
+        if: steps.install.outcome == 'success'
         continue-on-error: true
         run: npm run build > /tmp/build.log 2>&1
       - name: Start app
@@ -53,20 +53,14 @@ jobs:
           done
           exit 1
       - name: Exercise live fund intelligence
+        id: exercise
         if: steps.start.outcome == 'success'
         continue-on-error: true
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs/promises';
           const base = 'http://127.0.0.1:3000';
-          const queries = [
-            'HDFC Flexi Cap',
-            'Parag Parikh Flexi Cap',
-            'SBI Small Cap',
-            'ICICI Prudential Balanced Advantage',
-            'Kotak Emerging Equity',
-            'Axis Bluechip'
-          ];
+          const queries = ['HDFC Flexi Cap','Parag Parikh Flexi Cap','SBI Small Cap','ICICI Prudential Balanced Advantage','Kotak Emerging Equity','Axis Bluechip'];
           const report = { generatedAt: new Date().toISOString(), node: process.version, tests: [] };
           async function getJson(url) {
             const response = await fetch(url, { headers: { accept: 'application/json' } });
@@ -92,23 +86,8 @@ jobs:
             test.error = body.error || body.detail || null;
             test.sourceDiagnostics = body.sourceDiagnostics || body.diagnostics || null;
             test.sources = body.sources?.map(source => ({ name: source.name, type: source.type, url: source.url })) || [];
-            test.counts = {
-              managers: body.managers?.length || 0,
-              holdings: body.holdings?.length || 0,
-              sectors: body.sectors?.length || 0,
-              entries: body.entries?.length || 0,
-              exits: body.exits?.length || 0,
-              snapshotCount: body.coverage?.snapshotCount || 0,
-              factorCoverage: body.coverage?.resolvedPct || 0
-            };
-            test.snapshot = body.snapshot ? {
-              factsheetLabel: body.snapshot.factsheetLabel,
-              sectorBasis: body.snapshot.sectorBasis,
-              currentAsOf: body.snapshot.currentAsOf,
-              previousAsOf: body.snapshot.previousAsOf,
-              comparisonMode: body.snapshot.comparisonMode,
-              sectorWeights: body.snapshot.sectorWeights?.slice(0, 5) || []
-            } : null;
+            test.counts = { managers: body.managers?.length || 0, holdings: body.holdings?.length || 0, sectors: body.sectors?.length || 0, entries: body.entries?.length || 0, exits: body.exits?.length || 0, snapshotCount: body.coverage?.snapshotCount || 0, factorCoverage: body.coverage?.resolvedPct || 0 };
+            test.snapshot = body.snapshot ? { factsheetLabel: body.snapshot.factsheetLabel, sectorBasis: body.snapshot.sectorBasis, currentAsOf: body.snapshot.currentAsOf, previousAsOf: body.snapshot.previousAsOf, comparisonMode: body.snapshot.comparisonMode, sectorWeights: body.snapshot.sectorWeights?.slice(0, 5) || [] } : null;
             test.failures = body.officialPortfolioFailures || [];
             report.tests.push(test);
           }
@@ -128,6 +107,7 @@ jobs:
             install: '${{ steps.install.outcome }}',
             build: '${{ steps.build.outcome }}',
             start: '${{ steps.start.outcome }}',
+            exercise: '${{ steps.exercise.outcome }}',
             installLog: await read('/tmp/install.log'),
             buildLog: await read('/tmp/build.log'),
             serverLog: await read('/tmp/managerlens-server.log')
@@ -145,4 +125,5 @@ jobs:
             exit 0
           fi
           git commit -m "Capture live sector and timing diagnostics"
+          git pull --rebase origin main
           git push
