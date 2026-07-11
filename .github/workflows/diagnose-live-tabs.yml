@@ -5,40 +5,59 @@ on:
   push:
     branches: [main]
     paths:
+      - "app/api/fund-intelligence/**"
+      - "lib/fallback-sources.js"
+      - "lib/fallback-momentum-fast.js"
+      - "lib/official-portfolio.js"
+      - "lib/resolve-research-documents.js"
+      - "lib/normalize-research-history.js"
       - ".github/workflows/diagnose-live-tabs.yml"
 
 permissions:
   contents: write
 
+concurrency:
+  group: diagnose-live-tabs
+  cancel-in-progress: true
+
 jobs:
   diagnose:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-      - run: npm install --no-audit --no-fund
-      - run: npm run build
+      - name: Install
+        id: install
+        continue-on-error: true
+        run: npm install --no-audit --no-fund > /tmp/install.log 2>&1
+      - name: Build
+        id: build
+        continue-on-error: true
+        run: npm run build > /tmp/build.log 2>&1
       - name: Start app
+        id: start
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
         run: |
           npm start > /tmp/managerlens-server.log 2>&1 &
           echo $! > /tmp/managerlens-server.pid
           for i in {1..60}; do
-            if curl -fsS http://127.0.0.1:3000/api/universe?view=managers >/dev/null; then
+            if curl -fsS 'http://127.0.0.1:3000/api/universe?view=managers' >/dev/null; then
               exit 0
             fi
             sleep 2
           done
-          cat /tmp/managerlens-server.log
           exit 1
       - name: Exercise live fund intelligence
+        if: steps.start.outcome == 'success'
+        continue-on-error: true
         run: |
           node --input-type=module <<'NODE'
           import fs from 'node:fs/promises';
-
           const base = 'http://127.0.0.1:3000';
           const queries = [
             'HDFC Flexi Cap',
@@ -48,34 +67,18 @@ jobs:
             'Kotak Emerging Equity',
             'Axis Bluechip'
           ];
-          const report = {
-            generatedAt: new Date().toISOString(),
-            node: process.version,
-            tests: [],
-            serverLogTail: ''
-          };
-
+          const report = { generatedAt: new Date().toISOString(), node: process.version, tests: [] };
           async function getJson(url) {
             const response = await fetch(url, { headers: { accept: 'application/json' } });
             const text = await response.text();
             let body;
-            try { body = JSON.parse(text); } catch { body = { raw: text.slice(0, 2000) }; }
-            return { status: response.status, ok: response.ok, body };
+            try { body = JSON.parse(text); } catch { body = { raw: text.slice(0, 4000) }; }
+            return { status: response.status, body };
           }
-
           for (const query of queries) {
             const universe = await getJson(`${base}/api/universe?view=funds&q=${encodeURIComponent(query)}&limit=5&offset=0`);
             const fund = universe.body?.results?.[0];
-            const test = {
-              query,
-              universeStatus: universe.status,
-              fund: fund ? {
-                id: fund.id,
-                displayName: fund.displayName,
-                fundHouse: fund.fundHouse,
-                preferredSchemeCode: fund.preferredSchemeCode
-              } : null
-            };
+            const test = { query, universeStatus: universe.status, fund: fund ? { id: fund.id, displayName: fund.displayName, fundHouse: fund.fundHouse, preferredSchemeCode: fund.preferredSchemeCode } : null };
             if (!fund) {
               test.error = universe.body?.error || universe.body?.detail || 'No fund result';
               report.tests.push(test);
@@ -85,7 +88,9 @@ jobs:
             const body = intelligence.body || {};
             test.intelligenceStatus = intelligence.status;
             test.intelligenceOk = body.ok;
+            test.engineVersion = body.engineVersion;
             test.error = body.error || body.detail || null;
+            test.sourceDiagnostics = body.sourceDiagnostics || body.diagnostics || null;
             test.sources = body.sources?.map(source => ({ name: source.name, type: source.type, url: source.url })) || [];
             test.counts = {
               managers: body.managers?.length || 0,
@@ -107,15 +112,30 @@ jobs:
             test.failures = body.officialPortfolioFailures || [];
             report.tests.push(test);
           }
-
-          try {
-            const log = await fs.readFile('/tmp/managerlens-server.log', 'utf8');
-            report.serverLogTail = log.slice(-12000);
-          } catch {}
           await fs.writeFile('data/live-tabs-diagnostics.json', JSON.stringify(report, null, 2));
           console.log(JSON.stringify(report, null, 2));
           NODE
+      - name: Preserve diagnostic logs
+        if: always()
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          let report = {};
+          try { report = JSON.parse(await fs.readFile('data/live-tabs-diagnostics.json', 'utf8')); } catch {}
+          async function read(path) { try { return (await fs.readFile(path, 'utf8')).slice(-16000); } catch { return ''; } }
+          report.workflow = {
+            generatedAt: new Date().toISOString(),
+            install: '${{ steps.install.outcome }}',
+            build: '${{ steps.build.outcome }}',
+            start: '${{ steps.start.outcome }}',
+            installLog: await read('/tmp/install.log'),
+            buildLog: await read('/tmp/build.log'),
+            serverLog: await read('/tmp/managerlens-server.log')
+          };
+          await fs.writeFile('data/live-tabs-diagnostics.json', JSON.stringify(report, null, 2));
+          NODE
       - name: Commit diagnostics
+        if: always()
         run: |
           git config user.name "managerlens-diagnostics"
           git config user.email "managerlens-diagnostics@users.noreply.github.com"
