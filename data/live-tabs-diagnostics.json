@@ -363,13 +363,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-11T12:41:28.427Z",
+    "generatedAt": "2026-07-11T12:46:16.386Z",
     "install": "success",
-    "build": "success",
-    "start": "success",
-    "exercise": "success",
+    "build": "cancelled",
+    "start": "skipped",
+    "exercise": "skipped",
     "installLog": "\nadded 34 packages in 11s\n",
     "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    18.1 kB         105 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 367ms\n"
+    "serverLog": ""
   }
 }
