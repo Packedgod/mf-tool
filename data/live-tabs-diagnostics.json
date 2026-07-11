@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T13:20:00.109Z",
+  "generatedAt": "2026-07-11T13:23:19.167Z",
   "node": "v20.20.2",
   "tests": [
     {
@@ -40,7 +40,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:20:03.096Z",
+          "fetchedAt": "2026-07-11T13:23:22.423Z",
           "holdings": 5,
           "totalTopHoldingWeight": 30.56,
           "stale": false
@@ -88,7 +88,7 @@
           "failures": []
         },
         "holdings": 5,
-        "sectors": 2,
+        "sectors": 1,
         "entries": 5,
         "exits": 5
       },
@@ -120,7 +120,7 @@
       "counts": {
         "managers": 1,
         "holdings": 5,
-        "sectors": 2,
+        "sectors": 1,
         "entries": 5,
         "exits": 5,
         "snapshotCount": 2,
@@ -144,7 +144,7 @@
         },
         {
           "name": "SBI",
-          "sector": "Other",
+          "sector": "Financial Services",
           "weight": 4.3
         },
         {
@@ -162,11 +162,7 @@
         "sectorWeights": [
           {
             "sector": "Financial Services",
-            "weight": 26.259999999999998
-          },
-          {
-            "sector": "Other",
-            "weight": 4.3
+            "weight": 30.56
           }
         ]
       },
@@ -208,7 +204,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:20:07.414Z",
+          "fetchedAt": "2026-07-11T13:23:25.876Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.5,
           "stale": false
@@ -371,7 +367,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:20:10.914Z",
+          "fetchedAt": "2026-07-11T13:23:29.102Z",
           "holdings": 4,
           "totalTopHoldingWeight": 14.08,
           "stale": false
@@ -519,7 +515,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:20:18.468Z",
+          "fetchedAt": "2026-07-11T13:23:36.216Z",
           "holdings": 4,
           "totalTopHoldingWeight": 6.39,
           "stale": false
@@ -631,64 +627,115 @@
         "fundHouse": "Kotak Mahindra Mutual Fund",
         "preferredSchemeCode": 119774
       },
-      "intelligenceStatus": 424,
-      "intelligenceOk": false,
+      "intelligenceStatus": 200,
+      "intelligenceOk": true,
       "engineVersion": "1.2.0-live-fund-identity",
-      "error": "The selected fund matched the research universe, but its current holdings payload was empty. The UI will not render an empty sector or timing panel.",
+      "error": null,
       "sourceDiagnostics": {
-        "liveValueResearch": true,
-        "liveAdvisorKhoj": true,
-        "holdings": 7,
-        "sectors": 0,
-        "documents": 3,
-        "valueResearchError": null,
+        "registryMatch": {
+          "key": "kotak gilt investment",
+          "score": 0.4,
+          "type": "live-selector"
+        },
         "valueResearchIdentity": {
           "repaired": true,
           "accepted": true,
           "previousScore": 0,
           "previousUrl": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/",
-          "score": 0.42,
-          "url": "https://www.valueresearchonline.com/funds/17439/kotak-global-emerging-market-overseas-equity-omni-fof-direct-plan/"
+          "score": 0.4,
+          "url": "https://www.valueresearchonline.com/funds/16354/kotak-gilt-investment-direct-plan/"
+        },
+        "research": {
+          "liveValueResearch": true,
+          "liveAdvisorKhoj": true,
+          "holdings": 7,
+          "sectors": 0,
+          "documents": 3,
+          "valueResearchError": null
         },
         "exactValueResearchPortfolio": {
-          "ok": false,
-          "error": "The exact Company Percentage of Portfolio block was not present in the returned page.",
-          "url": "https://www.valueresearchonline.com/funds/17439/kotak-global-emerging-market-overseas-equity-omni-fof-direct-plan/"
+          "ok": true,
+          "url": "https://www.valueresearchonline.com/funds/16354/kotak-gilt-investment-direct-plan/",
+          "fetchedAt": "2026-07-11T13:24:19.580Z",
+          "holdings": 5,
+          "totalTopHoldingWeight": 55.11,
+          "stale": false
         },
-        "advisorIdentityValidation": {
-          "accepted": true,
-          "targetGroup": "kotak",
-          "amcScore": 0.1111111111111111,
-          "fundScore": 0.3333333333333333,
-          "documentsBefore": 3,
-          "documentsAfter": 1
+        "advisorIdentityRejection": {
+          "rejected": true,
+          "requestedFund": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
+          "requestedFundHouse": "Kotak Mahindra Mutual Fund",
+          "existingUrl": "https://www.advisorkhoj.com/mutual-funds-research/Kotak-Midcap-Fund-Direct-Plan-IDCW-Payout-and-Re-investment-of-Income-Distribution-cum-capital-withdrawal-option",
+          "reason": "No alias-matched AdvisorKhoj page exposed a validated holdings, sector, or direct portfolio-document path."
         },
-        "registryMatch": {
-          "key": "kotak global emerging market overseas equity omni fof",
-          "score": 0.42,
-          "type": "live-selector"
-        },
-        "documentResolution": {
-          "attempted": 1,
-          "directDocuments": 0,
-          "resolvedDocuments": 0,
-          "rejectedAsOtherFunds": 0,
-          "failures": []
-        },
-        "officialPortfolioFailures": []
+        "holdings": 5,
+        "sectors": 1,
+        "entries": 0,
+        "exits": 0
       },
-      "sources": [],
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Public fund holdings and portfolio facts",
+          "url": "https://www.valueresearchonline.com/funds/16354/kotak-gilt-investment-direct-plan/"
+        },
+        {
+          "name": "Yahoo Finance",
+          "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "AMFI / MFapi.in",
+          "type": "Fund identity and NAV history only"
+        }
+      ],
       "counts": {
-        "managers": 0,
-        "holdings": 0,
-        "sectors": 0,
+        "managers": 1,
+        "holdings": 5,
+        "sectors": 1,
         "entries": 0,
         "exits": 0,
-        "snapshotCount": 0,
-        "factorCoverage": 0
+        "snapshotCount": 1,
+        "factorCoverage": 60
       },
-      "holdings": [],
-      "snapshot": null,
+      "holdings": [
+        {
+          "name": "GOI Sec 6.90 15/04/2065",
+          "sector": "Other",
+          "weight": 15.24
+        },
+        {
+          "name": "Karnataka State SDL 7.58 11/03/2040",
+          "sector": "Other",
+          "weight": 14.7
+        },
+        {
+          "name": "GOI Sec 7.24 18/08/2055",
+          "sector": "Other",
+          "weight": 9.94
+        },
+        {
+          "name": "Tamilnadu State SDL 7.80 03/06/2041",
+          "sector": "Other",
+          "weight": 8.59
+        },
+        {
+          "name": "Tamilnadu State SDL 7.12 18/02/2032",
+          "sector": "Other",
+          "weight": 6.64
+        }
+      ],
+      "snapshot": {
+        "factsheetLabel": "Value Research Online",
+        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
+        "currentAsOf": "2026-07-11",
+        "comparisonMode": "top-holdings-proxy",
+        "sectorWeights": [
+          {
+            "sector": "Other",
+            "weight": 55.11
+          }
+        ]
+      },
       "failures": []
     },
     {
@@ -729,7 +776,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:20:27.960Z",
+          "fetchedAt": "2026-07-11T13:24:22.936Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.84,
           "stale": false
@@ -852,13 +899,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-11T13:20:31.870Z",
+    "generatedAt": "2026-07-11T13:24:25.263Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
-    "installLog": "\nadded 34 packages in 12s\n",
+    "installLog": "\nadded 34 packages in 10s\n",
     "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    18.1 kB         105 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 338ms\n"
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 377ms\n"
   }
 }
