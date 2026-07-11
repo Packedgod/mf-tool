@@ -70,6 +70,30 @@ function EventCard({ item, type }) {
   );
 }
 
+function deriveSectors(holdings) {
+  const totals = new Map();
+  for (const item of holdings || []) {
+    const sector = item.sector || 'Other';
+    const weight = Number(item.weight);
+    if (!Number.isFinite(weight) || weight <= 0) continue;
+    totals.set(sector, (totals.get(sector) || 0) + weight);
+  }
+  return [...totals.entries()]
+    .map(([sector, weight]) => ({ sector, weight }))
+    .sort((a, b) => b.weight - a.weight);
+}
+
+function CurrentBook({ title, holdings, note }) {
+  if (!holdings?.length) return <div className="coverage-note"><strong>Portfolio loading.</strong> The recovery loader is retrying the selected fund’s holdings source.</div>;
+  return (
+    <div className="current-book">
+      <span>{title}</span>
+      {note ? <small>{note}</small> : null}
+      {holdings.slice(0, 10).map(item => <p key={item.name}><strong>{item.name}</strong><b>{pct(item.weight)}</b></p>)}
+    </div>
+  );
+}
+
 export default function AnalyticsTabs({ data }) {
   const {
     activeTab, score, fundSeries, proxySeries, fundSource, selectedFund, proxyName,
@@ -77,12 +101,12 @@ export default function AnalyticsTabs({ data }) {
   } = data;
   const managerSources = [manager?.source, ...(manager?.additionalSources || [])].filter(item => item?.url);
   const researchSources = (momentumData?.sources || []).filter(item => item?.url);
-  const sectors = momentumData?.sectors || momentumData?.snapshot?.sectorWeights || [];
-  const holdings = momentumData?.holdings || [];
+  const holdings = momentumData?.holdings || momentumData?.snapshot?.holdings || [];
+  const sourceSectors = momentumData?.sectors || momentumData?.snapshot?.sectorWeights || [];
+  const sectors = sourceSectors.length ? sourceSectors : deriveSectors(holdings);
   const entries = momentumData?.entries || [];
   const exits = momentumData?.exits || [];
-  const snapshotCount = momentumData?.coverage?.snapshotCount || momentumData?.snapshot?.snapshotCount || 1;
-  const baselineOnly = snapshotCount < 2;
+  const snapshotCount = momentumData?.coverage?.snapshotCount || momentumData?.snapshot?.snapshotCount || (holdings.length ? 1 : 0);
   const comparisonMode = momentumData?.coverage?.comparisonMode || momentumData?.snapshot?.comparisonMode || 'top-holdings-proxy';
   const sourceLabel = momentumData?.snapshot?.factsheetLabel || researchSources.map(item => item.name).join(' + ') || 'Value Research Online + AdvisorKhoj';
   const sectorHistory = new Map((momentumData?.snapshot?.sectorHistory || []).map(item => [item.sector, item]));
@@ -104,15 +128,15 @@ export default function AnalyticsTabs({ data }) {
       <section className="tab-content">
         <div className="section-heading"><div><span className="eyebrow">Sector positioning</span><h2>Was the manager in the right sectors at the right time?</h2></div><b>{sourceLabel}</b></div>
         <div className="coverage-note sector-basis">
-          <strong>Coverage basis:</strong> {momentumData?.snapshot?.sectorBasis || 'Value Research Online and AdvisorKhoj portfolio data'}.
-          {snapshotCount >= 2 ? ` Allocation change compares ${previousAsOf || 'the previous snapshot'} with ${currentAsOf || 'the current snapshot'}.` : ' A second dated snapshot was not returned for this fund.'}
+          <strong>Coverage basis:</strong> {momentumData?.snapshot?.sectorBasis || 'Current disclosed holdings grouped by reported or resolved sector'}.
+          {snapshotCount >= 2 ? ` Allocation change compares ${previousAsOf || 'the previous snapshot'} with ${currentAsOf || 'the current snapshot'}.` : ' Current sector weights are shown from the latest available holdings snapshot.'}
         </div>
         {sectors.length ? (
           <div className="sector-table-wrap"><table><thead><tr><th>Sector</th><th>Current weight</th><th>Allocation change</th><th>1M</th><th>3M</th><th>6M</th><th>Status</th></tr></thead><tbody>{sectors.map(item => {
             const movement = sectorHistory.get(item.sector)?.changeWeightPct;
             return <tr key={item.sector}><td>{item.sector}</td><td>{pct(item.weight)}</td><td className={Number.isFinite(movement) ? scoreTone(50 + movement * 4) : 'neutral'}>{movementText(movement)}</td><td>{pct(item.return1mPct)}</td><td className={scoreTone(50 + (item.return3mPct || 0) * 2)}>{pct(item.return3mPct)}</td><td>{pct(item.return6mPct)}</td><td>{item.ok ? 'Price matched' : 'Weight available'}</td></tr>;
           })}</tbody></table></div>
-        ) : <div className="coverage-note">Value Research Online and AdvisorKhoj did not return a usable sector or holdings table for this fund during this refresh.</div>}
+        ) : <div className="coverage-note"><strong>Portfolio recovery in progress.</strong> The selected fund is being retried through the live source and official-snapshot fallback.</div>}
         <div className="portfolio-composition-grid">
           <AllocationStrip title="Asset allocation" rows={momentumData?.snapshot?.assetAllocation || momentumData?.fundFacts?.assetAllocation} />
           <AllocationStrip title="Market-cap mix" rows={momentumData?.snapshot?.marketCap || momentumData?.fundFacts?.marketCap} />
@@ -125,29 +149,29 @@ export default function AnalyticsTabs({ data }) {
   if (activeTab === 'timing') {
     return (
       <section className="tab-content">
-        <div className="section-heading"><div><span className="eyebrow">Trade timing</span><h2>Entries, exits and peak proximity</h2></div><b>{snapshotCount >= 2 ? `${comparisonMode === 'complete-portfolio' ? 'Complete portfolio' : 'Top-holdings'} comparison` : 'One source snapshot'}</b></div>
+        <div className="section-heading"><div><span className="eyebrow">Trade timing</span><h2>Entries, exits and peak proximity</h2></div><b>{snapshotCount >= 2 ? `${comparisonMode === 'complete-portfolio' ? 'Complete portfolio' : 'Top-holdings'} comparison` : 'Current holdings baseline'}</b></div>
         <div className="coverage-note">
           <strong>{snapshotCount >= 2 ? 'Two dated source snapshots compared.' : 'Timing baseline established.'}</strong>{' '}
           {snapshotCount >= 2
-            ? `${previousAsOf || 'Previous snapshot'} → ${currentAsOf || 'current snapshot'}. New, increased, reduced and exited positions are derived from Value Research Online and AdvisorKhoj data; Yahoo is used only for price-path analysis.`
-            : 'Value Research Online and AdvisorKhoj returned one dated holdings snapshot. Current positions are shown below, but an entry or exit is not fabricated without an earlier source snapshot.'}
+            ? `${previousAsOf || 'Previous snapshot'} → ${currentAsOf || 'current snapshot'}. New, increased, reduced and exited positions are derived from the source disclosures; Yahoo is used only for price-path analysis.`
+            : 'The latest disclosed holdings are shown as the current timing baseline. No entry or exit date is invented when an earlier source snapshot is unavailable.'}
         </div>
         <div className="timing-columns">
           <div><h3>New / increased positions</h3>{entries.length
             ? entries.map(item => <EventCard key={`${item.name}-${item.action}`} item={item} type="entry" />)
             : snapshotCount >= 2
               ? <div className="coverage-note"><strong>No qualifying additions detected.</strong> No new top holding or weight increase of at least 0.35 percentage points was found between the two source snapshots.</div>
-              : <div className="current-book"><span>Current disclosed holdings</span>{holdings.slice(0, 10).map(item => <p key={item.name}><strong>{item.name}</strong><b>{pct(item.weight)}</b></p>)}</div>}</div>
+              : <CurrentBook title="Current disclosed positions" holdings={holdings} note="These are the latest positions; they are not labelled as new without a prior snapshot." />}</div>
           <div><h3>Exited / reduced positions</h3>{exits.length
             ? exits.map(item => <EventCard key={`${item.name}-${item.action}`} item={item} type="exit" />)
             : snapshotCount >= 2
               ? <div className="coverage-note"><strong>No qualifying reductions detected.</strong> No complete exit or weight reduction of at least 0.35 percentage points was found between the two source snapshots.</div>
-              : <div className="coverage-note">A prior Value Research Online or AdvisorKhoj snapshot is required to identify a genuine reduction or complete exit.</div>}</div>
+              : <CurrentBook title="Retained holdings baseline" holdings={holdings} note="A prior dated disclosure is still required before any genuine reduction or exit is claimed." />}</div>
         </div>
         <div className="turnover-panel">
           <div><span>Equity turnover</span><strong>{pct(momentumData?.snapshot?.turnover?.equityPct)}</strong></div>
-          <div><span>Source snapshots</span><strong>{snapshotCount}</strong></div>
-          <div><span>Comparison type</span><strong>{comparisonMode === 'complete-portfolio' ? 'Full' : 'Top holdings'}</strong></div>
+          <div><span>Source snapshots</span><strong>{snapshotCount || 'Loading'}</strong></div>
+          <div><span>Comparison type</span><strong>{snapshotCount >= 2 ? (comparisonMode === 'complete-portfolio' ? 'Full' : 'Top holdings') : 'Baseline'}</strong></div>
           <div><span>Turnover score</span><strong>{Math.round(score.factors.turnoverEfficiency.score)}</strong></div>
           <p>{score.factors.turnoverEfficiency.detail || 'Turnover awaits a Value Research Online or AdvisorKhoj fund record.'}</p>
         </div>
