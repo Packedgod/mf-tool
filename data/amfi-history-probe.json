@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-07-11T19:25:15.047Z",
+  "probes": [
+    {
+      "url": "https://portal.amfiindia.com/DownloadNAVHistoryReport_Po.aspx?frmdt=01-Jun-2026&todt=30-Jun-2026",
+      "status": 200,
+      "durationMs": 23682,
+      "contentType": "text/plain",
+      "bytes": 20463388,
+      "lines": 188181,
+      "sample": [
+        "Scheme Code;Scheme Name;ISIN Div Payout/ISIN Growth;ISIN Div Reinvestment;Net Asset Value;Repurchase Price;Sale Price;Date",
+        "",
+        "Open Ended Schemes ( Money Market )",
+        "",
+        "",
+        "Taurus Mutual Fund",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;01-Jun-2026",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;02-Jun-2026",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;03-Jun-2026",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;04-Jun-2026",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;05-Jun-2026",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;08-Jun-2026"
+      ],
+      "hdfc118955": [
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2116.962;;;01-Jun-2026",
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2117.927;;;02-Jun-2026",
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2115.535;;;03-Jun-2026",
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2118.501;;;04-Jun-2026",
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2119.56;;;05-Jun-2026"
+      ]
+    },
+    {
+      "url": "https://portal.amfiindia.com/DownloadNAVHistoryReport_Po.aspx?frmdt=01-Jan-2025&todt=31-Dec-2025",
+      "status": 200,
+      "durationMs": 76229,
+      "contentType": "text/plain",
+      "bytes": 234646227,
+      "lines": 2113209,
+      "sample": [
+        "Scheme Code;Scheme Name;ISIN Div Payout/ISIN Growth;ISIN Div Reinvestment;Net Asset Value;Repurchase Price;Sale Price;Date",
+        "",
+        "Open Ended Schemes ( Money Market )",
+        "",
+        "",
+        "Taurus Mutual Fund",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;01-Jan-2025",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;02-Jan-2025",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;03-Jan-2025",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;06-Jan-2025",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;07-Jan-2025",
+        "139619;Taurus Investor Education Pool - Unclaimed Dividend - Growth;;;10.0000;;;08-Jan-2025"
+      ],
+      "hdfc118955": [
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2033.148;;;01-Jan-2025",
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2060.709;;;02-Jan-2025",
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2046.525;;;03-Jan-2025",
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2020.487;;;06-Jan-2025",
+        "118955;HDFC Flexi Cap Fund - Growth Option - Direct Plan;INF179K01UT0;;2027.412;;;07-Jan-2025"
+      ]
+    }
+  ]
+}
