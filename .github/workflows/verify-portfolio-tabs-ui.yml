@@ -1,0 +1,126 @@
+name: Verify portfolio tabs UI data
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "components/analytics/useReliableManagerAnalytics.js"
+      - "components/analytics/AnalyticsTabs.js"
+      - "components/AllManagerAnalyticsApp.js"
+      - "lib/dynamic-proxies.js"
+      - "app/api/fund-intelligence/**"
+      - "app/api/momentum/**"
+      - ".github/workflows/verify-portfolio-tabs-ui.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: verify-portfolio-tabs-ui
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Build production bundle
+        run: npm run build
+      - name: Start production server
+        run: |
+          npm start >/tmp/managerlens-ui.log 2>&1 &
+          for i in {1..60}; do
+            if curl -fsS 'http://127.0.0.1:3000/api/universe?view=managers' >/dev/null; then
+              exit 0
+            fi
+            sleep 2
+          done
+          cat /tmp/managerlens-ui.log
+          exit 1
+      - name: Verify live portfolio payloads and official fallbacks
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          const base = 'http://127.0.0.1:3000';
+          const queries = [
+            ['HDFC Flexi Cap', 'hdfc-flexi'],
+            ['Parag Parikh Flexi Cap', 'ppfas-flexi'],
+            ['SBI Small Cap', 'sbi-small'],
+            ['ICICI Prudential Balanced Advantage', 'icici-baf'],
+            ['Kotak Midcap Fund', null],
+            ['Axis Large Cap Fund', null]
+          ];
+          async function get(url) {
+            const response = await fetch(url, { headers: { accept: 'application/json' } });
+            const text = await response.text();
+            let body;
+            try { body = JSON.parse(text); } catch { body = { raw: text.slice(0, 3000) }; }
+            return { status: response.status, body };
+          }
+          function deriveSectors(holdings = []) {
+            const map = new Map();
+            for (const item of holdings) {
+              const sector = item.sector || 'Other';
+              const weight = Number(item.weight);
+              if (Number.isFinite(weight) && weight > 0) map.set(sector, (map.get(sector) || 0) + weight);
+            }
+            return [...map.entries()].map(([sector, weight]) => ({ sector, weight }));
+          }
+          const report = { generatedAt: new Date().toISOString(), tests: [] };
+          for (const [query, fallbackId] of queries) {
+            const universe = await get(`${base}/api/universe?view=funds&q=${encodeURIComponent(query)}&limit=5&offset=0`);
+            const fund = universe.body?.results?.[0];
+            const test = { query, fund: fund ? { id: fund.id, displayName: fund.displayName, preferredSchemeCode: fund.preferredSchemeCode } : null };
+            if (!fund) {
+              test.ok = false;
+              test.error = 'Fund not found';
+              report.tests.push(test);
+              continue;
+            }
+            const live = await get(`${base}/api/fund-intelligence?fundId=${encodeURIComponent(fund.id)}&schemeCode=${fund.preferredSchemeCode}&verify=${Date.now()}`);
+            const official = fallbackId ? await get(`${base}/api/momentum?schemeId=${fallbackId}&verify=${Date.now()}`) : null;
+            const candidates = [live.body, official?.body].filter(Boolean);
+            const holdings = candidates.find(item => item?.holdings?.length)?.holdings || [];
+            const sectors = candidates.find(item => item?.sectors?.length)?.sectors
+              || candidates.find(item => item?.snapshot?.sectorWeights?.length)?.snapshot?.sectorWeights
+              || deriveSectors(holdings);
+            const entries = candidates.find(item => item?.entries?.length)?.entries || [];
+            const exits = candidates.find(item => item?.exits?.length)?.exits || [];
+            const snapshots = Math.max(0, ...candidates.map(item => Number(item?.coverage?.snapshotCount || item?.snapshot?.snapshotCount || 0)), holdings.length ? 1 : 0);
+            test.liveStatus = live.status;
+            test.officialStatus = official?.status || null;
+            test.holdings = holdings.length;
+            test.sectors = sectors.length;
+            test.entries = entries.length;
+            test.exits = exits.length;
+            test.snapshots = snapshots;
+            test.ok = holdings.length > 0 && sectors.length > 0 && snapshots > 0;
+            report.tests.push(test);
+          }
+          report.uiFiles = {
+            resilientLoader: (await fs.readFile('components/analytics/useReliableManagerAnalytics.js', 'utf8')).includes('mergeMomentum'),
+            sectorDerivation: (await fs.readFile('components/analytics/AnalyticsTabs.js', 'utf8')).includes('deriveSectors'),
+            timingBaseline: (await fs.readFile('components/analytics/AnalyticsTabs.js', 'utf8')).includes('Retained holdings baseline'),
+            officialMappingRestored: (await fs.readFile('lib/dynamic-proxies.js', 'utf8')).includes('return "hdfc-flexi"')
+          };
+          report.ok = report.tests.every(item => item.ok) && Object.values(report.uiFiles).every(Boolean);
+          await fs.writeFile('data/portfolio-tabs-ui-verification.json', JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          if (!report.ok) process.exitCode = 1;
+          NODE
+      - name: Commit verification report
+        if: always()
+        run: |
+          git config user.name "managerlens-verification"
+          git config user.email "managerlens-verification@users.noreply.github.com"
+          git add data/portfolio-tabs-ui-verification.json
+          git commit -m "Capture portfolio tabs UI verification" || exit 0
+          git pull --rebase origin main
+          git push
