@@ -1,0 +1,11 @@
+{
+  "workflow": {
+    "generatedAt": "2026-07-11T12:39:05.118Z",
+    "install": "skipped",
+    "build": "skipped",
+    "start": "skipped",
+    "installLog": "",
+    "buildLog": "",
+    "serverLog": ""
+  }
+}
