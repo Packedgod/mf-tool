@@ -1,0 +1,61 @@
+name: Test AMFI historical NAV fallback
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/test-amfi-history.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Probe AMFI historical endpoint
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          const urls = [
+            'https://portal.amfiindia.com/DownloadNAVHistoryReport_Po.aspx?frmdt=01-Jun-2026&todt=30-Jun-2026',
+            'https://portal.amfiindia.com/DownloadNAVHistoryReport_Po.aspx?frmdt=01-Jan-2025&todt=31-Dec-2025'
+          ];
+          const report = { generatedAt: new Date().toISOString(), probes: [] };
+          for (const url of urls) {
+            const started = Date.now();
+            try {
+              const response = await fetch(url, { headers: { accept: 'text/plain,*/*', 'user-agent': 'ManagerLens/2.0 AMFI history probe' }, redirect: 'follow' });
+              const text = await response.text();
+              const lines = text.split(/\r?\n/);
+              report.probes.push({
+                url,
+                status: response.status,
+                durationMs: Date.now() - started,
+                contentType: response.headers.get('content-type'),
+                bytes: text.length,
+                lines: lines.length,
+                sample: lines.slice(0, 12),
+                hdfc118955: lines.filter(line => line.startsWith('118955;')).slice(0, 5)
+              });
+            } catch (error) {
+              report.probes.push({ url, error: error.message, durationMs: Date.now() - started });
+            }
+          }
+          await fs.writeFile('data/amfi-history-probe.json', JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+      - name: Commit result
+        run: |
+          git config user.name "managerlens-diagnostics"
+          git config user.email "managerlens-diagnostics@users.noreply.github.com"
+          git add data/amfi-history-probe.json
+          git commit -m "Capture AMFI historical NAV endpoint probe" || exit 0
+          git pull --rebase origin main
+          git push
