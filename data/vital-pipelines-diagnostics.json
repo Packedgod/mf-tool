@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T19:26:01.849Z",
+  "generatedAt": "2026-07-11T19:30:31.733Z",
   "nav": [
     {
       "name": "Fund HDFC Flexi",
@@ -7,7 +7,7 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 2410,
+      "durationMs": 3127,
       "ok": true,
       "error": null,
       "points": 2098,
@@ -25,8 +25,12 @@
           "nav": 2240.661,
           "date": "10-Jul-2026"
         },
-        "historyFallback": null,
-        "fetchedAt": "2026-07-11T19:26:04.244Z",
+        "historyFallback": "mfapi-chunked-range",
+        "requestedStartDate": "2018-01-01",
+        "requestedEndDate": "2026-07-11",
+        "actualStartDate": "2018-01-01",
+        "actualEndDate": "2026-07-11",
+        "fetchedAt": "2026-07-11T19:30:34.845Z",
         "stale": false,
         "warnings": []
       }
@@ -37,7 +41,7 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 660,
+      "durationMs": 846,
       "ok": true,
       "error": null,
       "points": 2097,
@@ -55,8 +59,12 @@
           "nav": 90.9438,
           "date": "10-Jul-2026"
         },
-        "historyFallback": null,
-        "fetchedAt": "2026-07-11T19:26:04.915Z",
+        "historyFallback": "mfapi-chunked-range",
+        "requestedStartDate": "2018-01-01",
+        "requestedEndDate": "2026-07-11",
+        "actualStartDate": "2018-01-01",
+        "actualEndDate": "2026-07-11",
+        "fetchedAt": "2026-07-11T19:30:35.701Z",
         "stale": false,
         "warnings": []
       }
@@ -67,7 +75,7 @@
         "schemeCode": 125497
       },
       "status": 200,
-      "durationMs": 706,
+      "durationMs": 832,
       "ok": true,
       "error": null,
       "points": 2107,
@@ -85,8 +93,12 @@
           "nav": 208.3518,
           "date": "10-Jul-2026"
         },
-        "historyFallback": null,
-        "fetchedAt": "2026-07-11T19:26:05.621Z",
+        "historyFallback": "mfapi-chunked-range",
+        "requestedStartDate": "2018-01-01",
+        "requestedEndDate": "2026-07-11",
+        "actualStartDate": "2018-01-01",
+        "actualEndDate": "2026-07-11",
+        "fetchedAt": "2026-07-11T19:30:36.534Z",
         "stale": false,
         "warnings": []
       }
@@ -101,7 +113,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 1347,
+      "durationMs": 817,
       "ok": true,
       "error": null,
       "points": 497,
@@ -119,8 +131,12 @@
           "nav": 10.2467,
           "date": "10-Jul-2026"
         },
-        "historyFallback": null,
-        "fetchedAt": "2026-07-11T19:26:06.969Z",
+        "historyFallback": "mfapi-chunked-range",
+        "requestedStartDate": "2018-01-01",
+        "requestedEndDate": "2026-07-11",
+        "actualStartDate": "2018-01-01",
+        "actualEndDate": "2026-07-11",
+        "fetchedAt": "2026-07-11T19:30:37.352Z",
         "stale": false,
         "warnings": []
       }
@@ -135,7 +151,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 722,
+      "durationMs": 856,
       "ok": true,
       "error": null,
       "points": 276,
@@ -153,8 +169,12 @@
           "nav": 9.9572,
           "date": "10-Jul-2026"
         },
-        "historyFallback": null,
-        "fetchedAt": "2026-07-11T19:26:07.691Z",
+        "historyFallback": "mfapi-chunked-range",
+        "requestedStartDate": "2018-01-01",
+        "requestedEndDate": "2026-07-11",
+        "actualStartDate": "2018-01-01",
+        "actualEndDate": "2026-07-11",
+        "fetchedAt": "2026-07-11T19:30:38.208Z",
         "stale": false,
         "warnings": []
       }
@@ -169,7 +189,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 1828,
+      "durationMs": 18356,
       "ok": true,
       "error": null,
       "points": 1410,
@@ -187,8 +207,12 @@
           "nav": 35.8902,
           "date": "10-Jul-2026"
         },
-        "historyFallback": null,
-        "fetchedAt": "2026-07-11T19:26:09.519Z",
+        "historyFallback": "mfapi-chunked-range",
+        "requestedStartDate": "2018-01-01",
+        "requestedEndDate": "2026-07-11",
+        "actualStartDate": "2018-01-01",
+        "actualEndDate": "2026-07-11",
+        "fetchedAt": "2026-07-11T19:30:56.563Z",
         "stale": false,
         "warnings": []
       }
@@ -203,7 +227,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 706,
+      "durationMs": 907,
       "ok": true,
       "error": null,
       "points": 178,
@@ -221,8 +245,12 @@
           "nav": 1042.0823,
           "date": "12-Jul-2026"
         },
-        "historyFallback": null,
-        "fetchedAt": "2026-07-11T19:26:10.225Z",
+        "historyFallback": "mfapi-chunked-range",
+        "requestedStartDate": "2018-01-01",
+        "requestedEndDate": "2026-07-11",
+        "actualStartDate": "2018-01-01",
+        "actualEndDate": "2026-07-11",
+        "fetchedAt": "2026-07-11T19:30:57.472Z",
         "stale": false,
         "warnings": []
       }
@@ -237,15 +265,15 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 4158,
+      "durationMs": 6010,
       "ok": true,
       "error": null,
       "holdings": 5,
-      "sectors": 2,
+      "sectors": 1,
       "entries": 5,
       "exits": 5,
       "coverage": {
-        "requestedSymbols": 8,
+        "requestedSymbols": 7,
         "resolvedSymbols": 7,
         "resolvedPct": 100,
         "sectorSeries": 1,
@@ -265,7 +293,7 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 2184,
+      "durationMs": 3267,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -293,7 +321,7 @@
         "schemeCode": 125497
       },
       "status": 200,
-      "durationMs": 6119,
+      "durationMs": 7521,
       "ok": true,
       "error": null,
       "holdings": 4,
@@ -321,7 +349,7 @@
         "schemeCode": 120377
       },
       "status": 200,
-      "durationMs": 2766,
+      "durationMs": 5021,
       "ok": true,
       "error": null,
       "holdings": 4,
@@ -349,7 +377,7 @@
         "schemeCode": 119774
       },
       "status": 200,
-      "durationMs": 28483,
+      "durationMs": 34434,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -377,7 +405,7 @@
         "schemeCode": 120465
       },
       "status": 200,
-      "durationMs": 4997,
+      "durationMs": 6827,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -400,13 +428,13 @@
   ],
   "ok": true,
   "workflow": {
-    "generatedAt": "2026-07-11T19:27:06.213Z",
+    "generatedAt": "2026-07-11T19:32:07.380Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
-    "installLog": "\nadded 34 packages in 12s\n",
+    "installLog": "\nadded 34 packages in 11s\n",
     "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    20.8 kB         108 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 384ms\n"
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 447ms\n"
   }
 }
