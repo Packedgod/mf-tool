@@ -1,0 +1,100 @@
+{
+  "generatedAt": "2026-07-11T13:28:18.087Z",
+  "rows": [
+    {
+      "key": "kotak large midcap fund",
+      "fundName": "Kotak Large & Midcap Fund - Direct Plan",
+      "url": "https://www.valueresearchonline.com/funds/16378/kotak-large-midcap-fund-direct-plan/",
+      "holdings": [],
+      "managers": [
+        {
+          "name": "Harsha Upadhyaya",
+          "startDate": null,
+          "startLabel": null
+        }
+      ]
+    },
+    {
+      "key": "kotak midcap fund",
+      "fundName": "Kotak Midcap Fund - Direct Plan",
+      "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
+      "holdings": [],
+      "managers": [
+        {
+          "name": "Atul Bhole",
+          "startDate": null,
+          "startLabel": null
+        }
+      ]
+    },
+    {
+      "key": "kotak nifty midcap 50 index fund",
+      "fundName": "Kotak Nifty Midcap 50 Index Fund - Direct Plan",
+      "url": "https://www.valueresearchonline.com/funds/44446/kotak-nifty-midcap-50-index-fund-direct-plan/",
+      "holdings": [],
+      "managers": [
+        {
+          "name": "Abhishek Bisen",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Satish Dondapati",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Jeetu Valechha Sonar",
+          "startDate": null,
+          "startLabel": null
+        }
+      ]
+    },
+    {
+      "key": "kotak nifty midcap 150 momentum 50 index fund",
+      "fundName": "Kotak Nifty Midcap 150 Momentum 50 Index Fund - Direct Plan",
+      "url": "https://www.valueresearchonline.com/funds/44573/kotak-nifty-midcap-150-momentum-50-index-fund-direct-plan/",
+      "holdings": [],
+      "managers": [
+        {
+          "name": "Abhishek Bisen",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Satish Dondapati",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Jeetu Valechha Sonar",
+          "startDate": null,
+          "startLabel": null
+        }
+      ]
+    },
+    {
+      "key": "kotak nifty midcap 150 index fund",
+      "fundName": "Kotak Nifty Midcap 150 Index Fund - Direct Plan",
+      "url": "https://www.valueresearchonline.com/funds/45040/kotak-nifty-midcap-150-index-fund-direct-plan/",
+      "holdings": [],
+      "managers": [
+        {
+          "name": "Abhishek Bisen",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Satish Dondapati",
+          "startDate": null,
+          "startLabel": null
+        },
+        {
+          "name": "Jeetu Valechha Sonar",
+          "startDate": null,
+          "startLabel": null
+        }
+      ]
+    }
+  ]
+}
