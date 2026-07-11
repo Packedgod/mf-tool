@@ -2,13 +2,16 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useManagerAnalytics from '@/components/analytics/useManagerAnalytics';
+import { buildSyntheticProxy, computeMetrics, normaliseSeries } from '@/lib/analytics';
+import { calculateManagerScore } from '@/lib/momentum-engine';
 import { detailedMomentumSchemeId } from '@/lib/dynamic-proxies';
 
-const useful = data => Boolean(
+const usefulMomentum = data => Boolean(
   data?.holdings?.length
   || data?.sectors?.length
   || data?.snapshot?.sectorWeights?.length
 );
+const usefulNav = data => Boolean(data?.fundSeries?.length >= 3 && data?.proxySeries?.length >= 3);
 
 function deriveSectors(holdings = []) {
   const totals = new Map();
@@ -37,9 +40,9 @@ function mergeSources(candidates) {
 }
 
 function mergeMomentum({ live, recovered, official, cached, fundId }) {
-  const candidates = [recovered, live, official, cached].filter(Boolean);
+  const candidates = [live, recovered, official, cached].filter(Boolean);
   if (!candidates.length) return null;
-  const primary = candidates.find(useful) || candidates[0];
+  const primary = candidates.find(usefulMomentum) || candidates[0];
   const holdings = firstRows(candidates, item => item?.holdings || item?.snapshot?.holdings);
   let sectors = firstRows(candidates, item => item?.sectors || item?.snapshot?.sectorWeights);
   if (!sectors.length && holdings.length) sectors = deriveSectors(holdings);
@@ -81,20 +84,11 @@ function mergeMomentum({ live, recovered, official, cached, fundId }) {
     },
     __fundId: fundId,
     recovery: {
-      usedRecoveredRequest: useful(recovered),
-      usedOfficialFallback: useful(official),
-      usedCachedDataset: !useful(recovered) && !useful(live) && !useful(official) && useful(cached)
+      usedRecoveredRequest: usefulMomentum(recovered),
+      usedOfficialFallback: usefulMomentum(official),
+      usedCachedDataset: !usefulMomentum(live) && !usefulMomentum(recovered) && !usefulMomentum(official) && usefulMomentum(cached)
     }
   };
-}
-
-async function fetchJson(url, signal) {
-  const response = await fetch(url, { cache: 'no-store', signal });
-  const text = await response.text();
-  let data;
-  try { data = JSON.parse(text); } catch { throw new Error(`The server returned a non-JSON response (${response.status}).`); }
-  if (!response.ok || !data?.ok) throw new Error(data?.detail || data?.error || `Request failed (${response.status}).`);
-  return data;
 }
 
 function wait(ms, signal) {
@@ -107,123 +101,318 @@ function wait(ms, signal) {
   });
 }
 
-async function fetchWithRetry(url, signal, attempts = 2) {
+async function fetchJson(url, { signal, attempts = 2, options = {} } = {}) {
   let lastError;
   for (let attempt = 0; attempt < attempts; attempt += 1) {
-    try { return await fetchJson(url, signal); }
-    catch (error) {
+    try {
+      const response = await fetch(url, { cache: 'no-store', signal, ...options });
+      const text = await response.text();
+      let data;
+      try { data = JSON.parse(text); } catch { throw new Error(`The server returned a non-JSON response (${response.status}).`); }
+      if (!response.ok || !data?.ok) throw new Error(data?.detail || data?.error || `Request failed (${response.status}).`);
+      return data;
+    } catch (error) {
       if (error?.name === 'AbortError') throw error;
       lastError = error;
-      if (attempt < attempts - 1) await wait(900 * (attempt + 1), signal);
+      if (attempt < attempts - 1) await wait(800 * (attempt + 1), signal);
     }
   }
-  throw lastError;
+  throw lastError || new Error('Request failed.');
+}
+
+async function requestSeries(payload, signal) {
+  return fetchJson('/api/live/series', {
+    signal,
+    attempts: 3,
+    options: {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify(payload)
+    }
+  });
+}
+
+async function recoverNav(base, signal) {
+  const fundPayload = {
+    schemeCode: base.selectedFund.preferredSchemeCode,
+    startDate: base.analysisStart,
+    endDate: base.endDate
+  };
+  const fundResult = await requestSeries(fundPayload, signal);
+  const fundSeries = normaliseSeries(fundResult.data);
+  if (fundSeries.length < 3) throw new Error('The selected fund returned insufficient NAV history.');
+
+  let proxySeries = [];
+  let proxySource = null;
+  if (base.proxyMode === 'custom') {
+    const customCode = base.proxyCodeStatus?.schemeCode || base.proxyCodeInput;
+    if (!/^\d{4,9}$/.test(String(customCode || '').trim())) throw new Error('The custom proxy AMFI code is not validated.');
+    const result = await requestSeries({ schemeCode: customCode, startDate: base.analysisStart, endDate: base.endDate }, signal);
+    proxySeries = normaliseSeries(result.data);
+    proxySource = result.source;
+  } else {
+    const components = base.selectedProxy?.components || [];
+    if (!components.length) throw new Error('No proxy components are configured for this fund.');
+    const settled = await Promise.allSettled(components.map(component => requestSeries({
+      queries: component.queries,
+      startDate: base.analysisStart,
+      endDate: base.endDate
+    }, signal)));
+    const successful = settled
+      .map((result, index) => result.status === 'fulfilled' ? { result: result.value, weight: Number(components[index].weight) || 0 } : null)
+      .filter(Boolean)
+      .filter(item => normaliseSeries(item.result.data).length >= 3);
+    if (!successful.length) {
+      const errors = settled.filter(item => item.status === 'rejected').map(item => item.reason?.message).filter(Boolean);
+      throw new Error(errors.join(' ') || 'The configured NAV proxy did not return usable history.');
+    }
+    const weightTotal = successful.reduce((sum, item) => sum + item.weight, 0) || successful.length;
+    proxySeries = buildSyntheticProxy(
+      successful.map(item => normaliseSeries(item.result.data)),
+      successful.map(item => (item.weight || 1) / weightTotal)
+    );
+    proxySource = successful.map(item => item.result.source);
+  }
+
+  if (proxySeries.length < 3) throw new Error('The selected comparison proxy returned insufficient NAV history.');
+  return {
+    fundSeries,
+    proxySeries,
+    fundSource: fundResult.source,
+    proxySource,
+    fetchedAt: new Date().toISOString()
+  };
 }
 
 export default function useReliableManagerAnalytics(options = {}) {
   const base = useManagerAnalytics(options);
-  const [recoveredData, setRecoveredData] = useState(null);
-  const [officialData, setOfficialData] = useState(null);
-  const [cachedData, setCachedData] = useState(null);
-  const [recoveryState, setRecoveryState] = useState('idle');
-  const [recoveryMessage, setRecoveryMessage] = useState('');
-  const [recoveryNonce, setRecoveryNonce] = useState(0);
-  const controllerRef = useRef(null);
   const selectedFund = base.selectedFund;
   const schemeId = useMemo(() => detailedMomentumSchemeId(selectedFund), [selectedFund]);
 
+  const [cachedMomentum, setCachedMomentum] = useState(null);
+  const [officialMomentum, setOfficialMomentum] = useState(null);
+  const [recoveredMomentum, setRecoveredMomentum] = useState(null);
+  const [momentumRecoveryState, setMomentumRecoveryState] = useState('idle');
+  const [momentumRecoveryMessage, setMomentumRecoveryMessage] = useState('');
+  const [momentumRetryNonce, setMomentumRetryNonce] = useState(0);
+  const momentumControllerRef = useRef(null);
+
+  const proxyIdentity = base.proxyMode === 'custom'
+    ? `custom:${base.proxyCodeStatus?.schemeCode || base.proxyCodeInput || ''}`
+    : `${base.proxyMode}:${base.selectedProxy?.id || base.selectedProxy?.label || 'proxy'}`;
+  const navCacheKey = selectedFund?.id
+    ? `managerlens:nav:${selectedFund.id}:${proxyIdentity}:${base.analysisStart}:${base.endDate}`
+    : '';
+  const [cachedNav, setCachedNav] = useState(null);
+  const [recoveredNav, setRecoveredNav] = useState(null);
+  const [navRecoveryState, setNavRecoveryState] = useState('idle');
+  const [navRecoveryMessage, setNavRecoveryMessage] = useState('');
+  const [navRetryNonce, setNavRetryNonce] = useState(0);
+  const navControllerRef = useRef(null);
+
   useEffect(() => {
-    controllerRef.current?.abort();
-    setRecoveredData(null);
-    setOfficialData(null);
-    setCachedData(null);
-    setRecoveryMessage('');
+    setCachedMomentum(null);
+    setOfficialMomentum(null);
+    setRecoveredMomentum(null);
+    setMomentumRecoveryState('idle');
+    setMomentumRecoveryMessage('');
+    momentumControllerRef.current?.abort();
     if (!selectedFund?.id) return undefined;
 
     try {
       const saved = window.localStorage.getItem(`managerlens:portfolio:${selectedFund.id}`);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed?.__fundId === selectedFund.id && useful(parsed)) setCachedData(parsed);
+        if (parsed?.__fundId === selectedFund.id && usefulMomentum(parsed)) setCachedMomentum(parsed);
       }
     } catch {}
 
+    if (!schemeId) return undefined;
     const controller = new AbortController();
-    controllerRef.current = controller;
+    momentumControllerRef.current = controller;
+    setMomentumRecoveryState('syncing');
+    fetchJson(`/api/momentum?schemeId=${encodeURIComponent(schemeId)}&fallback=${Date.now()}`, { signal: controller.signal, attempts: 2 })
+      .then(data => {
+        if (controller.signal.aborted) return;
+        setOfficialMomentum(data);
+        setMomentumRecoveryState('ready');
+        setMomentumRecoveryMessage('Official portfolio fallback loaded.');
+      })
+      .catch(error => {
+        if (error?.name === 'AbortError') return;
+        setMomentumRecoveryState('idle');
+        setMomentumRecoveryMessage(error.message);
+      });
+    return () => controller.abort();
+  }, [selectedFund?.id, schemeId]);
+
+  useEffect(() => {
+    if (!selectedFund?.id || base.momentumState !== 'error' || usefulMomentum(base.momentumData) || usefulMomentum(officialMomentum)) return undefined;
+    momentumControllerRef.current?.abort();
+    const controller = new AbortController();
+    momentumControllerRef.current = controller;
+    setMomentumRecoveryState('syncing');
     const params = new URLSearchParams({
       fundId: selectedFund.id,
       schemeCode: String(selectedFund.preferredSchemeCode),
-      uiRecovery: String(Date.now())
+      recovery: String(Date.now())
     });
-    setRecoveryState('syncing');
-
-    const livePromise = fetchWithRetry(`/api/fund-intelligence?${params}`, controller.signal, 2)
+    fetchJson(`/api/fund-intelligence?${params}`, { signal: controller.signal, attempts: 2 })
       .then(data => {
-        if (!controller.signal.aborted) setRecoveredData(data);
-        return data;
+        if (controller.signal.aborted) return;
+        setRecoveredMomentum(data);
+        setMomentumRecoveryState('ready');
+        setMomentumRecoveryMessage('Portfolio intelligence recovered after the primary request failed.');
+      })
+      .catch(error => {
+        if (error?.name === 'AbortError') return;
+        setMomentumRecoveryState(usefulMomentum(cachedMomentum) ? 'degraded' : 'error');
+        setMomentumRecoveryMessage(error.message);
       });
-    const officialPromise = schemeId
-      ? fetchWithRetry(`/api/momentum?schemeId=${encodeURIComponent(schemeId)}&uiRecovery=${Date.now()}`, controller.signal, 2)
-        .then(data => {
-          if (!controller.signal.aborted) setOfficialData(data);
-          return data;
-        })
-      : Promise.resolve(null);
-
-    Promise.allSettled([livePromise, officialPromise]).then(results => {
-      if (controller.signal.aborted) return;
-      const fulfilled = results.some(item => item.status === 'fulfilled' && useful(item.value));
-      if (fulfilled) {
-        setRecoveryState('ready');
-        setRecoveryMessage('Portfolio tables were verified through an independent recovery request.');
-      } else {
-        const errors = results.filter(item => item.status === 'rejected').map(item => item.reason?.message).filter(Boolean);
-        setRecoveryState(cachedData ? 'degraded' : 'error');
-        setRecoveryMessage(errors.join(' ') || 'No recovery dataset was returned.');
-      }
-    });
-
     return () => controller.abort();
-  }, [selectedFund?.id, selectedFund?.preferredSchemeCode, schemeId, recoveryNonce]);
+  }, [base.momentumState, base.momentumData, officialMomentum, cachedMomentum, selectedFund?.id, selectedFund?.preferredSchemeCode, momentumRetryNonce]);
 
   const mergedMomentumData = useMemo(() => mergeMomentum({
     live: base.momentumData,
-    recovered: recoveredData,
-    official: officialData,
-    cached: cachedData,
+    recovered: recoveredMomentum,
+    official: officialMomentum,
+    cached: cachedMomentum,
     fundId: selectedFund?.id
-  }), [base.momentumData, recoveredData, officialData, cachedData, selectedFund?.id]);
+  }), [base.momentumData, recoveredMomentum, officialMomentum, cachedMomentum, selectedFund?.id]);
 
   useEffect(() => {
-    if (!selectedFund?.id || !useful(mergedMomentumData)) return;
-    try {
-      window.localStorage.setItem(`managerlens:portfolio:${selectedFund.id}`, JSON.stringify(mergedMomentumData));
-    } catch {}
+    if (!selectedFund?.id || !usefulMomentum(mergedMomentumData)) return;
+    try { window.localStorage.setItem(`managerlens:portfolio:${selectedFund.id}`, JSON.stringify(mergedMomentumData)); } catch {}
   }, [selectedFund?.id, mergedMomentumData]);
 
   useEffect(() => {
-    if (!selectedFund || !['sectors', 'timing'].includes(base.activeTab)) return;
-    if (!useful(mergedMomentumData) || base.momentumState === 'error') setRecoveryNonce(value => value + 1);
-  }, [base.activeTab, selectedFund?.id]);
+    navControllerRef.current?.abort();
+    setCachedNav(null);
+    setRecoveredNav(null);
+    setNavRecoveryState('idle');
+    setNavRecoveryMessage('');
+    if (!navCacheKey) return;
+    try {
+      const saved = window.localStorage.getItem(navCacheKey);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (usefulNav(parsed)) setCachedNav(parsed);
+      }
+    } catch {}
+  }, [navCacheKey]);
+
+  useEffect(() => {
+    if (!navCacheKey || base.fundSeries.length < 3 || base.proxySeries.length < 3) return;
+    const value = {
+      fundSeries: base.fundSeries,
+      proxySeries: base.proxySeries,
+      fundSource: base.fundSource,
+      proxySource: base.proxySource,
+      fetchedAt: new Date().toISOString()
+    };
+    try { window.localStorage.setItem(navCacheKey, JSON.stringify(value)); } catch {}
+  }, [navCacheKey, base.fundSeries, base.proxySeries, base.fundSource, base.proxySource]);
+
+  useEffect(() => {
+    if (!selectedFund || base.navState !== 'error' || (base.fundSeries.length >= 3 && base.proxySeries.length >= 3)) return undefined;
+    navControllerRef.current?.abort();
+    const controller = new AbortController();
+    navControllerRef.current = controller;
+    setNavRecoveryState('syncing');
+    setNavRecoveryMessage('Retrying the fund and selected NAV proxy with resilient upstream resolution…');
+    recoverNav(base, controller.signal)
+      .then(data => {
+        if (controller.signal.aborted) return;
+        setRecoveredNav(data);
+        setNavRecoveryState('ready');
+        setNavRecoveryMessage('Fund and proxy NAV histories recovered successfully.');
+        if (navCacheKey) {
+          try { window.localStorage.setItem(navCacheKey, JSON.stringify(data)); } catch {}
+        }
+      })
+      .catch(error => {
+        if (error?.name === 'AbortError') return;
+        setNavRecoveryState(usefulNav(cachedNav) ? 'degraded' : 'error');
+        setNavRecoveryMessage(error.message);
+      });
+    return () => controller.abort();
+  }, [base.navState, base.fundSeries.length, base.proxySeries.length, selectedFund?.id, proxyIdentity, base.analysisStart, base.endDate, navRetryNonce]);
+
+  const baseNav = base.fundSeries.length >= 3 && base.proxySeries.length >= 3
+    ? { fundSeries: base.fundSeries, proxySeries: base.proxySeries, fundSource: base.fundSource, proxySource: base.proxySource }
+    : null;
+  const finalNav = baseNav || (usefulNav(recoveredNav) ? recoveredNav : null) || (usefulNav(cachedNav) ? cachedNav : null);
+  const fundSeries = finalNav?.fundSeries || base.fundSeries;
+  const proxySeries = finalNav?.proxySeries || base.proxySeries;
+  const fundSource = finalNav?.fundSource || base.fundSource;
+  const proxySource = finalNav?.proxySource || base.proxySource;
+
+  const navState = baseNav
+    ? base.navState
+    : usefulNav(recoveredNav)
+      ? 'ready'
+      : usefulNav(cachedNav)
+        ? (base.navState === 'syncing' ? 'syncing' : 'degraded')
+        : navRecoveryState === 'syncing'
+          ? 'syncing'
+          : base.navState;
+  const navMessage = baseNav
+    ? base.navMessage
+    : usefulNav(recoveredNav)
+      ? navRecoveryMessage
+      : usefulNav(cachedNav)
+        ? `The last valid fund and proxy NAV dataset remains available. ${base.navMessage || navRecoveryMessage}`
+        : navRecoveryMessage || base.navMessage;
+
+  const baseMetrics = useMemo(() => computeMetrics(fundSeries, proxySeries, base.riskFree), [fundSeries, proxySeries, base.riskFree]);
+  const metrics = useMemo(() => {
+    const secondary = mergedMomentumData?.fundFacts?.riskMetrics || {};
+    return {
+      ...baseMetrics,
+      alphaPct: Number.isFinite(baseMetrics.alphaPct) ? baseMetrics.alphaPct : secondary.alpha,
+      beta: Number.isFinite(baseMetrics.beta) ? baseMetrics.beta : secondary.beta,
+      sharpe: Number.isFinite(baseMetrics.sharpe) ? baseMetrics.sharpe : secondary.sharpe,
+      volatilityPct: Number.isFinite(baseMetrics.volatilityPct) ? baseMetrics.volatilityPct : secondary.volatility
+    };
+  }, [baseMetrics, mergedMomentumData]);
+  const score = useMemo(() => calculateManagerScore({
+    schemeId: schemeId || 'generic',
+    snapshot: mergedMomentumData?.snapshot || null,
+    market: mergedMomentumData,
+    traditional: metrics
+  }), [schemeId, mergedMomentumData, metrics]);
+  const provisional = score.coveragePct < 60;
+
+  const hasMomentum = usefulMomentum(mergedMomentumData);
+  const momentumState = hasMomentum
+    ? (base.momentumState === 'syncing' && !usefulMomentum(base.momentumData) ? 'syncing' : 'ready')
+    : momentumRecoveryState === 'syncing' || base.momentumState === 'syncing'
+      ? 'syncing'
+      : momentumRecoveryState === 'error' ? 'error' : base.momentumState;
+  const momentumMessage = hasMomentum
+    ? `${base.momentumMessage || 'Portfolio intelligence loaded.'}${momentumRecoveryMessage && !usefulMomentum(base.momentumData) ? ` ${momentumRecoveryMessage}` : ''}`
+    : momentumRecoveryMessage || base.momentumMessage;
 
   const refreshAll = useCallback(async args => {
-    setRecoveryNonce(value => value + 1);
+    setMomentumRetryNonce(value => value + 1);
+    setNavRetryNonce(value => value + 1);
     return base.refreshAll(args);
   }, [base.refreshAll]);
 
-  const hasPortfolio = useful(mergedMomentumData);
-  const momentumState = hasPortfolio
-    ? (base.momentumState === 'ready' || recoveryState === 'ready' ? 'ready' : 'degraded')
-    : (recoveryState === 'syncing' || base.momentumState === 'syncing' ? 'syncing' : base.momentumState || recoveryState);
-  const momentumMessage = hasPortfolio
-    ? `${base.momentumMessage || 'Portfolio intelligence loaded.'}${recoveryMessage ? ` ${recoveryMessage}` : ''}`
-    : recoveryMessage || base.momentumMessage;
-
   return {
     ...base,
+    fundSeries,
+    proxySeries,
+    fundSource,
+    proxySource,
+    navState,
+    navMessage,
     momentumData: mergedMomentumData,
     momentumState,
     momentumMessage,
+    metrics,
+    score,
+    provisional,
     refreshAll
   };
 }
