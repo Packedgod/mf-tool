@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { buildSyntheticProxy, computeMetrics, normaliseSeries } from '@/lib/analytics';
 import { calculateManagerScore } from '@/lib/momentum-engine';
 import { detailedMomentumSchemeId, proxyProfileForFund } from '@/lib/dynamic-proxies';
@@ -61,19 +61,20 @@ function mergeManagerRecords(base, incoming) {
   return result.sort((a, b) => a.name.localeCompare(b.name));
 }
 
-async function getJson(url) {
-  const response = await fetch(url, { cache: 'no-store' });
+async function getJson(url, options = {}) {
+  const response = await fetch(url, { cache: 'no-store', signal: options.signal });
   const data = await response.json();
   if (!response.ok || !data.ok) throw new Error(data.detail || data.error || 'Request failed.');
   return data;
 }
 
-async function requestSeries(payload) {
+async function requestSeries(payload, options = {}) {
   const response = await fetch('/api/live/series', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(payload),
-    cache: 'no-store'
+    cache: 'no-store',
+    signal: options.signal
   });
   const data = await response.json();
   if (!response.ok || !data.ok) throw new Error(data.detail || data.error || 'Live NAV series failed.');
@@ -115,6 +116,12 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
   const [lastRefresh, setLastRefresh] = useState(null);
   const [autoRefresh, setAutoRefresh] = useState(true);
 
+  const navRequestRef = useRef(0);
+  const momentumRequestRef = useRef(0);
+  const navControllerRef = useRef(null);
+  const momentumControllerRef = useRef(null);
+  const activeFundRef = useRef('');
+
   const manager = useMemo(() => managers.find(item => item.id === managerId) || null, [managers, managerId]);
   const allFundOptions = useMemo(() => {
     const map = new Map();
@@ -146,9 +153,9 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
   const baseMetrics = useMemo(() => computeMetrics(fundSeries, proxySeries, riskFree), [fundSeries, proxySeries, riskFree]);
   const metrics = useMemo(() => {
     const secondary = momentumData?.fundFacts?.riskMetrics || {};
-    const usedFallback = !Number.isFinite(baseMetrics.alphaPct) && Number.isFinite(secondary.alpha)
-      || !Number.isFinite(baseMetrics.sharpe) && Number.isFinite(secondary.sharpe)
-      || !Number.isFinite(baseMetrics.beta) && Number.isFinite(secondary.beta);
+    const usedFallback = (!Number.isFinite(baseMetrics.alphaPct) && Number.isFinite(secondary.alpha))
+      || (!Number.isFinite(baseMetrics.sharpe) && Number.isFinite(secondary.sharpe))
+      || (!Number.isFinite(baseMetrics.beta) && Number.isFinite(secondary.beta));
     return {
       ...baseMetrics,
       alphaPct: Number.isFinite(baseMetrics.alphaPct) ? baseMetrics.alphaPct : secondary.alpha,
@@ -265,20 +272,26 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
       setNavMessage('Validate the custom proxy AMFI code before loading.');
       return;
     }
-    if (!silent) setNavState('syncing');
+
+    navControllerRef.current?.abort();
+    const controller = new AbortController();
+    navControllerRef.current = controller;
+    const requestId = ++navRequestRef.current;
+
+    if (!silent || !fundSeries.length || !proxySeries.length) setNavState('syncing');
     setNavMessage(`Loading ${selectedFund.displayName} and the selected proxy…`);
     try {
-      const fundPromise = requestSeries({ schemeCode: selectedFund.preferredSchemeCode, startDate: analysisStart, endDate });
+      const fundPromise = requestSeries({ schemeCode: selectedFund.preferredSchemeCode, startDate: analysisStart, endDate }, { signal: controller.signal });
       let proxyPromise;
       if (proxyMode === 'custom') {
-        proxyPromise = requestSeries({ schemeCode: proxyCode, startDate: analysisStart, endDate })
+        proxyPromise = requestSeries({ schemeCode: proxyCode, startDate: analysisStart, endDate }, { signal: controller.signal })
           .then(result => ({ result, series: normaliseSeries(result.data) }));
       } else {
         proxyPromise = Promise.all(selectedProxy.components.map(component => requestSeries({
           queries: component.queries,
           startDate: analysisStart,
           endDate
-        }))).then(results => ({
+        }, { signal: controller.signal }))).then(results => ({
           result: results[0],
           results,
           series: buildSyntheticProxy(
@@ -288,6 +301,7 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
         }));
       }
       const [fundResult, proxyBundle] = await Promise.all([fundPromise, proxyPromise]);
+      if (requestId !== navRequestRef.current) return;
       const fund = normaliseSeries(fundResult.data);
       const proxy = proxyBundle.series;
       if (fund.length < 3 || proxy.length < 3) throw new Error('Insufficient overlapping NAV history for the selected period.');
@@ -299,15 +313,22 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
       setNavMessage('Live fund and proxy histories loaded successfully.');
       setLastRefresh(new Date());
     } catch (error) {
+      if (error?.name === 'AbortError' || requestId !== navRequestRef.current) return;
       setNavState(fundSeries.length && proxySeries.length ? 'degraded' : 'error');
-      setNavMessage(`${fundSeries.length && proxySeries.length ? 'The last valid chart remains visible. ' : ''}${error.message} Portfolio facts will still be attempted through Value Research and AdvisorKhoj.`);
+      setNavMessage(`${fundSeries.length && proxySeries.length ? 'The last valid chart remains visible. ' : ''}${error.message} Portfolio facts will still be loaded through Value Research Online and AdvisorKhoj.`);
     }
   }, [selectedFund, proxyMode, proxyCode, selectedProxy, analysisStart, endDate, fundSeries.length, proxySeries.length]);
 
   const loadMomentumData = useCallback(async ({ silent = false } = {}) => {
     if (!selectedFund) return;
-    if (!silent) setMomentumState('syncing');
-    setMomentumMessage('Loading official disclosures, Value Research, AdvisorKhoj and live Yahoo price momentum…');
+
+    momentumControllerRef.current?.abort();
+    const controller = new AbortController();
+    momentumControllerRef.current = controller;
+    const requestId = ++momentumRequestRef.current;
+
+    if (!silent || !momentumData) setMomentumState('syncing');
+    setMomentumMessage('Pulling manager, holdings, sectors, turnover and portfolio changes from Value Research Online and AdvisorKhoj…');
 
     const addDiscoveredManagers = data => {
       const discovered = (data.managers || []).map(item => ({
@@ -325,36 +346,27 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
       if (discovered.length) setManagers(previous => mergeManagerRecords(previous, discovered));
     };
 
-    const fallback = async officialError => {
-      const data = await getJson(`/api/fund-intelligence?fundId=${encodeURIComponent(selectedFund.id)}&schemeCode=${encodeURIComponent(selectedFund.preferredSchemeCode)}`);
+    try {
+      const params = new URLSearchParams({
+        fundId: selectedFund.id,
+        schemeCode: String(selectedFund.preferredSchemeCode),
+        selectedAt: String(Date.now())
+      });
+      const data = await getJson(`/api/fund-intelligence?${params}`, { signal: controller.signal });
+      if (requestId !== momentumRequestRef.current) return;
       addDiscoveredManagers(data);
       setMomentumData(data);
       const coverage = Math.round(data.coverage?.resolvedPct || 0);
       setMomentumState(coverage >= 60 ? 'ready' : 'degraded');
-      setMomentumMessage(`${officialError ? 'Official structured snapshot was unavailable; ' : ''}portfolio intelligence loaded through ${data.sources?.map(item => item.name).filter((name, index, list) => list.indexOf(name) === index).join(', ') || 'public fallbacks'} with ${coverage}% factor coverage.`);
+      const providers = data.sources?.map(item => item.name).filter((name, index, list) => name && list.indexOf(name) === index).join(', ');
+      setMomentumMessage(`Current portfolio intelligence loaded${providers ? ` through ${providers}` : ''}. ${coverage}% factor coverage; ${data.coverage?.snapshotCount || 1} dated source snapshot${data.coverage?.snapshotCount === 1 ? '' : 's'} available.`);
       setLastRefresh(new Date());
-    };
-
-    try {
-      if (detailedSchemeId) {
-        try {
-          const data = await getJson(`/api/momentum?schemeId=${encodeURIComponent(detailedSchemeId)}`);
-          setMomentumData(data);
-          setMomentumState(data.coverage?.resolvedPct >= 60 ? 'ready' : 'degraded');
-          setMomentumMessage(`Official-factsheet momentum data resolved for ${Math.round(data.coverage?.resolvedPct || 0)}% of requested symbols.`);
-          setLastRefresh(new Date());
-          return;
-        } catch (officialError) {
-          await fallback(officialError);
-          return;
-        }
-      }
-      await fallback(null);
     } catch (error) {
+      if (error?.name === 'AbortError' || requestId !== momentumRequestRef.current) return;
       setMomentumState(momentumData ? 'degraded' : 'error');
       setMomentumMessage(`${momentumData ? 'The last valid portfolio dataset remains visible. ' : ''}${error.message}`);
     }
-  }, [selectedFund, detailedSchemeId, momentumData]);
+  }, [selectedFund, momentumData]);
 
   const refreshAll = useCallback(async ({ silent = false } = {}) => {
     await Promise.all([loadNavData({ silent }), loadMomentumData({ silent })]);
@@ -362,7 +374,27 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
 
   useEffect(() => {
     if (!selectedFund) return undefined;
-    const timer = window.setTimeout(() => refreshAll({ silent: true }), 250);
+    const fundChanged = activeFundRef.current !== selectedFundId;
+    activeFundRef.current = selectedFundId;
+
+    if (fundChanged) {
+      navControllerRef.current?.abort();
+      momentumControllerRef.current?.abort();
+      setFundSeries([]);
+      setProxySeries([]);
+      setFundSource(null);
+      setProxySource(null);
+      setMomentumData(null);
+      setNavState('syncing');
+      setMomentumState('syncing');
+      setNavMessage(`Loading ${selectedFund.displayName}…`);
+      setMomentumMessage('Pulling current Value Research Online and AdvisorKhoj records for the selected fund…');
+    }
+
+    const timer = window.setTimeout(() => {
+      if (fundChanged) refreshAll({ silent: false });
+      else loadNavData({ silent: false });
+    }, 40);
     return () => window.clearTimeout(timer);
   }, [selectedFundId, proxyMode, proxyCode, analysisStart, endDate]);
 
@@ -373,6 +405,11 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
     }, 15 * 60 * 1000);
     return () => window.clearInterval(timer);
   }, [autoRefresh, selectedFund, refreshAll]);
+
+  useEffect(() => () => {
+    navControllerRef.current?.abort();
+    momentumControllerRef.current?.abort();
+  }, []);
 
   return {
     managers, manager, managerId, setManagerId, managerSearch, setManagerSearch, filteredManagers,
