@@ -1,0 +1,155 @@
+name: Diagnose vital NAV and momentum pipelines
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "app/api/live/series/**"
+      - "app/api/fund-intelligence/**"
+      - "app/api/momentum/**"
+      - "lib/upstream.js"
+      - "lib/dynamic-proxies.js"
+      - "components/analytics/useManagerAnalytics.js"
+      - "components/analytics/useReliableManagerAnalytics.js"
+      - ".github/workflows/diagnose-vital-pipelines.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: diagnose-vital-pipelines
+  cancel-in-progress: false
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        id: install
+        continue-on-error: true
+        run: npm install --no-audit --no-fund >/tmp/install-vital.log 2>&1
+      - name: Build
+        id: build
+        if: steps.install.outcome == 'success'
+        continue-on-error: true
+        run: npm run build >/tmp/build-vital.log 2>&1
+      - name: Start
+        id: start
+        if: steps.build.outcome == 'success'
+        continue-on-error: true
+        run: |
+          npm start >/tmp/server-vital.log 2>&1 &
+          for i in {1..90}; do
+            curl -fsS 'http://127.0.0.1:3000/api/live/health' >/dev/null && exit 0
+            sleep 2
+          done
+          exit 1
+      - name: Exercise NAV and momentum
+        id: exercise
+        if: steps.start.outcome == 'success'
+        continue-on-error: true
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          const base = 'http://127.0.0.1:3000';
+          const report = { generatedAt: new Date().toISOString(), nav: [], momentum: [] };
+          async function request(url, options = {}) {
+            const started = Date.now();
+            try {
+              const response = await fetch(url, options);
+              const text = await response.text();
+              let body;
+              try { body = JSON.parse(text); } catch { body = { raw: text.slice(0, 3000) }; }
+              return { status: response.status, durationMs: Date.now() - started, body };
+            } catch (error) {
+              return { status: 0, durationMs: Date.now() - started, body: { error: error.message } };
+            }
+          }
+          async function series(name, payload) {
+            const result = await request(`${base}/api/live/series`, {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ ...payload, startDate: '2018-01-01', endDate: new Date().toISOString().slice(0, 10) })
+            });
+            report.nav.push({
+              name,
+              payload,
+              status: result.status,
+              durationMs: result.durationMs,
+              ok: result.body?.ok,
+              error: result.body?.detail || result.body?.error || null,
+              points: result.body?.data?.length || 0,
+              source: result.body?.source || null
+            });
+          }
+          await series('Fund HDFC Flexi', { schemeCode: 118955 });
+          await series('Fund PPFAS Flexi', { schemeCode: 122639 });
+          await series('Fund SBI Small', { schemeCode: 125497 });
+          await series('Proxy Nifty 500', { queries: ['Motilal Oswal Nifty 500 Index Fund Direct Growth','Nifty 500 Index Fund Direct Growth','NIFTY 500 Index Fund Direct Plan Growth'] });
+          await series('Proxy Nifty 50', { queries: ['HDFC Nifty 50 Index Fund Direct Growth','UTI Nifty 50 Index Fund Direct Growth','Nifty 50 Index Fund Direct Growth'] });
+          await series('Proxy Smallcap 250', { queries: ['Motilal Oswal Nifty Smallcap 250 Index Fund Direct Growth','Nifty Smallcap 250 Index Fund Direct Growth','NIFTY Smallcap 250 Index Fund Direct Plan Growth'] });
+          await series('Proxy Liquid', { queries: ['HDFC Liquid Fund Direct Plan Growth','SBI Liquid Fund Direct Growth','Liquid Fund Direct Growth'] });
+
+          const fundQueries = ['HDFC Flexi Cap','Parag Parikh Flexi Cap','SBI Small Cap','ICICI Prudential Balanced Advantage','Kotak Midcap Fund','Axis Large Cap Fund'];
+          for (const query of fundQueries) {
+            const universe = await request(`${base}/api/universe?view=funds&q=${encodeURIComponent(query)}&limit=5&offset=0`);
+            const fund = universe.body?.results?.[0];
+            if (!fund) {
+              report.momentum.push({ query, ok: false, error: 'Fund not found', universeStatus: universe.status });
+              continue;
+            }
+            const result = await request(`${base}/api/fund-intelligence?fundId=${encodeURIComponent(fund.id)}&schemeCode=${fund.preferredSchemeCode}&diagnostic=${Date.now()}`);
+            report.momentum.push({
+              query,
+              fund: { id: fund.id, displayName: fund.displayName, schemeCode: fund.preferredSchemeCode },
+              status: result.status,
+              durationMs: result.durationMs,
+              ok: result.body?.ok,
+              error: result.body?.detail || result.body?.error || null,
+              holdings: result.body?.holdings?.length || 0,
+              sectors: result.body?.sectors?.length || result.body?.snapshot?.sectorWeights?.length || 0,
+              entries: result.body?.entries?.length || 0,
+              exits: result.body?.exits?.length || 0,
+              coverage: result.body?.coverage || null,
+              engineVersion: result.body?.engineVersion || null
+            });
+          }
+          report.ok = report.nav.every(item => item.ok && item.points >= 3) && report.momentum.every(item => item.ok && item.holdings > 0 && item.sectors > 0);
+          await fs.writeFile('data/vital-pipelines-diagnostics.json', JSON.stringify(report, null, 2));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+      - name: Preserve logs
+        if: always()
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          let report = {};
+          try { report = JSON.parse(await fs.readFile('data/vital-pipelines-diagnostics.json', 'utf8')); } catch {}
+          async function read(path) { try { return (await fs.readFile(path, 'utf8')).slice(-20000); } catch { return ''; } }
+          report.workflow = {
+            generatedAt: new Date().toISOString(),
+            install: '${{ steps.install.outcome }}',
+            build: '${{ steps.build.outcome }}',
+            start: '${{ steps.start.outcome }}',
+            exercise: '${{ steps.exercise.outcome }}',
+            installLog: await read('/tmp/install-vital.log'),
+            buildLog: await read('/tmp/build-vital.log'),
+            serverLog: await read('/tmp/server-vital.log')
+          };
+          await fs.writeFile('data/vital-pipelines-diagnostics.json', JSON.stringify(report, null, 2));
+          NODE
+      - name: Commit diagnostics
+        if: always()
+        run: |
+          git config user.name "managerlens-diagnostics"
+          git config user.email "managerlens-diagnostics@users.noreply.github.com"
+          git add data/vital-pipelines-diagnostics.json
+          git commit -m "Capture vital NAV and momentum diagnostics" || exit 0
+          git pull --rebase origin main
+          git push
