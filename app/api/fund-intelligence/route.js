@@ -5,12 +5,13 @@ import { buildFallbackMomentumFast } from '@/lib/fallback-momentum-fast';
 import { enrichResearchWithOfficialPortfolio } from '@/lib/official-portfolio';
 import { normalizeResearchHistory } from '@/lib/normalize-research-history';
 import { resolveAdvisorKhojDocuments } from '@/lib/resolve-research-documents';
+import { refreshValueResearchPortfolio } from '@/lib/value-research-live-portfolio';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const maxDuration = 60;
 
-const ENGINE_VERSION = '1.0.1-validated-portfolios';
+const ENGINE_VERSION = '1.1.0-exact-vro-portfolios';
 
 function canonicalHolding(value) {
   return String(value || '')
@@ -23,10 +24,9 @@ function canonicalHolding(value) {
 
 function validHoldingName(value) {
   const name = String(value || '').replace(/\s+/g, ' ').trim();
-  if (name.length < 2 || name.length > 120) return false;
-  if (!/[A-Za-z]/.test(name)) return false;
-  return !/^(total|portfolio|company|sector|asset allocation|market cap|see more|show all|fund manager|riskometer)/i.test(name)
-    && !/benchmark|turnover|expense ratio|standard deviation|sharpe|alpha|beta|latest nav|returns?/i.test(name);
+  if (name.length < 2 || name.length > 120 || !/[A-Za-z]/.test(name)) return false;
+  return !/^(total|portfolio|company|sector|asset allocation|market cap|see more|show all|fund manager|riskometer|very high|min\.|created with)/i.test(name)
+    && !/highcharts|benchmark|turnover|expense ratio|standard deviation|sharpe|alpha|beta|latest nav|returns?|withdrawal|cheques/i.test(name);
 }
 
 function sanitiseHoldings(rows) {
@@ -77,10 +77,7 @@ function sanitiseResearch(research) {
     ...research,
     current: {
       ...current,
-      valueResearch: current.valueResearch ? {
-        ...current.valueResearch,
-        holdings: sanitiseHoldings(current.valueResearch.holdings)
-      } : current.valueResearch,
+      valueResearch: current.valueResearch ? { ...current.valueResearch, holdings: sanitiseHoldings(current.valueResearch.holdings) } : current.valueResearch,
       advisorKhoj: current.advisorKhoj ? {
         ...current.advisorKhoj,
         holdings: sanitiseHoldings(current.advisorKhoj.holdings),
@@ -92,21 +89,18 @@ function sanitiseResearch(research) {
   };
 }
 
-function preferPortfolioDocuments(research) {
+function useBestPortfolioDocument(research) {
   const current = research?.current || {};
   const documents = current.advisorKhoj?.officialDocuments || [];
   if (!documents.length) return research;
-  const preferred = documents.filter(item =>
-    /\.xlsx?(?:$|\?)/i.test(item.url || '')
-    || /monthly\s+portfolio|portfolio\s+disclosure|excel|spreadsheet/i.test(`${item.text || ''} ${item.type || ''}`)
-  );
+  const best = documents[0];
   return {
     ...research,
     current: {
       ...current,
       advisorKhoj: current.advisorKhoj ? {
         ...current.advisorKhoj,
-        officialDocuments: preferred.length ? preferred : documents
+        officialDocuments: best ? [best] : []
       } : current.advisorKhoj
     }
   };
@@ -126,7 +120,9 @@ export async function GET(request) {
       return NextResponse.json({ ok: false, error: 'Fund family not found in the live AMFI universe.', engineVersion: ENGINE_VERSION }, { status: 404 });
     }
 
-    const publicResearch = sanitiseResearch(await resolveFundResearch(fund));
+    const resolvedResearch = await resolveFundResearch(fund);
+    const exactResearch = await refreshValueResearchPortfolio(resolvedResearch);
+    const publicResearch = sanitiseResearch(exactResearch);
     if (!publicResearch.ok) {
       return NextResponse.json({
         ok: false,
@@ -138,7 +134,7 @@ export async function GET(request) {
     }
 
     const resolvedDocuments = await resolveAdvisorKhojDocuments(publicResearch, fund.displayName);
-    const sourceResearch = preferPortfolioDocuments(resolvedDocuments);
+    const sourceResearch = useBestPortfolioDocument(resolvedDocuments);
     const enriched = sanitiseResearch(await enrichResearchWithOfficialPortfolio(sourceResearch, fund.displayName));
     const research = sanitiseResearch(normalizeResearchHistory(enriched));
     const intelligence = await buildFallbackMomentumFast(fund, research);
@@ -153,6 +149,7 @@ export async function GET(request) {
         fund: { id: fund.id, displayName: fund.displayName, fundHouse: fund.fundHouse, preferredSchemeCode: fund.preferredSchemeCode },
         diagnostics: {
           ...publicResearch.diagnostics,
+          exactValueResearchPortfolio: publicResearch.exactValueResearchPortfolio,
           registryMatch: publicResearch.registryMatch,
           documentResolution: resolvedDocuments.documentResolution,
           officialPortfolioFailures: research.officialPortfolioFailures || []
@@ -171,6 +168,7 @@ export async function GET(request) {
       sourceDiagnostics: {
         registryMatch: publicResearch.registryMatch,
         research: publicResearch.diagnostics,
+        exactValueResearchPortfolio: publicResearch.exactValueResearchPortfolio,
         documents: resolvedDocuments.documentResolution,
         holdings: holdingCount,
         sectors: sectorCount,
