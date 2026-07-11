@@ -1,11 +1,375 @@
 {
+  "generatedAt": "2026-07-11T12:41:07.898Z",
+  "node": "v20.20.2",
+  "tests": [
+    {
+      "query": "HDFC Flexi Cap",
+      "universeStatus": 200,
+      "fund": {
+        "id": "hdfc mutual fund::hdfc flexi cap fund",
+        "displayName": "HDFC Flexi Cap Fund - Growth Option - Direct Plan",
+        "fundHouse": "HDFC Mutual Fund",
+        "preferredSchemeCode": 118955
+      },
+      "intelligenceStatus": 200,
+      "intelligenceOk": true,
+      "engineVersion": "1.0.0-live-portfolios",
+      "error": null,
+      "sourceDiagnostics": {
+        "registryMatch": {
+          "key": "hdfc flexi cap fund",
+          "score": 1,
+          "type": "exact"
+        },
+        "research": {
+          "liveValueResearch": true,
+          "liveAdvisorKhoj": true,
+          "holdings": 6,
+          "sectors": 0,
+          "documents": 3,
+          "valueResearchError": null
+        },
+        "documents": {
+          "attempted": 2,
+          "directDocuments": 1,
+          "resolvedDocuments": 12,
+          "failures": []
+        },
+        "holdings": 6,
+        "sectors": 2,
+        "entries": 6,
+        "exits": 6
+      },
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Public fund holdings and portfolio facts",
+          "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/"
+        },
+        {
+          "name": "AdvisorKhoj",
+          "type": "Live fund facts, risk metrics and portfolio-document discovery",
+          "url": "https://www.advisorkhoj.com/mutual-funds-research/HDFC-Flexi-Cap-Fund-Growth-Option-Direct-Plan"
+        },
+        {
+          "name": "AdvisorKhoj-linked monthly portfolio disclosure",
+          "type": "Portfolio workbook linked by AdvisorKhoj",
+          "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Small%20Cap%20Fund%20-%2030%20June%202026.xlsx"
+        },
+        {
+          "name": "Yahoo Finance",
+          "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "AMFI / MFapi.in",
+          "type": "Fund identity and NAV history only"
+        }
+      ],
+      "counts": {
+        "managers": 1,
+        "holdings": 6,
+        "sectors": 2,
+        "entries": 6,
+        "exits": 6,
+        "snapshotCount": 2,
+        "factorCoverage": 100
+      },
+      "snapshot": {
+        "factsheetLabel": "Value Research Online + AdvisorKhoj + AdvisorKhoj-linked monthly portfolio disclosure",
+        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
+        "currentAsOf": "2026-07-11",
+        "previousAsOf": "2026-05-01",
+        "comparisonMode": "top-holdings-proxy",
+        "sectorWeights": [
+          {
+            "sector": "Financial Services",
+            "weight": 100
+          },
+          {
+            "sector": "Other",
+            "weight": 208.34
+          }
+        ]
+      },
+      "failures": [
+        "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Silver%20ETF%20Fund%20of%20Fund%20-%2030%20June%202026.xlsx: No usable holdings table found",
+        "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20SILVER%20ETF%20-%2030%20June%202026.xlsx: No usable holdings table found"
+      ]
+    },
+    {
+      "query": "Parag Parikh Flexi Cap",
+      "universeStatus": 200,
+      "fund": {
+        "id": "ppfas mutual fund::parag parikh flexi cap fund",
+        "displayName": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
+        "fundHouse": "PPFAS Mutual Fund",
+        "preferredSchemeCode": 122639
+      },
+      "intelligenceStatus": 200,
+      "intelligenceOk": true,
+      "engineVersion": "1.0.0-live-portfolios",
+      "error": null,
+      "sourceDiagnostics": {
+        "registryMatch": {
+          "key": "parag parikh flexi cap fund",
+          "score": 1,
+          "type": "exact"
+        },
+        "research": {
+          "liveValueResearch": true,
+          "liveAdvisorKhoj": true,
+          "holdings": 3,
+          "sectors": 0,
+          "documents": 3,
+          "valueResearchError": null
+        },
+        "documents": {
+          "attempted": 1,
+          "directDocuments": 2,
+          "resolvedDocuments": 2,
+          "failures": []
+        },
+        "holdings": 3,
+        "sectors": 1,
+        "entries": 3,
+        "exits": 5
+      },
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Public fund holdings and portfolio facts",
+          "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/"
+        },
+        {
+          "name": "AdvisorKhoj",
+          "type": "Live fund facts, risk metrics and portfolio-document discovery",
+          "url": "https://www.advisorkhoj.com/mutual-funds-research/Parag-Parikh-Flexi-Cap-Fund-Direct-Plan-Growth"
+        },
+        {
+          "name": "AdvisorKhoj-linked monthly portfolio disclosure",
+          "type": "Portfolio workbook linked by AdvisorKhoj",
+          "url": "https://amc.ppfas.com/downloads/portfolio-disclosure/2026/PPFAS_Monthly_Portfolio_Report_May_31_2026.xls?08062026_1"
+        },
+        {
+          "name": "Yahoo Finance",
+          "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "AMFI / MFapi.in",
+          "type": "Fund identity and NAV history only"
+        }
+      ],
+      "counts": {
+        "managers": 6,
+        "holdings": 3,
+        "sectors": 1,
+        "entries": 3,
+        "exits": 5,
+        "snapshotCount": 2,
+        "factorCoverage": 95
+      },
+      "snapshot": {
+        "factsheetLabel": "Value Research Online + AdvisorKhoj + AdvisorKhoj-linked monthly portfolio disclosure",
+        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
+        "currentAsOf": "2026-07-10",
+        "previousAsOf": null,
+        "comparisonMode": "top-holdings-proxy",
+        "sectorWeights": [
+          {
+            "sector": "Other",
+            "weight": 8.29
+          }
+        ]
+      },
+      "failures": []
+    },
+    {
+      "query": "SBI Small Cap",
+      "universeStatus": 200,
+      "fund": {
+        "id": "sbi mutual fund::sbi small cap fund",
+        "displayName": "SBI Small Cap Fund - Direct Plan - Growth",
+        "fundHouse": "SBI Mutual Fund",
+        "preferredSchemeCode": 125497
+      },
+      "intelligenceStatus": 200,
+      "intelligenceOk": true,
+      "engineVersion": "1.0.0-live-portfolios",
+      "error": null,
+      "sourceDiagnostics": {
+        "registryMatch": {
+          "key": "sbi small cap fund",
+          "score": 1,
+          "type": "exact"
+        },
+        "research": {
+          "liveValueResearch": true,
+          "liveAdvisorKhoj": true,
+          "holdings": 3,
+          "sectors": 0,
+          "documents": 3,
+          "valueResearchError": null
+        },
+        "documents": {
+          "attempted": 1,
+          "directDocuments": 2,
+          "resolvedDocuments": 2,
+          "failures": []
+        },
+        "holdings": 3,
+        "sectors": 1,
+        "entries": 0,
+        "exits": 0
+      },
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Public fund holdings and portfolio facts",
+          "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/"
+        },
+        {
+          "name": "AdvisorKhoj",
+          "type": "Live fund facts, risk metrics and portfolio-document discovery",
+          "url": "https://www.advisorkhoj.com/mutual-funds-research/SBI-Small-Cap-Fund-Direct-Plan-Growth"
+        },
+        {
+          "name": "Yahoo Finance",
+          "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "AMFI / MFapi.in",
+          "type": "Fund identity and NAV history only"
+        }
+      ],
+      "counts": {
+        "managers": 1,
+        "holdings": 3,
+        "sectors": 1,
+        "entries": 0,
+        "exits": 0,
+        "snapshotCount": 1,
+        "factorCoverage": 70
+      },
+      "snapshot": {
+        "factsheetLabel": "Value Research Online + AdvisorKhoj",
+        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
+        "currentAsOf": "2026-07-11",
+        "comparisonMode": "top-holdings-proxy",
+        "sectorWeights": [
+          {
+            "sector": "Other",
+            "weight": 15.33
+          }
+        ]
+      },
+      "failures": [
+        "https://www.sbimf.com/docs/default-source/scheme-portfolios/all-schemes-monthly-portfolio---as-on-31st-may-2026.xlsx?sfvrsn=1e792ce4_2: No usable holdings table found"
+      ]
+    },
+    {
+      "query": "ICICI Prudential Balanced Advantage",
+      "universeStatus": 200,
+      "fund": {
+        "id": "icici prudential mutual fund::icici prudential balanced advantage fund",
+        "displayName": "ICICI Prudential Balanced Advantage Fund - Direct Plan -  Growth",
+        "fundHouse": "ICICI Prudential Mutual Fund",
+        "preferredSchemeCode": 120377
+      },
+      "intelligenceStatus": 200,
+      "intelligenceOk": true,
+      "engineVersion": "1.0.0-live-portfolios",
+      "error": null,
+      "sourceDiagnostics": {
+        "registryMatch": {
+          "key": "icici prudential balanced advantage fund",
+          "score": 1,
+          "type": "exact"
+        },
+        "research": {
+          "liveValueResearch": true,
+          "liveAdvisorKhoj": true,
+          "holdings": 5,
+          "sectors": 0,
+          "documents": 3,
+          "valueResearchError": null
+        },
+        "documents": {
+          "attempted": 2,
+          "directDocuments": 1,
+          "resolvedDocuments": 1,
+          "failures": []
+        },
+        "holdings": 5,
+        "sectors": 1,
+        "entries": 0,
+        "exits": 0
+      },
+      "sources": [
+        {
+          "name": "Value Research Online",
+          "type": "Public fund holdings and portfolio facts",
+          "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/"
+        },
+        {
+          "name": "AdvisorKhoj",
+          "type": "Live fund facts, risk metrics and portfolio-document discovery",
+          "url": "https://www.advisorkhoj.com/mutual-funds-research/ICICI-Prudential-Balanced-Advantage-Fund-Direct-Plan-Growth"
+        },
+        {
+          "name": "Yahoo Finance",
+          "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "AMFI / MFapi.in",
+          "type": "Fund identity and NAV history only"
+        }
+      ],
+      "counts": {
+        "managers": 4,
+        "holdings": 5,
+        "sectors": 1,
+        "entries": 0,
+        "exits": 0,
+        "snapshotCount": 1,
+        "factorCoverage": 70
+      },
+      "snapshot": {
+        "factsheetLabel": "Value Research Online + AdvisorKhoj",
+        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
+        "currentAsOf": "2026-07-11",
+        "comparisonMode": "top-holdings-proxy",
+        "sectorWeights": [
+          {
+            "sector": "Other",
+            "weight": 112.82
+          }
+        ]
+      },
+      "failures": [
+        "https://digitalfactsheet.icicipruamc.com/fact/pdf/fund-factsheet-for-may-2026.pdf: fetch failed"
+      ]
+    },
+    {
+      "query": "Kotak Emerging Equity",
+      "universeStatus": 200,
+      "fund": null,
+      "error": "No fund result"
+    },
+    {
+      "query": "Axis Bluechip",
+      "universeStatus": 200,
+      "fund": null,
+      "error": "No fund result"
+    }
+  ],
   "workflow": {
-    "generatedAt": "2026-07-11T12:39:05.118Z",
-    "install": "skipped",
-    "build": "skipped",
-    "start": "skipped",
-    "installLog": "",
-    "buildLog": "",
-    "serverLog": ""
+    "generatedAt": "2026-07-11T12:41:28.427Z",
+    "install": "success",
+    "build": "success",
+    "start": "success",
+    "exercise": "success",
+    "installLog": "\nadded 34 packages in 11s\n",
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    18.1 kB         105 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 367ms\n"
   }
 }
