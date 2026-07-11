@@ -1,0 +1,75 @@
+name: Verify Kotak live fund intelligence
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/diagnose-kotak-live.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      - run: npm run build
+      - name: Start and test
+        run: |
+          npm start >/tmp/server.log 2>&1 &
+          for i in {1..60}; do
+            curl -fsS 'http://127.0.0.1:3000/api/universe?view=managers' >/dev/null && break
+            sleep 2
+          done
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs/promises';
+          const base = 'http://127.0.0.1:3000';
+          async function json(url) {
+            const response = await fetch(url);
+            const text = await response.text();
+            let body;
+            try { body = JSON.parse(text); } catch { body = { raw: text }; }
+            return { status: response.status, body };
+          }
+          const universe = await json(`${base}/api/universe?view=funds&q=${encodeURIComponent('Kotak Midcap Fund')}&limit=5&offset=0`);
+          const fund = universe.body?.results?.[0];
+          const intelligence = fund ? await json(`${base}/api/fund-intelligence?fundId=${encodeURIComponent(fund.id)}&schemeCode=${fund.preferredSchemeCode}&t=${Date.now()}`) : null;
+          const body = intelligence?.body || {};
+          const result = {
+            generatedAt: new Date().toISOString(),
+            fund: fund ? { id: fund.id, displayName: fund.displayName, fundHouse: fund.fundHouse, preferredSchemeCode: fund.preferredSchemeCode } : null,
+            status: intelligence?.status,
+            ok: body.ok,
+            engineVersion: body.engineVersion,
+            error: body.error || body.detail || null,
+            diagnostics: body.sourceDiagnostics || body.diagnostics || null,
+            counts: {
+              holdings: body.holdings?.length || 0,
+              sectors: body.sectors?.length || 0,
+              entries: body.entries?.length || 0,
+              exits: body.exits?.length || 0,
+              snapshotCount: body.coverage?.snapshotCount || 0
+            },
+            holdings: body.holdings?.slice(0, 10) || [],
+            snapshot: body.snapshot || null
+          };
+          await fs.writeFile('data/kotak-live-diagnostics.json', JSON.stringify(result, null, 2));
+          console.log(JSON.stringify(result, null, 2));
+          if (!result.ok || !result.counts.holdings || !result.counts.sectors) process.exitCode = 1;
+          NODE
+      - name: Commit result
+        if: always()
+        run: |
+          git config user.name "managerlens-diagnostics"
+          git config user.email "managerlens-diagnostics@users.noreply.github.com"
+          git add data/kotak-live-diagnostics.json
+          git commit -m "Capture Kotak live intelligence verification" || exit 0
+          git pull --rebase origin main
+          git push
