@@ -1,0 +1,286 @@
+{
+  "generatedAt": "2026-07-11T19:20:27.243Z",
+  "nav": [
+    {
+      "name": "Fund HDFC Flexi",
+      "payload": {
+        "schemeCode": 118955
+      },
+      "status": 503,
+      "durationMs": 3639,
+      "ok": false,
+      "error": "MFapi history 502",
+      "points": 0,
+      "source": null
+    },
+    {
+      "name": "Fund PPFAS Flexi",
+      "payload": {
+        "schemeCode": 122639
+      },
+      "status": 503,
+      "durationMs": 619,
+      "ok": false,
+      "error": "MFapi history 502",
+      "points": 0,
+      "source": null
+    },
+    {
+      "name": "Fund SBI Small",
+      "payload": {
+        "schemeCode": 125497
+      },
+      "status": 503,
+      "durationMs": 611,
+      "ok": false,
+      "error": "MFapi history 502",
+      "points": 0,
+      "source": null
+    },
+    {
+      "name": "Proxy Nifty 500",
+      "payload": {
+        "queries": [
+          "Motilal Oswal Nifty 500 Index Fund Direct Growth",
+          "Nifty 500 Index Fund Direct Growth",
+          "NIFTY 500 Index Fund Direct Plan Growth"
+        ]
+      },
+      "status": 503,
+      "durationMs": 1175,
+      "ok": false,
+      "error": "MFapi history 502",
+      "points": 0,
+      "source": null
+    },
+    {
+      "name": "Proxy Nifty 50",
+      "payload": {
+        "queries": [
+          "HDFC Nifty 50 Index Fund Direct Growth",
+          "UTI Nifty 50 Index Fund Direct Growth",
+          "Nifty 50 Index Fund Direct Growth"
+        ]
+      },
+      "status": 503,
+      "durationMs": 13368,
+      "ok": false,
+      "error": "MFapi history 502",
+      "points": 0,
+      "source": null
+    },
+    {
+      "name": "Proxy Smallcap 250",
+      "payload": {
+        "queries": [
+          "Motilal Oswal Nifty Smallcap 250 Index Fund Direct Growth",
+          "Nifty Smallcap 250 Index Fund Direct Growth",
+          "NIFTY Smallcap 250 Index Fund Direct Plan Growth"
+        ]
+      },
+      "status": 503,
+      "durationMs": 1157,
+      "ok": false,
+      "error": "MFapi history 502",
+      "points": 0,
+      "source": null
+    },
+    {
+      "name": "Proxy Liquid",
+      "payload": {
+        "queries": [
+          "HDFC Liquid Fund Direct Plan Growth",
+          "SBI Liquid Fund Direct Growth",
+          "Liquid Fund Direct Growth"
+        ]
+      },
+      "status": 503,
+      "durationMs": 24729,
+      "ok": false,
+      "error": "This operation was aborted",
+      "points": 0,
+      "source": null
+    }
+  ],
+  "momentum": [
+    {
+      "query": "HDFC Flexi Cap",
+      "fund": {
+        "id": "hdfc mutual fund::hdfc flexi cap fund",
+        "displayName": "HDFC Flexi Cap Fund - Growth Option - Direct Plan",
+        "schemeCode": 118955
+      },
+      "status": 200,
+      "durationMs": 5671,
+      "ok": true,
+      "error": null,
+      "holdings": 5,
+      "sectors": 1,
+      "entries": 5,
+      "exits": 5,
+      "coverage": {
+        "requestedSymbols": 7,
+        "resolvedSymbols": 7,
+        "resolvedPct": 100,
+        "sectorSeries": 1,
+        "entrySeries": 5,
+        "exitSeries": 4,
+        "baselineEstablished": false,
+        "snapshotCount": 2,
+        "comparisonMode": "top-holdings-proxy"
+      },
+      "engineVersion": "1.2.0-live-fund-identity"
+    },
+    {
+      "query": "Parag Parikh Flexi Cap",
+      "fund": {
+        "id": "ppfas mutual fund::parag parikh flexi cap fund",
+        "displayName": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
+        "schemeCode": 122639
+      },
+      "status": 200,
+      "durationMs": 2629,
+      "ok": true,
+      "error": null,
+      "holdings": 5,
+      "sectors": 4,
+      "entries": 5,
+      "exits": 5,
+      "coverage": {
+        "requestedSymbols": 10,
+        "resolvedSymbols": 8,
+        "resolvedPct": 100,
+        "sectorSeries": 2,
+        "entrySeries": 5,
+        "exitSeries": 4,
+        "baselineEstablished": false,
+        "snapshotCount": 2,
+        "comparisonMode": "top-holdings-proxy"
+      },
+      "engineVersion": "1.2.0-live-fund-identity"
+    },
+    {
+      "query": "SBI Small Cap",
+      "fund": {
+        "id": "sbi mutual fund::sbi small cap fund",
+        "displayName": "SBI Small Cap Fund - Direct Plan - Growth",
+        "schemeCode": 125497
+      },
+      "status": 200,
+      "durationMs": 6725,
+      "ok": true,
+      "error": null,
+      "holdings": 4,
+      "sectors": 3,
+      "entries": 0,
+      "exits": 0,
+      "coverage": {
+        "requestedSymbols": 8,
+        "resolvedSymbols": 8,
+        "resolvedPct": 75,
+        "sectorSeries": 3,
+        "entrySeries": 0,
+        "exitSeries": 0,
+        "baselineEstablished": true,
+        "snapshotCount": 1,
+        "comparisonMode": "top-holdings-proxy"
+      },
+      "engineVersion": "1.2.0-live-fund-identity"
+    },
+    {
+      "query": "ICICI Prudential Balanced Advantage",
+      "fund": {
+        "id": "icici prudential mutual fund::icici prudential balanced advantage fund",
+        "displayName": "ICICI Prudential Balanced Advantage Fund - Direct Plan -  Growth",
+        "schemeCode": 120377
+      },
+      "status": 200,
+      "durationMs": 2687,
+      "ok": true,
+      "error": null,
+      "holdings": 4,
+      "sectors": 2,
+      "entries": 0,
+      "exits": 0,
+      "coverage": {
+        "requestedSymbols": 7,
+        "resolvedSymbols": 3,
+        "resolvedPct": 75,
+        "sectorSeries": 1,
+        "entrySeries": 0,
+        "exitSeries": 0,
+        "baselineEstablished": true,
+        "snapshotCount": 1,
+        "comparisonMode": "top-holdings-proxy"
+      },
+      "engineVersion": "1.2.0-live-fund-identity"
+    },
+    {
+      "query": "Kotak Midcap Fund",
+      "fund": {
+        "id": "kotak mahindra mutual fund::kotak midcap fund re investment of income distribution cum capital withdrawal",
+        "displayName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
+        "schemeCode": 119774
+      },
+      "status": 200,
+      "durationMs": 37160,
+      "ok": true,
+      "error": null,
+      "holdings": 5,
+      "sectors": 3,
+      "entries": 0,
+      "exits": 0,
+      "coverage": {
+        "requestedSymbols": 9,
+        "resolvedSymbols": 9,
+        "resolvedPct": 65,
+        "sectorSeries": 3,
+        "entrySeries": 0,
+        "exitSeries": 0,
+        "baselineEstablished": true,
+        "snapshotCount": 1,
+        "comparisonMode": "top-holdings-proxy"
+      },
+      "engineVersion": "1.2.0-live-fund-identity"
+    },
+    {
+      "query": "Axis Large Cap Fund",
+      "fund": {
+        "id": "axis mutual fund::axis large cap fund",
+        "displayName": "Axis Large Cap Fund - Direct Plan - Growth",
+        "schemeCode": 120465
+      },
+      "status": 200,
+      "durationMs": 4281,
+      "ok": true,
+      "error": null,
+      "holdings": 5,
+      "sectors": 3,
+      "entries": 5,
+      "exits": 5,
+      "coverage": {
+        "requestedSymbols": 9,
+        "resolvedSymbols": 9,
+        "resolvedPct": 100,
+        "sectorSeries": 3,
+        "entrySeries": 5,
+        "exitSeries": 3,
+        "baselineEstablished": false,
+        "snapshotCount": 2,
+        "comparisonMode": "top-holdings-proxy"
+      },
+      "engineVersion": "1.2.0-live-fund-identity"
+    }
+  ],
+  "ok": false,
+  "workflow": {
+    "generatedAt": "2026-07-11T19:22:18.588Z",
+    "install": "success",
+    "build": "success",
+    "start": "success",
+    "exercise": "success",
+    "installLog": "\nadded 34 packages in 10s\n",
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    20.1 kB         107 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 404ms\n"
+  }
+}
