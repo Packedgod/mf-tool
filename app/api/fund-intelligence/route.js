@@ -10,7 +10,87 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const maxDuration = 60;
 
-const ENGINE_VERSION = '1.0.0-live-portfolios';
+const ENGINE_VERSION = '1.0.1-validated-portfolios';
+
+function canonicalHolding(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/\b(limited|ltd|inc|corporation|corp|company|co)\b/g, ' ')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function validHoldingName(value) {
+  const name = String(value || '').replace(/\s+/g, ' ').trim();
+  if (name.length < 2 || name.length > 120) return false;
+  if (!/[A-Za-z]/.test(name)) return false;
+  return !/^(total|portfolio|company|sector|asset allocation|market cap|see more|show all|fund manager|riskometer)/i.test(name)
+    && !/benchmark|turnover|expense ratio|standard deviation|sharpe|alpha|beta|latest nav|returns?/i.test(name);
+}
+
+function sanitiseHoldings(rows) {
+  const map = new Map();
+  for (const item of rows || []) {
+    const weight = Number(item?.weight);
+    const name = String(item?.name || '').replace(/\s+/g, ' ').trim();
+    if (!validHoldingName(name) || !Number.isFinite(weight) || weight <= 0 || weight > 25) continue;
+    const key = canonicalHolding(name);
+    const existing = map.get(key);
+    if (!existing || weight > existing.weight) map.set(key, { ...item, name, weight });
+  }
+  const sorted = [...map.values()].sort((a, b) => b.weight - a.weight);
+  const total = sorted.reduce((sum, item) => sum + item.weight, 0);
+  if (total <= 101.5) return sorted;
+  const bounded = [];
+  let cumulative = 0;
+  for (const item of sorted) {
+    if (cumulative + item.weight > 101.5) continue;
+    bounded.push(item);
+    cumulative += item.weight;
+  }
+  return bounded;
+}
+
+function sanitiseSectors(rows) {
+  const map = new Map();
+  for (const item of rows || []) {
+    const sector = String(item?.sector || item?.name || '').replace(/\s+/g, ' ').trim();
+    const weight = Number(item?.weight);
+    if (!sector || !Number.isFinite(weight) || weight <= 0 || weight > 100) continue;
+    map.set(sector, (map.get(sector) || 0) + weight);
+  }
+  const sorted = [...map.entries()].map(([sector, weight]) => ({ sector, weight: Number(weight.toFixed(4)) })).sort((a, b) => b.weight - a.weight);
+  const total = sorted.reduce((sum, item) => sum + item.weight, 0);
+  return total <= 102 ? sorted : [];
+}
+
+function sanitiseResearch(research) {
+  if (!research?.ok) return research;
+  const cleanSnapshot = snapshot => snapshot ? {
+    ...snapshot,
+    holdings: sanitiseHoldings(snapshot.holdings),
+    sectors: sanitiseSectors(snapshot.sectors)
+  } : snapshot;
+  const current = cleanSnapshot(research.current || {});
+  return {
+    ...research,
+    current: {
+      ...current,
+      valueResearch: current.valueResearch ? {
+        ...current.valueResearch,
+        holdings: sanitiseHoldings(current.valueResearch.holdings)
+      } : current.valueResearch,
+      advisorKhoj: current.advisorKhoj ? {
+        ...current.advisorKhoj,
+        holdings: sanitiseHoldings(current.advisorKhoj.holdings),
+        sectors: sanitiseSectors(current.advisorKhoj.sectors)
+      } : current.advisorKhoj
+    },
+    previous: cleanSnapshot(research.previous),
+    portfolioHistory: (research.portfolioHistory || []).map(cleanSnapshot)
+  };
+}
 
 function preferPortfolioDocuments(research) {
   const current = research?.current || {};
@@ -46,7 +126,7 @@ export async function GET(request) {
       return NextResponse.json({ ok: false, error: 'Fund family not found in the live AMFI universe.', engineVersion: ENGINE_VERSION }, { status: 404 });
     }
 
-    const publicResearch = await resolveFundResearch(fund);
+    const publicResearch = sanitiseResearch(await resolveFundResearch(fund));
     if (!publicResearch.ok) {
       return NextResponse.json({
         ok: false,
@@ -57,10 +137,10 @@ export async function GET(request) {
       }, { status: 404 });
     }
 
-    const resolvedDocuments = await resolveAdvisorKhojDocuments(publicResearch);
+    const resolvedDocuments = await resolveAdvisorKhojDocuments(publicResearch, fund.displayName);
     const sourceResearch = preferPortfolioDocuments(resolvedDocuments);
-    const enriched = await enrichResearchWithOfficialPortfolio(sourceResearch, fund.displayName);
-    const research = normalizeResearchHistory(enriched);
+    const enriched = sanitiseResearch(await enrichResearchWithOfficialPortfolio(sourceResearch, fund.displayName));
+    const research = sanitiseResearch(normalizeResearchHistory(enriched));
     const intelligence = await buildFallbackMomentumFast(fund, research);
 
     const holdingCount = intelligence.holdings?.length || 0;
@@ -69,13 +149,8 @@ export async function GET(request) {
       return NextResponse.json({
         ok: false,
         error: 'The selected fund matched the research universe, but its current holdings payload was empty. The UI will not render an empty sector or timing panel.',
-        detail: 'Value Research Online and AdvisorKhoj were resolved, but neither returned a parseable holdings or sector table for this refresh.',
-        fund: {
-          id: fund.id,
-          displayName: fund.displayName,
-          fundHouse: fund.fundHouse,
-          preferredSchemeCode: fund.preferredSchemeCode
-        },
+        detail: 'Value Research Online and AdvisorKhoj were resolved, but neither returned a validated holdings or sector table for this refresh.',
+        fund: { id: fund.id, displayName: fund.displayName, fundHouse: fund.fundHouse, preferredSchemeCode: fund.preferredSchemeCode },
         diagnostics: {
           ...publicResearch.diagnostics,
           registryMatch: publicResearch.registryMatch,
@@ -88,13 +163,7 @@ export async function GET(request) {
 
     return NextResponse.json({
       ...intelligence,
-      fund: {
-        id: fund.id,
-        displayName: fund.displayName,
-        fundHouse: fund.fundHouse,
-        category: fund.category,
-        preferredSchemeCode: fund.preferredSchemeCode
-      },
+      fund: { id: fund.id, displayName: fund.displayName, fundHouse: fund.fundHouse, category: fund.category, preferredSchemeCode: fund.preferredSchemeCode },
       researchPolicy: {
         managerAndPortfolio: ['Value Research Online', 'AdvisorKhoj'],
         navAndPriceEnrichment: ['AMFI', 'MFapi.in', 'Yahoo Finance']
