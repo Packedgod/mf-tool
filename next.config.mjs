@@ -1,6 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true
+  reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: '/',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, max-age=0, must-revalidate' },
+          { key: 'Pragma', value: 'no-cache' }
+        ]
+      },
+      {
+        source: '/universe',
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, max-age=0, must-revalidate' },
+          { key: 'Pragma', value: 'no-cache' }
+        ]
+      },
+      {
+        source: '/api/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'private, no-store, max-age=0, must-revalidate' }
+        ]
+      }
+    ];
+  }
 };
 
 export default nextConfig;
