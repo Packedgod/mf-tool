@@ -1,0 +1,192 @@
+{
+  "generatedAt": "2026-07-11T13:33:43.665Z",
+  "fund": {
+    "id": "kotak mahindra mutual fund::kotak midcap fund re investment of income distribution cum capital withdrawal",
+    "displayName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
+    "fundHouse": "Kotak Mahindra Mutual Fund",
+    "preferredSchemeCode": 119774
+  },
+  "status": 200,
+  "ok": true,
+  "engineVersion": "1.2.0-live-fund-identity",
+  "error": null,
+  "diagnostics": {
+    "registryMatch": {
+      "key": "kotak midcap",
+      "score": 0.62,
+      "type": "live-selector"
+    },
+    "valueResearchIdentity": {
+      "repaired": true,
+      "accepted": true,
+      "previousScore": 0,
+      "previousUrl": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/",
+      "score": 0.62,
+      "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/"
+    },
+    "research": {
+      "liveValueResearch": true,
+      "liveAdvisorKhoj": true,
+      "holdings": 7,
+      "sectors": 0,
+      "documents": 3,
+      "valueResearchError": null
+    },
+    "exactValueResearchPortfolio": {
+      "ok": true,
+      "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
+      "fetchedAt": "2026-07-11T13:33:43.069Z",
+      "holdings": 5,
+      "totalTopHoldingWeight": 15.79,
+      "stale": false
+    },
+    "advisorIdentityRejection": {
+      "rejected": true,
+      "requestedFund": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
+      "requestedFundHouse": "Kotak Mahindra Mutual Fund",
+      "existingUrl": "https://www.advisorkhoj.com/mutual-funds-research/Kotak-Midcap-Fund-Direct-Plan-IDCW-Payout-and-Re-investment-of-Income-Distribution-cum-capital-withdrawal-option",
+      "reason": "No alias-matched AdvisorKhoj page exposed a validated holdings, sector, or direct portfolio-document path."
+    },
+    "holdings": 5,
+    "sectors": 3,
+    "entries": 0,
+    "exits": 0
+  },
+  "counts": {
+    "holdings": 5,
+    "sectors": 3,
+    "entries": 0,
+    "exits": 0,
+    "snapshotCount": 1
+  },
+  "holdings": [
+    {
+      "name": "Fortis Healthcare",
+      "weight": 3.98,
+      "symbol": "FORTIS.BO",
+      "sector": "Healthcare",
+      "ok": true,
+      "return1mPct": -2.1133549882283886,
+      "return3mPct": 14.230924992479089,
+      "return6mPct": 5.7515798530382245
+    },
+    {
+      "name": "Ipca Laboratories",
+      "weight": 3.11,
+      "symbol": "IPCALAB.NS",
+      "sector": "Healthcare",
+      "ok": true,
+      "return1mPct": 10.801936754171827,
+      "return3mPct": 23.21847170324345,
+      "return6mPct": 21.658958499997063
+    },
+    {
+      "name": "Vishal Mega Mart",
+      "weight": 3.06,
+      "symbol": "VMM.BO",
+      "sector": "Consumer Services",
+      "ok": true,
+      "return1mPct": 1.1479579010523322,
+      "return3mPct": 3.8864602168054097,
+      "return6mPct": -11.59420717182349
+    },
+    {
+      "name": "GE Vernova T&D",
+      "weight": 2.84,
+      "symbol": "GVT&D.NS",
+      "sector": "Capital Goods",
+      "ok": true,
+      "return1mPct": -1.222806807682153,
+      "return3mPct": 14.253957056872203,
+      "return6mPct": 48.45580376626726
+    },
+    {
+      "name": "KEI",
+      "weight": 2.8,
+      "symbol": "RYKKY",
+      "sector": "Consumer Services",
+      "ok": true,
+      "return1mPct": 12.980773374879305,
+      "return3mPct": -2.8925650449212137,
+      "return6mPct": 28.135222488992184
+    }
+  ],
+  "snapshot": {
+    "turnover": {
+      "interpretation": "Turnover from Value Research Online or AdvisorKhoj"
+    },
+    "sectorWeights": [
+      {
+        "sector": "Healthcare",
+        "weight": 7.09
+      },
+      {
+        "sector": "Consumer Services",
+        "weight": 5.859999999999999
+      },
+      {
+        "sector": "Capital Goods",
+        "weight": 2.84
+      }
+    ],
+    "sectorHistory": [
+      {
+        "sector": "Healthcare",
+        "values": [
+          7.09
+        ]
+      },
+      {
+        "sector": "Consumer Services",
+        "values": [
+          5.859999999999999
+        ]
+      },
+      {
+        "sector": "Capital Goods",
+        "values": [
+          2.84
+        ]
+      }
+    ],
+    "coverageNote": "The current Value Research/AdvisorKhoj snapshot is available; a second dated source snapshot was not returned for this fund.",
+    "factsheetUrl": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
+    "factsheetLabel": "Value Research Online",
+    "assetAllocation": [
+      {
+        "name": "Equity",
+        "weight": 98.11
+      },
+      {
+        "name": "Debt",
+        "weight": 0.2
+      },
+      {
+        "name": "Cash & Cash Eq.",
+        "weight": 1.68
+      },
+      {
+        "name": "Cash",
+        "weight": 1.68
+      }
+    ],
+    "marketCap": [
+      {
+        "name": "Large",
+        "weight": 14.85
+      },
+      {
+        "name": "Mid",
+        "weight": 69.05
+      },
+      {
+        "name": "Small",
+        "weight": 16.1
+      }
+    ],
+    "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
+    "comparisonMode": "top-holdings-proxy",
+    "currentAsOf": "2026-07-11",
+    "snapshotCount": 1
+  }
+}
