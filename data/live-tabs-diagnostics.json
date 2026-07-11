@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T13:18:21.402Z",
+  "generatedAt": "2026-07-11T13:20:00.109Z",
   "node": "v20.20.2",
   "tests": [
     {
@@ -40,7 +40,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:18:24.074Z",
+          "fetchedAt": "2026-07-11T13:20:03.096Z",
           "holdings": 5,
           "totalTopHoldingWeight": 30.56,
           "stale": false
@@ -56,14 +56,41 @@
         "documents": {
           "attempted": 2,
           "directDocuments": 1,
-          "resolvedDocuments": 0,
-          "rejectedAsOtherFunds": 112,
+          "resolvedDocuments": 10,
+          "rejectedAsOtherFunds": 16,
+          "selected": [
+            {
+              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Flexi%20Cap%20Fund%20-%2030%20June%202026.xlsx",
+              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
+              "score": 146.18
+            },
+            {
+              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Multi%20Cap%20Fund%20-%2030%20June%202026.xlsx",
+              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
+              "score": 139.12
+            },
+            {
+              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Diversified%20Equity%20All%20Cap%20Active%20FOF%20-%2030%20June%202026.xlsx",
+              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
+              "score": 136.43
+            },
+            {
+              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Technology%20Fund%20-%2030%20June%202026.xlsx",
+              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
+              "score": 132.5
+            },
+            {
+              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20MNC%20Fund%20-%2030%20June%202026.xlsx",
+              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
+              "score": 132.5
+            }
+          ],
           "failures": []
         },
         "holdings": 5,
         "sectors": 2,
-        "entries": 0,
-        "exits": 0
+        "entries": 5,
+        "exits": 5
       },
       "sources": [
         {
@@ -75,6 +102,11 @@
           "name": "Value Research Online",
           "type": "Public fund holdings and portfolio facts",
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/"
+        },
+        {
+          "name": "AdvisorKhoj-linked monthly portfolio disclosure",
+          "type": "Portfolio workbook linked by AdvisorKhoj",
+          "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Flexi%20Cap%20Fund%20-%2030%20June%202026.xlsx"
         },
         {
           "name": "Yahoo Finance",
@@ -89,10 +121,10 @@
         "managers": 1,
         "holdings": 5,
         "sectors": 2,
-        "entries": 0,
-        "exits": 0,
-        "snapshotCount": 1,
-        "factorCoverage": 75
+        "entries": 5,
+        "exits": 5,
+        "snapshotCount": 2,
+        "factorCoverage": 100
       },
       "holdings": [
         {
@@ -122,9 +154,10 @@
         }
       ],
       "snapshot": {
-        "factsheetLabel": "AdvisorKhoj + Value Research Online",
+        "factsheetLabel": "AdvisorKhoj + Value Research Online + AdvisorKhoj-linked monthly portfolio disclosure",
         "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
         "currentAsOf": "2026-07-11",
+        "previousAsOf": "2026-05-01",
         "comparisonMode": "top-holdings-proxy",
         "sectorWeights": [
           {
@@ -175,7 +208,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:18:26.648Z",
+          "fetchedAt": "2026-07-11T13:20:07.414Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.5,
           "stale": false
@@ -191,13 +224,18 @@
         "documents": {
           "attempted": 1,
           "directDocuments": 2,
-          "resolvedDocuments": 1,
-          "rejectedAsOtherFunds": 2,
+          "resolvedDocuments": 2,
+          "rejectedAsOtherFunds": 0,
           "selected": [
             {
               "url": "https://amc.ppfas.com/downloads/portfolio-disclosure/2026/PPFAS_Monthly_Portfolio_Report_May_31_2026.xls?08062026_1",
               "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 133
+              "score": 165
+            },
+            {
+              "url": "https://amc.ppfas.com/downloads/factsheet/2026/ppfas-mf-factsheet-for-May-2026.pdf?08062026_1",
+              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
+              "score": 73
             }
           ],
           "failures": []
@@ -333,7 +371,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:18:29.805Z",
+          "fetchedAt": "2026-07-11T13:20:10.914Z",
           "holdings": 4,
           "totalTopHoldingWeight": 14.08,
           "stale": false
@@ -349,13 +387,18 @@
         "documents": {
           "attempted": 1,
           "directDocuments": 2,
-          "resolvedDocuments": 1,
-          "rejectedAsOtherFunds": 2,
+          "resolvedDocuments": 2,
+          "rejectedAsOtherFunds": 0,
           "selected": [
             {
               "url": "https://www.sbimf.com/docs/default-source/scheme-portfolios/all-schemes-monthly-portfolio---as-on-31st-may-2026.xlsx?sfvrsn=1e792ce4_2",
               "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 133
+              "score": 165
+            },
+            {
+              "url": "https://www.sbimf.com/docs/default-source/scheme-factsheets/all-sbimf-schemes-factsheet-may-2026.pdf?sfvrsn=4c31a7bc_4",
+              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
+              "score": 73
             }
           ],
           "failures": []
@@ -476,7 +519,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:18:37.218Z",
+          "fetchedAt": "2026-07-11T13:20:18.468Z",
           "holdings": 4,
           "totalTopHoldingWeight": 6.39,
           "stale": false
@@ -492,8 +535,15 @@
         "documents": {
           "attempted": 2,
           "directDocuments": 1,
-          "resolvedDocuments": 0,
-          "rejectedAsOtherFunds": 2,
+          "resolvedDocuments": 1,
+          "rejectedAsOtherFunds": 0,
+          "selected": [
+            {
+              "url": "https://digitalfactsheet.icicipruamc.com/fact/pdf/fund-factsheet-for-may-2026.pdf",
+              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
+              "score": 73
+            }
+          ],
           "failures": []
         },
         "holdings": 4,
@@ -568,7 +618,9 @@
           }
         ]
       },
-      "failures": []
+      "failures": [
+        "https://digitalfactsheet.icicipruamc.com/fact/pdf/fund-factsheet-for-may-2026.pdf: fetch failed"
+      ]
     },
     {
       "query": "Kotak Midcap Fund",
@@ -677,7 +729,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:18:47.628Z",
+          "fetchedAt": "2026-07-11T13:20:27.960Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.84,
           "stale": false
@@ -693,14 +745,26 @@
         "documents": {
           "attempted": 1,
           "directDocuments": 2,
-          "resolvedDocuments": 0,
-          "rejectedAsOtherFunds": 4,
+          "resolvedDocuments": 2,
+          "rejectedAsOtherFunds": 0,
+          "selected": [
+            {
+              "url": "https://www.axismf.com/1/5/464/560/3622/4309/Monthly_Portfolio_31_05_26.xlsx",
+              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
+              "score": 117
+            },
+            {
+              "url": "https://www.axismf.com/1/5/1423/1484/1487/2872/4332/AxisFundFactsheetMay2026.pdf",
+              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
+              "score": 73
+            }
+          ],
           "failures": []
         },
         "holdings": 5,
         "sectors": 3,
-        "entries": 0,
-        "exits": 0
+        "entries": 5,
+        "exits": 5
       },
       "sources": [
         {
@@ -712,6 +776,11 @@
           "name": "Value Research Online",
           "type": "Public fund holdings and portfolio facts",
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/"
+        },
+        {
+          "name": "AdvisorKhoj-linked monthly portfolio disclosure",
+          "type": "Portfolio workbook linked by AdvisorKhoj",
+          "url": "https://www.axismf.com/1/5/464/560/3622/4309/Monthly_Portfolio_31_05_26.xlsx"
         },
         {
           "name": "Yahoo Finance",
@@ -726,10 +795,10 @@
         "managers": 2,
         "holdings": 5,
         "sectors": 3,
-        "entries": 0,
-        "exits": 0,
-        "snapshotCount": 1,
-        "factorCoverage": 75
+        "entries": 5,
+        "exits": 5,
+        "snapshotCount": 2,
+        "factorCoverage": 100
       },
       "holdings": [
         {
@@ -759,9 +828,10 @@
         }
       ],
       "snapshot": {
-        "factsheetLabel": "AdvisorKhoj + Value Research Online",
+        "factsheetLabel": "AdvisorKhoj + Value Research Online + AdvisorKhoj-linked monthly portfolio disclosure",
         "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
         "currentAsOf": "2026-07-11",
+        "previousAsOf": null,
         "comparisonMode": "top-holdings-proxy",
         "sectorWeights": [
           {
@@ -782,13 +852,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-11T13:18:48.511Z",
+    "generatedAt": "2026-07-11T13:20:31.870Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
     "installLog": "\nadded 34 packages in 12s\n",
     "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    18.1 kB         105 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 408ms\n"
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 338ms\n"
   }
 }
