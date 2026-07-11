@@ -60,7 +60,7 @@ jobs:
           node --input-type=module <<'NODE'
           import fs from 'node:fs/promises';
           const base = 'http://127.0.0.1:3000';
-          const queries = ['HDFC Flexi Cap','Parag Parikh Flexi Cap','SBI Small Cap','ICICI Prudential Balanced Advantage','Kotak Emerging Equity','Axis Bluechip'];
+          const queries = ['HDFC Flexi Cap','Parag Parikh Flexi Cap','SBI Small Cap','ICICI Prudential Balanced Advantage','Kotak Midcap Fund','Axis Large Cap Fund'];
           const report = { generatedAt: new Date().toISOString(), node: process.version, tests: [] };
           async function getJson(url) {
             const response = await fetch(url, { headers: { accept: 'application/json' } });
@@ -87,7 +87,8 @@ jobs:
             test.sourceDiagnostics = body.sourceDiagnostics || body.diagnostics || null;
             test.sources = body.sources?.map(source => ({ name: source.name, type: source.type, url: source.url })) || [];
             test.counts = { managers: body.managers?.length || 0, holdings: body.holdings?.length || 0, sectors: body.sectors?.length || 0, entries: body.entries?.length || 0, exits: body.exits?.length || 0, snapshotCount: body.coverage?.snapshotCount || 0, factorCoverage: body.coverage?.resolvedPct || 0 };
-            test.snapshot = body.snapshot ? { factsheetLabel: body.snapshot.factsheetLabel, sectorBasis: body.snapshot.sectorBasis, currentAsOf: body.snapshot.currentAsOf, previousAsOf: body.snapshot.previousAsOf, comparisonMode: body.snapshot.comparisonMode, sectorWeights: body.snapshot.sectorWeights?.slice(0, 5) || [] } : null;
+            test.holdings = body.holdings?.slice(0, 8).map(item => ({ name: item.name, sector: item.sector, weight: item.weight })) || [];
+            test.snapshot = body.snapshot ? { factsheetLabel: body.snapshot.factsheetLabel, sectorBasis: body.snapshot.sectorBasis, currentAsOf: body.snapshot.currentAsOf, previousAsOf: body.snapshot.previousAsOf, comparisonMode: body.snapshot.comparisonMode, sectorWeights: body.snapshot.sectorWeights?.slice(0, 8) || [] } : null;
             test.failures = body.officialPortfolioFailures || [];
             report.tests.push(test);
           }
