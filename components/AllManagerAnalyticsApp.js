@@ -1,6 +1,6 @@
 'use client';
 
-import useManagerAnalytics from '@/components/analytics/useManagerAnalytics';
+import useManagerAnalytics from '@/components/analytics/useReliableManagerAnalytics';
 import AnalyticsTabs, { TABS } from '@/components/analytics/AnalyticsTabs';
 import { ScoreRing } from '@/components/analytics/AnalyticsPanels';
 
