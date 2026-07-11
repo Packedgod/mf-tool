@@ -1,0 +1,108 @@
+{
+  "generatedAt": "2026-07-11T18:55:51.791Z",
+  "tests": [
+    {
+      "query": "HDFC Flexi Cap",
+      "fund": {
+        "id": "hdfc mutual fund::hdfc flexi cap fund",
+        "displayName": "HDFC Flexi Cap Fund - Growth Option - Direct Plan",
+        "preferredSchemeCode": 118955
+      },
+      "liveStatus": 200,
+      "officialStatus": 200,
+      "holdings": 5,
+      "sectors": 2,
+      "entries": 5,
+      "exits": 5,
+      "snapshots": 2,
+      "ok": true
+    },
+    {
+      "query": "Parag Parikh Flexi Cap",
+      "fund": {
+        "id": "ppfas mutual fund::parag parikh flexi cap fund",
+        "displayName": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
+        "preferredSchemeCode": 122639
+      },
+      "liveStatus": 200,
+      "officialStatus": 200,
+      "holdings": 5,
+      "sectors": 4,
+      "entries": 5,
+      "exits": 5,
+      "snapshots": 2,
+      "ok": true
+    },
+    {
+      "query": "SBI Small Cap",
+      "fund": {
+        "id": "sbi mutual fund::sbi small cap fund",
+        "displayName": "SBI Small Cap Fund - Direct Plan - Growth",
+        "preferredSchemeCode": 125497
+      },
+      "liveStatus": 200,
+      "officialStatus": 200,
+      "holdings": 4,
+      "sectors": 3,
+      "entries": 0,
+      "exits": 0,
+      "snapshots": 1,
+      "ok": true
+    },
+    {
+      "query": "ICICI Prudential Balanced Advantage",
+      "fund": {
+        "id": "icici prudential mutual fund::icici prudential balanced advantage fund",
+        "displayName": "ICICI Prudential Balanced Advantage Fund - Direct Plan -  Growth",
+        "preferredSchemeCode": 120377
+      },
+      "liveStatus": 200,
+      "officialStatus": 200,
+      "holdings": 4,
+      "sectors": 2,
+      "entries": 0,
+      "exits": 0,
+      "snapshots": 1,
+      "ok": true
+    },
+    {
+      "query": "Kotak Midcap Fund",
+      "fund": {
+        "id": "kotak mahindra mutual fund::kotak midcap fund re investment of income distribution cum capital withdrawal",
+        "displayName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
+        "preferredSchemeCode": 119774
+      },
+      "liveStatus": 200,
+      "officialStatus": null,
+      "holdings": 5,
+      "sectors": 3,
+      "entries": 0,
+      "exits": 0,
+      "snapshots": 1,
+      "ok": true
+    },
+    {
+      "query": "Axis Large Cap Fund",
+      "fund": {
+        "id": "axis mutual fund::axis large cap fund",
+        "displayName": "Axis Large Cap Fund - Direct Plan - Growth",
+        "preferredSchemeCode": 120465
+      },
+      "liveStatus": 200,
+      "officialStatus": null,
+      "holdings": 5,
+      "sectors": 3,
+      "entries": 5,
+      "exits": 5,
+      "snapshots": 2,
+      "ok": true
+    }
+  ],
+  "uiFiles": {
+    "resilientLoader": true,
+    "sectorDerivation": true,
+    "timingBaseline": true,
+    "officialMappingRestored": true
+  },
+  "ok": true
+}
