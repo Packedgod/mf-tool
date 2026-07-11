@@ -11,6 +11,8 @@ on:
       - "lib/official-portfolio.js"
       - "lib/resolve-research-documents.js"
       - "lib/normalize-research-history.js"
+      - "lib/value-research-live-portfolio.js"
+      - "lib/repair-vro-fund-match.js"
       - ".github/workflows/diagnose-live-tabs.yml"
 
 permissions:
@@ -18,7 +20,7 @@ permissions:
 
 concurrency:
   group: diagnose-live-tabs
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   diagnose:
