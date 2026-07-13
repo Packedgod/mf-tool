@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T19:24:33.586Z",
+  "generatedAt": "2026-07-13T07:05:35.202Z",
   "tests": [
     {
       "query": "HDFC Flexi Cap",
@@ -11,7 +11,7 @@
       "liveStatus": 200,
       "officialStatus": 200,
       "holdings": 5,
-      "sectors": 2,
+      "sectors": 1,
       "entries": 5,
       "exits": 5,
       "snapshots": 2,
@@ -40,10 +40,10 @@
         "displayName": "SBI Small Cap Fund - Direct Plan - Growth",
         "preferredSchemeCode": 125497
       },
-      "liveStatus": 200,
+      "liveStatus": 424,
       "officialStatus": 200,
-      "holdings": 4,
-      "sectors": 3,
+      "holdings": 10,
+      "sectors": 11,
       "entries": 0,
       "exits": 0,
       "snapshots": 1,
