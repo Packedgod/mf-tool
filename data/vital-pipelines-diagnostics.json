@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T07:06:38.260Z",
+  "generatedAt": "2026-07-13T07:21:38.125Z",
   "nav": [
     {
       "name": "Fund HDFC Flexi",
@@ -7,7 +7,7 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 3229,
+      "durationMs": 3165,
       "ok": true,
       "error": null,
       "points": 2098,
@@ -30,7 +30,7 @@
         "requestedEndDate": "2026-07-13",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:06:41.475Z",
+        "fetchedAt": "2026-07-13T07:21:41.276Z",
         "stale": false,
         "warnings": []
       }
@@ -41,7 +41,7 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 835,
+      "durationMs": 811,
       "ok": true,
       "error": null,
       "points": 2097,
@@ -64,7 +64,7 @@
         "requestedEndDate": "2026-07-13",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:06:42.321Z",
+        "fetchedAt": "2026-07-13T07:21:42.097Z",
         "stale": false,
         "warnings": []
       }
@@ -75,7 +75,7 @@
         "schemeCode": 125497
       },
       "status": 200,
-      "durationMs": 828,
+      "durationMs": 804,
       "ok": true,
       "error": null,
       "points": 2107,
@@ -98,7 +98,7 @@
         "requestedEndDate": "2026-07-13",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:06:43.148Z",
+        "fetchedAt": "2026-07-13T07:21:42.901Z",
         "stale": false,
         "warnings": []
       }
@@ -113,7 +113,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 1092,
+      "durationMs": 808,
       "ok": true,
       "error": null,
       "points": 497,
@@ -136,7 +136,7 @@
         "requestedEndDate": "2026-07-13",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:06:44.242Z",
+        "fetchedAt": "2026-07-13T07:21:43.711Z",
         "stale": false,
         "warnings": []
       }
@@ -151,7 +151,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 11233,
+      "durationMs": 5331,
       "ok": true,
       "error": null,
       "points": 276,
@@ -174,7 +174,7 @@
         "requestedEndDate": "2026-07-13",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:06:55.476Z",
+        "fetchedAt": "2026-07-13T07:21:49.041Z",
         "stale": false,
         "warnings": []
       }
@@ -189,7 +189,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 1335,
+      "durationMs": 812,
       "ok": true,
       "error": null,
       "points": 1410,
@@ -212,7 +212,7 @@
         "requestedEndDate": "2026-07-13",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:06:56.809Z",
+        "fetchedAt": "2026-07-13T07:21:49.853Z",
         "stale": false,
         "warnings": []
       }
@@ -227,7 +227,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 825,
+      "durationMs": 821,
       "ok": true,
       "error": null,
       "points": 179,
@@ -250,7 +250,7 @@
         "requestedEndDate": "2026-07-13",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:06:57.635Z",
+        "fetchedAt": "2026-07-13T07:21:50.675Z",
         "stale": false,
         "warnings": []
       }
@@ -265,7 +265,7 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 6637,
+      "durationMs": 5814,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -293,7 +293,7 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 3342,
+      "durationMs": 2822,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -321,7 +321,7 @@
         "schemeCode": 125497
       },
       "status": 424,
-      "durationMs": 6988,
+      "durationMs": 5888,
       "ok": false,
       "error": "Value Research Online and AdvisorKhoj were resolved, but neither returned a validated holdings or sector table for this refresh.",
       "holdings": 0,
@@ -339,7 +339,7 @@
         "schemeCode": 120377
       },
       "status": 200,
-      "durationMs": 5185,
+      "durationMs": 3065,
       "ok": true,
       "error": null,
       "holdings": 4,
@@ -367,7 +367,7 @@
         "schemeCode": 119774
       },
       "status": 200,
-      "durationMs": 128961,
+      "durationMs": 38542,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -395,7 +395,7 @@
         "schemeCode": 120465
       },
       "status": 200,
-      "durationMs": 6932,
+      "durationMs": 4884,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -418,13 +418,13 @@
   ],
   "ok": false,
   "workflow": {
-    "generatedAt": "2026-07-13T07:09:42.182Z",
+    "generatedAt": "2026-07-13T07:22:58.358Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
-    "installLog": "\nadded 34 packages in 11s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    21 kB           108 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 356ms\n"
+    "installLog": "\nadded 34 packages in 10s\n",
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    21.5 kB         109 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 432ms\n"
   }
 }
