@@ -2,10 +2,12 @@ import { NextResponse } from 'next/server';
 import { getMarketUniverse } from '@/lib/universe';
 import { generatedFundSnapshot } from '@/lib/generated-fund-snapshot';
 import { resolveFundResearch } from '@/lib/fallback-sources';
+import { repairValueResearchFundMatch } from '@/lib/repair-vro-fund-match';
+import { refreshValueResearchPortfolio } from '@/lib/value-research-live-portfolio';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
-export const maxDuration = 40;
+export const maxDuration = 45;
 
 function suppliedFund(searchParams) {
   const id = searchParams.get('fundId');
@@ -24,6 +26,24 @@ function suppliedFund(searchParams) {
     canonicalName: searchParams.get('canonicalName') || displayName,
     variants: preferredSchemeName ? [{ schemeName: preferredSchemeName, schemeCode: preferredSchemeCode }] : []
   };
+}
+
+function withAliases(fund) {
+  const text = `${fund.displayName || ''} ${fund.preferredSchemeName || ''}`;
+  const aliases = [];
+  if (/kotak\s+midcap/i.test(text)) aliases.push('Kotak Emerging Equity Fund', 'Kotak Emerging Equity Scheme');
+  if (/axis\s+large\s+cap/i.test(text)) aliases.push('Axis Bluechip Fund');
+  if (/hdfc\s+large\s+cap/i.test(text)) aliases.push('HDFC Top 100 Fund');
+  if (/nippon\s+india\s+large\s+cap/i.test(text)) aliases.push('Reliance Large Cap Fund');
+  if (/bandhan\s+large\s+cap/i.test(text)) aliases.push('IDFC Large Cap Fund');
+  return aliases.length ? {
+    ...fund,
+    researchAliases: aliases,
+    variants: [
+      ...(fund.variants || []),
+      ...aliases.map((schemeName, index) => ({ schemeName, schemeCode: `snapshot-alias-${index}` }))
+    ]
+  } : fund;
 }
 
 function firstRows(...values) {
@@ -151,12 +171,14 @@ function liveSnapshot(fund, research) {
     sources: current.sources || [],
     sourceDiagnostics: {
       boundedLiveSnapshot: true,
+      exactPortfolio: research?.exactValueResearchPortfolio || null,
+      valueResearchIdentity: research?.valueResearchIdentity || null,
       holdings: holdings.length,
       sectors: sectors.length,
       researchDiagnostics: research?.diagnostics || null,
       registryMatch: research?.registryMatch || null
     },
-    engineVersion: '1.4.0-bounded-live-snapshot'
+    engineVersion: '1.5.0-renamed-fund-snapshot'
   };
 }
 
@@ -164,6 +186,12 @@ function timeoutAfter(ms) {
   return new Promise((_, reject) => {
     setTimeout(() => reject(new Error(`Snapshot source resolution timed out after ${Math.round(ms / 1000)} seconds.`)), ms);
   });
+}
+
+async function resolveSnapshotResearch(fund) {
+  const resolved = await resolveFundResearch(fund);
+  const repaired = await repairValueResearchFundMatch(resolved, fund);
+  return refreshValueResearchPortfolio(repaired);
 }
 
 export async function GET(request) {
@@ -189,7 +217,8 @@ export async function GET(request) {
       });
     }
 
-    const generated = generatedFundSnapshot(fund);
+    const researchFund = withAliases(fund);
+    const generated = generatedFundSnapshot(researchFund);
     if (generated.ok) {
       return NextResponse.json(generated, {
         headers: { 'Cache-Control': 'private, no-store, max-age=0, must-revalidate' }
@@ -197,8 +226,8 @@ export async function GET(request) {
     }
 
     const research = await Promise.race([
-      resolveFundResearch(fund),
-      timeoutAfter(26000)
+      resolveSnapshotResearch(researchFund),
+      timeoutAfter(32000)
     ]);
     const result = liveSnapshot(fund, research);
     if (!result.ok) {
