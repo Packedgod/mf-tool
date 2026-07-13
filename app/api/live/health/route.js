@@ -4,7 +4,7 @@ import { health } from '@/lib/upstream';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-const PORTFOLIO_TABS_BUILD = '2026-07-13-authoritative-nav-momentum-v3';
+const PORTFOLIO_TABS_BUILD = '2026-07-13-terminal-momentum-sync-v4';
 
 export async function GET() {
   try {
@@ -12,7 +12,8 @@ export async function GET() {
       ok: true,
       portfolioTabsBuild: PORTFOLIO_TABS_BUILD,
       navLoader: 'authoritative-with-amfi-history-fallback',
-      momentumLoader: 'authoritative-with-official-and-cache-fallbacks',
+      momentumLoader: 'parallel-live-generated-official-with-terminal-ui-guard',
+      momentumTerminalTimeoutSeconds: 35,
       deploymentHost: process.env.VERCEL_URL || null,
       ...await health()
     }, { headers: { 'Cache-Control': 'no-store' } });
@@ -21,7 +22,8 @@ export async function GET() {
       ok: false,
       portfolioTabsBuild: PORTFOLIO_TABS_BUILD,
       navLoader: 'authoritative-with-amfi-history-fallback',
-      momentumLoader: 'authoritative-with-official-and-cache-fallbacks',
+      momentumLoader: 'parallel-live-generated-official-with-terminal-ui-guard',
+      momentumTerminalTimeoutSeconds: 35,
       deploymentHost: process.env.VERCEL_URL || null,
       mfapi: 'degraded',
       amfi: 'degraded',
