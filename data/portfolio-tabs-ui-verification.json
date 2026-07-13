@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T07:32:29.716Z",
+  "generatedAt": "2026-07-13T07:38:46.465Z",
   "tests": [
     {
       "query": "HDFC Flexi Cap",
@@ -9,8 +9,8 @@
         "preferredSchemeCode": 118955
       },
       "snapshotStatus": 200,
-      "snapshotDurationMs": 1887,
-      "snapshotHoldings": 6,
+      "snapshotDurationMs": 2268,
+      "snapshotHoldings": 5,
       "snapshotSectors": 1,
       "snapshotReady": true,
       "liveStatus": 200,
@@ -30,8 +30,8 @@
         "preferredSchemeCode": 122639
       },
       "snapshotStatus": 200,
-      "snapshotDurationMs": 1201,
-      "snapshotHoldings": 3,
+      "snapshotDurationMs": 1271,
+      "snapshotHoldings": 5,
       "snapshotSectors": 1,
       "snapshotReady": true,
       "liveStatus": 200,
@@ -50,11 +50,11 @@
         "displayName": "SBI Small Cap Fund - Direct Plan - Growth",
         "preferredSchemeCode": 125497
       },
-      "snapshotStatus": 200,
-      "snapshotDurationMs": 967,
-      "snapshotHoldings": 3,
-      "snapshotSectors": 1,
-      "snapshotReady": true,
+      "snapshotStatus": 424,
+      "snapshotDurationMs": 988,
+      "snapshotHoldings": 0,
+      "snapshotSectors": 0,
+      "snapshotReady": false,
       "liveStatus": 424,
       "officialStatus": 200,
       "holdings": 10,
@@ -62,7 +62,7 @@
       "entries": 0,
       "exits": 0,
       "snapshots": 1,
-      "ok": true
+      "ok": false
     },
     {
       "query": "ICICI Prudential Balanced Advantage",
@@ -72,8 +72,8 @@
         "preferredSchemeCode": 120377
       },
       "snapshotStatus": 200,
-      "snapshotDurationMs": 1933,
-      "snapshotHoldings": 5,
+      "snapshotDurationMs": 1680,
+      "snapshotHoldings": 4,
       "snapshotSectors": 1,
       "snapshotReady": true,
       "liveStatus": 200,
@@ -92,8 +92,8 @@
         "displayName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
         "preferredSchemeCode": 119774
       },
-      "snapshotStatus": 424,
-      "snapshotDurationMs": 2642,
+      "snapshotStatus": 0,
+      "snapshotDurationMs": 15001,
       "snapshotHoldings": 0,
       "snapshotSectors": 0,
       "snapshotReady": false,
@@ -114,7 +114,7 @@
         "preferredSchemeCode": 120465
       },
       "snapshotStatus": 200,
-      "snapshotDurationMs": 764,
+      "snapshotDurationMs": 1310,
       "snapshotHoldings": 5,
       "snapshotSectors": 1,
       "snapshotReady": true,
