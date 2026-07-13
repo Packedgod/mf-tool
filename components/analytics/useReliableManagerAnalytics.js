@@ -45,8 +45,8 @@ function mergeSources(candidates) {
   return [...new Map(rows.map(item => [item.url || `${item.name}-${item.type || ''}`, item])).values()];
 }
 
-function mergeMomentum({ live, baseLive, official, cached, fundId }) {
-  const candidates = [live, baseLive, official, cached].filter(Boolean);
+function mergeMomentum({ live, baseLive, snapshot, official, cached, fundId }) {
+  const candidates = [live, baseLive, snapshot, official, cached].filter(Boolean);
   if (!candidates.length) return null;
 
   const primary = candidates.find(usefulMomentum) || candidates[0];
@@ -56,7 +56,7 @@ function mergeMomentum({ live, baseLive, official, cached, fundId }) {
   const entries = firstRows(candidates, item => item?.entries);
   const exits = firstRows(candidates, item => item?.exits);
   const snapshots = candidates.map(item => item?.snapshot).filter(Boolean);
-  const snapshot = { ...(snapshots.at(-1) || {}), ...(snapshots[0] || {}) };
+  const mergedSnapshot = { ...(snapshots.at(-1) || {}), ...(snapshots[0] || {}) };
 
   let snapshotCount = Math.max(
     0,
@@ -80,28 +80,33 @@ function mergeMomentum({ live, baseLive, official, cached, fundId }) {
     exits,
     sources: mergeSources(candidates),
     snapshot: {
-      ...snapshot,
+      ...mergedSnapshot,
       holdings,
       sectorWeights: sectors,
       snapshotCount,
-      comparisonMode: snapshot.comparisonMode || (snapshotCount >= 2 ? 'top-holdings-proxy' : 'current-holdings-baseline'),
-      sectorBasis: snapshot.sectorBasis || 'Current disclosed holdings grouped by reported or resolved sector',
-      factsheetLabel: snapshot.factsheetLabel || primary?.snapshot?.factsheetLabel || 'Live portfolio sources'
+      comparisonMode: mergedSnapshot.comparisonMode || (snapshotCount >= 2 ? 'top-holdings-proxy' : 'current-holdings-baseline'),
+      sectorBasis: mergedSnapshot.sectorBasis || 'Current disclosed holdings grouped by reported or resolved sector',
+      factsheetLabel: mergedSnapshot.factsheetLabel || primary?.snapshot?.factsheetLabel || 'Live portfolio sources'
     },
     coverage: {
       ...(primary?.coverage || {}),
       snapshotCount,
       resolvedPct,
       comparisonMode: primary?.coverage?.comparisonMode
-        || snapshot.comparisonMode
+        || mergedSnapshot.comparisonMode
         || (snapshotCount >= 2 ? 'top-holdings-proxy' : 'current-holdings-baseline')
     },
     __fundId: fundId,
     recovery: {
       usedIndependentLiveRequest: usefulMomentum(live),
       usedPrimaryHookRequest: usefulMomentum(baseLive),
+      usedGeneratedSnapshot: usefulMomentum(snapshot),
       usedOfficialFallback: usefulMomentum(official),
-      usedCachedDataset: !usefulMomentum(live) && !usefulMomentum(baseLive) && !usefulMomentum(official) && usefulMomentum(cached)
+      usedCachedDataset: !usefulMomentum(live)
+        && !usefulMomentum(baseLive)
+        && !usefulMomentum(snapshot)
+        && !usefulMomentum(official)
+        && usefulMomentum(cached)
     }
   };
 }
@@ -116,19 +121,45 @@ function wait(ms, signal) {
   });
 }
 
-async function fetchJson(url, { signal, attempts = 2, options = {} } = {}) {
+async function fetchAttempt(url, { signal, options = {}, timeoutMs = 30000 } = {}) {
+  const controller = new AbortController();
+  let timedOut = false;
+  const relayAbort = () => controller.abort();
+  signal?.addEventListener('abort', relayAbort, { once: true });
+  const timer = window.setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, timeoutMs);
+
+  try {
+    const response = await fetch(url, {
+      cache: 'no-store',
+      ...options,
+      signal: controller.signal
+    });
+    const text = await response.text();
+    let data;
+    try { data = JSON.parse(text); }
+    catch { throw new Error(`The server returned a non-JSON response (${response.status}).`); }
+    if (!response.ok || !data?.ok) {
+      throw new Error(data?.detail || data?.error || `Request failed (${response.status}).`);
+    }
+    return data;
+  } catch (error) {
+    if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
+    if (timedOut) throw new Error(`Request timed out after ${Math.round(timeoutMs / 1000)} seconds.`);
+    throw error;
+  } finally {
+    window.clearTimeout(timer);
+    signal?.removeEventListener('abort', relayAbort);
+  }
+}
+
+async function fetchJson(url, { signal, attempts = 2, options = {}, timeoutMs = 30000 } = {}) {
   let lastError;
   for (let attempt = 0; attempt < attempts; attempt += 1) {
     try {
-      const response = await fetch(url, { cache: 'no-store', signal, ...options });
-      const text = await response.text();
-      let data;
-      try { data = JSON.parse(text); }
-      catch { throw new Error(`The server returned a non-JSON response (${response.status}).`); }
-      if (!response.ok || !data?.ok) {
-        throw new Error(data?.detail || data?.error || `Request failed (${response.status}).`);
-      }
-      return data;
+      return await fetchAttempt(url, { signal, options, timeoutMs });
     } catch (error) {
       if (error?.name === 'AbortError') throw error;
       lastError = error;
@@ -142,6 +173,7 @@ async function requestSeries(payload, signal) {
   return fetchJson('/api/live/series', {
     signal,
     attempts: 3,
+    timeoutMs: 65000,
     options: {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
@@ -241,12 +273,14 @@ export default function useReliableManagerAnalytics(options = {}) {
   const navControllerRef = useRef(null);
 
   const [authoritativeMomentum, setAuthoritativeMomentum] = useState(null);
+  const [generatedMomentum, setGeneratedMomentum] = useState(null);
   const [officialMomentum, setOfficialMomentum] = useState(null);
   const [cachedMomentum, setCachedMomentum] = useState(null);
   const [momentumLoadState, setMomentumLoadState] = useState('idle');
   const [momentumLoadMessage, setMomentumLoadMessage] = useState('Select a fund.');
   const [momentumNonce, setMomentumNonce] = useState(0);
   const momentumControllerRef = useRef(null);
+  const momentumRequestRef = useRef(0);
 
   useEffect(() => {
     navControllerRef.current?.abort();
@@ -258,17 +292,21 @@ export default function useReliableManagerAnalytics(options = {}) {
       return undefined;
     }
 
+    let cachedAtStart = null;
     try {
       const saved = window.localStorage.getItem(navCacheKey);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (usefulNav(parsed)) setCachedNav(parsed);
+        if (usefulNav(parsed)) {
+          cachedAtStart = parsed;
+          setCachedNav(parsed);
+        }
       }
     } catch {}
 
     const controller = new AbortController();
     navControllerRef.current = controller;
-    setNavLoadState('syncing');
+    setNavLoadState(cachedAtStart ? 'degraded' : 'syncing');
 
     loadNavBundle(base, controller.signal)
       .then(data => {
@@ -281,7 +319,7 @@ export default function useReliableManagerAnalytics(options = {}) {
       })
       .catch(error => {
         if (error?.name === 'AbortError') return;
-        setNavLoadState(current => usefulNav(cachedNav) ? 'degraded' : 'error');
+        setNavLoadState(cachedAtStart ? 'degraded' : 'error');
         setNavLoadMessage(error.message);
       });
 
@@ -290,64 +328,104 @@ export default function useReliableManagerAnalytics(options = {}) {
 
   useEffect(() => {
     momentumControllerRef.current?.abort();
+    const requestId = ++momentumRequestRef.current;
     setAuthoritativeMomentum(null);
+    setGeneratedMomentum(null);
     setOfficialMomentum(null);
     setCachedMomentum(null);
-    setMomentumLoadMessage('Loading manager holdings, sectors and portfolio changes…');
+    setMomentumLoadMessage('Synchronising manager holdings, sectors and portfolio changes…');
+
     if (!selectedFund || !momentumCacheKey) {
       setMomentumLoadState('idle');
       return undefined;
     }
 
+    let cachedAtStart = null;
     try {
       const saved = window.localStorage.getItem(momentumCacheKey);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (parsed?.__fundId === selectedFund.id && usefulMomentum(parsed)) setCachedMomentum(parsed);
+        if (parsed?.__fundId === selectedFund.id && usefulMomentum(parsed)) {
+          cachedAtStart = parsed;
+          setCachedMomentum(parsed);
+        }
       }
     } catch {}
 
     const controller = new AbortController();
     momentumControllerRef.current = controller;
-    setMomentumLoadState('syncing');
+    setMomentumLoadState(cachedAtStart ? 'degraded' : 'syncing');
 
     const params = new URLSearchParams({
       fundId: selectedFund.id,
       schemeCode: String(selectedFund.preferredSchemeCode),
-      authoritative: String(Date.now())
+      requestId: String(requestId)
     });
 
-    const livePromise = fetchJson(`/api/fund-intelligence?${params}`, {
+    const markReady = (message) => {
+      if (controller.signal.aborted || requestId !== momentumRequestRef.current) return;
+      setMomentumLoadState('ready');
+      setMomentumLoadMessage(message);
+      setLastSuccessfulRefresh(new Date());
+    };
+
+    const generatedPromise = fetchJson(`/api/fund-snapshot?${params}`, {
       signal: controller.signal,
-      attempts: 2
+      attempts: 1,
+      timeoutMs: 15000
     }).then(data => {
-      if (!controller.signal.aborted) setAuthoritativeMomentum(data);
+      if (controller.signal.aborted || requestId !== momentumRequestRef.current) return data;
+      setGeneratedMomentum(data);
+      if (usefulMomentum(data)) {
+        markReady('Momentum coverage synchronised from the latest source-tracked portfolio snapshot; live enrichment is continuing.');
+      }
+      return data;
+    });
+
+    const livePromise = fetchJson(`/api/fund-intelligence?${params}&live=${Date.now()}`, {
+      signal: controller.signal,
+      attempts: 2,
+      timeoutMs: 55000
+    }).then(data => {
+      if (controller.signal.aborted || requestId !== momentumRequestRef.current) return data;
+      setAuthoritativeMomentum(data);
+      if (usefulMomentum(data)) {
+        markReady('Live manager holdings, sector positioning and timing coverage synchronised successfully.');
+      }
       return data;
     });
 
     const officialPromise = schemeId
-      ? fetchJson(`/api/momentum?schemeId=${encodeURIComponent(schemeId)}&authoritative=${Date.now()}`, {
+      ? fetchJson(`/api/momentum?schemeId=${encodeURIComponent(schemeId)}&fallback=${Date.now()}`, {
         signal: controller.signal,
-        attempts: 2
+        attempts: 2,
+        timeoutMs: 20000
       }).then(data => {
-        if (!controller.signal.aborted) setOfficialMomentum(data);
+        if (controller.signal.aborted || requestId !== momentumRequestRef.current) return data;
+        setOfficialMomentum(data);
+        if (usefulMomentum(data)) {
+          markReady('Momentum coverage synchronised through the official portfolio fallback while live enrichment continues.');
+        }
         return data;
       })
       : Promise.resolve(null);
 
-    Promise.allSettled([livePromise, officialPromise]).then(results => {
-      if (controller.signal.aborted) return;
-      const usable = results.some(result => result.status === 'fulfilled' && usefulMomentum(result.value));
-      if (usable || usefulMomentum(base.momentumData)) {
+    Promise.allSettled([generatedPromise, livePromise, officialPromise]).then(results => {
+      if (controller.signal.aborted || requestId !== momentumRequestRef.current) return;
+      const usable = results.some(result => result.status === 'fulfilled' && usefulMomentum(result.value))
+        || usefulMomentum(base.momentumData)
+        || usefulMomentum(cachedAtStart);
+      if (usable) {
         setMomentumLoadState('ready');
-        setMomentumLoadMessage('Live manager holdings, sector positioning and timing coverage loaded successfully.');
-        setLastSuccessfulRefresh(new Date());
+        setMomentumLoadMessage(current => current.includes('synchronised')
+          ? current
+          : 'Momentum coverage synchronised from the best available validated source.');
       } else {
         const errors = results
           .filter(result => result.status === 'rejected')
           .map(result => result.reason?.message)
           .filter(Boolean);
-        setMomentumLoadState(usefulMomentum(cachedMomentum) ? 'degraded' : 'error');
+        setMomentumLoadState('error');
         setMomentumLoadMessage(errors.join(' ') || 'No validated portfolio dataset was returned.');
       }
     });
@@ -358,10 +436,11 @@ export default function useReliableManagerAnalytics(options = {}) {
   const mergedMomentumData = useMemo(() => mergeMomentum({
     live: authoritativeMomentum,
     baseLive: base.momentumData,
+    snapshot: generatedMomentum,
     official: officialMomentum,
     cached: cachedMomentum,
     fundId: selectedFund?.id
-  }), [authoritativeMomentum, base.momentumData, officialMomentum, cachedMomentum, selectedFund?.id]);
+  }), [authoritativeMomentum, base.momentumData, generatedMomentum, officialMomentum, cachedMomentum, selectedFund?.id]);
 
   useEffect(() => {
     if (!momentumCacheKey || !usefulMomentum(mergedMomentumData)) return;
@@ -403,13 +482,20 @@ export default function useReliableManagerAnalytics(options = {}) {
     : navLoadMessage;
 
   const hasMomentum = usefulMomentum(mergedMomentumData);
+  const onlyCachedMomentum = hasMomentum
+    && !usefulMomentum(authoritativeMomentum)
+    && !usefulMomentum(base.momentumData)
+    && !usefulMomentum(generatedMomentum)
+    && !usefulMomentum(officialMomentum);
   const momentumState = hasMomentum
-    ? (usefulMomentum(authoritativeMomentum) || usefulMomentum(base.momentumData) || usefulMomentum(officialMomentum) ? 'ready' : 'degraded')
+    ? (onlyCachedMomentum ? 'degraded' : 'ready')
     : momentumLoadState;
   const momentumMessage = hasMomentum
-    ? (momentumState === 'ready'
-      ? 'Live manager holdings, sector positioning and timing coverage loaded successfully.'
-      : `The last valid portfolio dataset remains visible. ${momentumLoadMessage}`)
+    ? (onlyCachedMomentum
+      ? `The last valid momentum dataset remains visible. ${momentumLoadMessage}`
+      : momentumLoadMessage.includes('synchronised')
+        ? momentumLoadMessage
+        : `${mergedMomentumData.holdings?.length || 0} holdings and ${mergedMomentumData.sectors?.length || 0} sectors synchronised for the selected fund.`)
     : momentumLoadMessage;
 
   const metricsBase = useMemo(
