@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T07:21:43.168Z",
+  "generatedAt": "2026-07-13T07:28:06.272Z",
   "tests": [
     {
       "query": "HDFC Flexi Cap",
@@ -8,6 +8,11 @@
         "displayName": "HDFC Flexi Cap Fund - Growth Option - Direct Plan",
         "preferredSchemeCode": 118955
       },
+      "snapshotStatus": 404,
+      "snapshotDurationMs": 27,
+      "snapshotHoldings": 0,
+      "snapshotSectors": 0,
+      "snapshotReady": false,
       "liveStatus": 200,
       "officialStatus": 200,
       "holdings": 5,
@@ -15,7 +20,7 @@
       "entries": 5,
       "exits": 5,
       "snapshots": 2,
-      "ok": true
+      "ok": false
     },
     {
       "query": "Parag Parikh Flexi Cap",
@@ -24,6 +29,11 @@
         "displayName": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
         "preferredSchemeCode": 122639
       },
+      "snapshotStatus": 404,
+      "snapshotDurationMs": 6,
+      "snapshotHoldings": 0,
+      "snapshotSectors": 0,
+      "snapshotReady": false,
       "liveStatus": 200,
       "officialStatus": 200,
       "holdings": 5,
@@ -31,7 +41,7 @@
       "entries": 5,
       "exits": 5,
       "snapshots": 2,
-      "ok": true
+      "ok": false
     },
     {
       "query": "SBI Small Cap",
@@ -40,6 +50,11 @@
         "displayName": "SBI Small Cap Fund - Direct Plan - Growth",
         "preferredSchemeCode": 125497
       },
+      "snapshotStatus": 404,
+      "snapshotDurationMs": 7,
+      "snapshotHoldings": 0,
+      "snapshotSectors": 0,
+      "snapshotReady": false,
       "liveStatus": 424,
       "officialStatus": 200,
       "holdings": 10,
@@ -47,7 +62,7 @@
       "entries": 0,
       "exits": 0,
       "snapshots": 1,
-      "ok": true
+      "ok": false
     },
     {
       "query": "ICICI Prudential Balanced Advantage",
@@ -56,6 +71,11 @@
         "displayName": "ICICI Prudential Balanced Advantage Fund - Direct Plan -  Growth",
         "preferredSchemeCode": 120377
       },
+      "snapshotStatus": 404,
+      "snapshotDurationMs": 4,
+      "snapshotHoldings": 0,
+      "snapshotSectors": 0,
+      "snapshotReady": false,
       "liveStatus": 200,
       "officialStatus": 200,
       "holdings": 4,
@@ -63,7 +83,7 @@
       "entries": 0,
       "exits": 0,
       "snapshots": 1,
-      "ok": true
+      "ok": false
     },
     {
       "query": "Kotak Midcap Fund",
@@ -72,6 +92,11 @@
         "displayName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
         "preferredSchemeCode": 119774
       },
+      "snapshotStatus": 404,
+      "snapshotDurationMs": 13,
+      "snapshotHoldings": 0,
+      "snapshotSectors": 0,
+      "snapshotReady": false,
       "liveStatus": 200,
       "officialStatus": null,
       "holdings": 5,
@@ -79,7 +104,7 @@
       "entries": 0,
       "exits": 0,
       "snapshots": 1,
-      "ok": true
+      "ok": false
     },
     {
       "query": "Axis Large Cap Fund",
@@ -88,6 +113,11 @@
         "displayName": "Axis Large Cap Fund - Direct Plan - Growth",
         "preferredSchemeCode": 120465
       },
+      "snapshotStatus": 404,
+      "snapshotDurationMs": 5,
+      "snapshotHoldings": 0,
+      "snapshotSectors": 0,
+      "snapshotReady": false,
       "liveStatus": 200,
       "officialStatus": null,
       "holdings": 5,
@@ -95,14 +125,18 @@
       "entries": 5,
       "exits": 5,
       "snapshots": 2,
-      "ok": true
+      "ok": false
     }
   ],
   "uiFiles": {
     "resilientLoader": true,
+    "instantSnapshotRequest": true,
+    "boundedLiveRequest": true,
+    "immediateReadyTransition": true,
+    "staleRequestProtection": true,
     "sectorDerivation": true,
     "timingBaseline": true,
     "officialMappingRestored": true
   },
-  "ok": true
+  "ok": false
 }
