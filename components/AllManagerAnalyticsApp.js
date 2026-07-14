@@ -33,7 +33,7 @@ export default function AllManagerAnalyticsApp({ initialManagerName = '', initia
     managerState, managerMessage, exactFunds, amcFunds, selectedFund, selectedFundId, setSelectedFundId,
     fundState, exactAssignment, proxyMode, setProxyMode, proxyCodeInput, setProxyCodeInput,
     proxyCodeStatus, validateProxyCode, selectedProxy, activeTab, setActiveTab,
-    startDate, setStartDate, analysisStart, endDate, setEndDate, riskFree, setRiskFree,
+    startDate, setStartDate, endDate, setEndDate, riskFree, setRiskFree,
     navState, navMessage, momentumData, momentumState, momentumMessage, lastRefresh,
     autoRefresh, setAutoRefresh, score, provisional, refreshAll
   } = data;
@@ -122,7 +122,6 @@ export default function AllManagerAnalyticsApp({ initialManagerName = '', initia
 
           <section className="date-controls">
             <label>From<input type="date" value={startDate} onChange={event => setStartDate(event.target.value)} /></label>
-            <label>Manager-aware start<input type="date" value={analysisStart} readOnly /></label>
             <label>To<input type="date" value={endDate} onChange={event => setEndDate(event.target.value)} /></label>
             <label>Risk-free rate %<input type="number" value={riskFree} step="0.1" onChange={event => setRiskFree(Number(event.target.value))} /></label>
           </section>

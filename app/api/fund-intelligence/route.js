@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getMarketUniverse } from '@/lib/universe';
-import { resolveFundResearch } from '@/lib/fallback-sources';
+import { enrichFundResearchLookThrough, resolveFundResearch } from '@/lib/fallback-sources';
 import { buildFallbackMomentumFast } from '@/lib/fallback-momentum-fast';
 import { enrichResearchWithOfficialPortfolio } from '@/lib/official-portfolio';
 import { normalizeResearchHistory } from '@/lib/normalize-research-history';
@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const maxDuration = 60;
 
-const ENGINE_VERSION = '1.6.0-moneycontrol-isin-portfolio';
+const ENGINE_VERSION = '1.7.0-moneycontrol-look-through-trades';
 const FUND_ALIASES = [
   { pattern: /kotak\s+midcap/i, aliases: ['Kotak Emerging Equity Fund', 'Kotak Emerging Equity Scheme'] },
   { pattern: /axis\s+large\s+cap/i, aliases: ['Axis Bluechip Fund'] },
@@ -260,7 +260,8 @@ export async function GET(request) {
     const resolvedDocuments = await resolveAdvisorKhojDocuments(publicResearch, researchFund.displayName);
     const sourceResearch = useBestPortfolioDocument(resolvedDocuments);
     const enriched = sanitiseResearch(await enrichResearchWithOfficialPortfolio(sourceResearch, researchFund.displayName));
-    const research = sanitiseResearch(normalizeResearchHistory(enriched));
+    const normalized = sanitiseResearch(normalizeResearchHistory(enriched));
+    const research = sanitiseResearch(await enrichFundResearchLookThrough(normalized, researchFund, universe.families));
     const intelligence = await buildFallbackMomentumFast(selectedFund, research);
 
     const holdingCount = intelligence.holdings?.length || 0;

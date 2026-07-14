@@ -49,12 +49,17 @@ function mergePayload(primary, fallback, fundId) {
   const exits = primary?.exits?.length ? primary.exits : fallback?.exits || [];
   const primarySnapshot = primary?.snapshot || {};
   const fallbackSnapshot = fallback?.snapshot || {};
+  const comparisonMode = primary?.coverage?.comparisonMode
+    || primarySnapshot.comparisonMode
+    || fallback?.coverage?.comparisonMode
+    || fallbackSnapshot.comparisonMode
+    || 'current-holdings-baseline';
   let snapshotCount = Math.max(
     Number(primary?.coverage?.snapshotCount || primarySnapshot.snapshotCount || 0),
     Number(fallback?.coverage?.snapshotCount || fallbackSnapshot.snapshotCount || 0),
     holdings.length ? 1 : 0
   );
-  if ((entries.length || exits.length) && snapshotCount < 2) snapshotCount = 2;
+  if ((entries.length || exits.length) && snapshotCount < 2 && comparisonMode !== 'reported-one-month-allocation-change') snapshotCount = 2;
   const resolvedPct = Math.max(
     Number(primary?.coverage?.resolvedPct || 0),
     Number(fallback?.coverage?.resolvedPct || 0),
@@ -75,15 +80,14 @@ function mergePayload(primary, fallback, fundId) {
       holdings,
       sectorWeights: sectors,
       snapshotCount,
-      comparisonMode: primarySnapshot.comparisonMode
-        || fallbackSnapshot.comparisonMode
-        || (snapshotCount >= 2 ? 'top-holdings-proxy' : 'current-holdings-baseline')
+      comparisonMode
     },
     coverage: {
       ...(fallback?.coverage || {}),
       ...(primary?.coverage || {}),
       snapshotCount,
-      resolvedPct
+      resolvedPct,
+      comparisonMode
     },
     sources: [...new Map([
       ...(primary?.sources || []),

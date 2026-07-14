@@ -66,13 +66,16 @@ function mergeMomentum({ live, baseLive, snapshot, official, cached, fundId }) {
   const exits = firstRows(candidates, item => item?.exits);
   const snapshots = candidates.map(item => item?.snapshot).filter(Boolean);
   const mergedSnapshot = { ...(snapshots.at(-1) || {}), ...(snapshots[0] || {}) };
+  const comparisonMode = primary?.coverage?.comparisonMode
+    || mergedSnapshot.comparisonMode
+    || 'current-holdings-baseline';
 
   let snapshotCount = Math.max(
     0,
     ...candidates.map(item => Number(item?.coverage?.snapshotCount || item?.snapshot?.snapshotCount || 0))
   );
   if (!snapshotCount && (holdings.length || sectors.length)) snapshotCount = 1;
-  if ((entries.length || exits.length) && snapshotCount < 2) snapshotCount = 2;
+  if ((entries.length || exits.length) && snapshotCount < 2 && comparisonMode !== 'reported-one-month-allocation-change') snapshotCount = 2;
 
   const resolvedPct = Math.max(
     0,
@@ -93,7 +96,7 @@ function mergeMomentum({ live, baseLive, snapshot, official, cached, fundId }) {
       holdings,
       sectorWeights: sectors,
       snapshotCount,
-      comparisonMode: mergedSnapshot.comparisonMode || (snapshotCount >= 2 ? 'top-holdings-proxy' : 'current-holdings-baseline'),
+      comparisonMode,
       sectorBasis: mergedSnapshot.sectorBasis || 'Current disclosed holdings grouped by reported or resolved sector',
       factsheetLabel: mergedSnapshot.factsheetLabel || primary?.snapshot?.factsheetLabel || 'Live portfolio sources'
     },
@@ -101,9 +104,7 @@ function mergeMomentum({ live, baseLive, snapshot, official, cached, fundId }) {
       ...(primary?.coverage || {}),
       snapshotCount,
       resolvedPct,
-      comparisonMode: primary?.coverage?.comparisonMode
-        || mergedSnapshot.comparisonMode
-        || (snapshotCount >= 2 ? 'top-holdings-proxy' : 'current-holdings-baseline')
+      comparisonMode
     },
     __fundId: fundId,
     recovery: {

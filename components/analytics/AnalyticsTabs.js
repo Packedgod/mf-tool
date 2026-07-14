@@ -42,7 +42,34 @@ function weightText(item) {
   return `${previous} → ${current}`;
 }
 
-function EventCard({ item, type }) {
+function usableSector(item) {
+  const sector = String(item?.sector || '').trim();
+  if (sector && !/^(other|unclassified|sector classification pending)$/i.test(sector)) return sector;
+  const name = String(item?.name || '').toLowerCase();
+  if (/bank|financial|finance|insurance/.test(name)) return 'Financial Services';
+  if (/technology|software|digital/.test(name)) return 'Information Technology';
+  if (/pharma|health|diagnostic|biotech/.test(name)) return 'Healthcare';
+  if (/fmcg|consumption|consumer|rural/.test(name)) return 'Consumer';
+  if (/transport|logistic|industrial|infrastructure/.test(name)) return 'Industrials';
+  if (/gilt|bond|savings|liquid|debt/.test(name)) return 'Fixed Income';
+  if (/treps|current assets|cash/.test(name)) return 'Cash & Equivalents';
+  return item?.holdingType === 'underlying-fund' ? 'Diversified / Multi-asset' : 'Sector classification pending';
+}
+
+function holdingTypeLabel(item) {
+  if (item?.holdingType === 'look-through-stock') return 'Look-through stock';
+  if (item?.holdingType === 'underlying-fund') return 'Underlying fund';
+  if (item?.holdingType === 'debt') return 'Debt security';
+  if (item?.holdingType === 'cash') return 'Cash / TREPS';
+  return 'Stock';
+}
+
+function approxExposureCr(item, aumCr) {
+  if (!Number.isFinite(item?.changeWeightPct) || !Number.isFinite(aumCr)) return null;
+  return Math.abs(item.changeWeightPct) * aumCr / 100;
+}
+
+function EventCard({ item, type, aumCr }) {
   const isExit = type === 'exit';
   const action = item.action === 'new' ? 'New position'
     : item.action === 'increased' ? 'Weight increased'
@@ -55,41 +82,116 @@ function EventCard({ item, type }) {
   const tone = item.ok
     ? (isExit ? scoreTone(50 - (item.postEventReturnPct || 0) * 2) : scoreTone(50 + (item.returnSinceEventPct || 0) * 2))
     : 'neutral';
+  const exposureCr = approxExposureCr(item, aumCr);
 
   return (
     <article className="event-card">
-      <div><strong>{item.name}</strong><span>{item.sector || 'Sector not classified'} · {action}</span></div>
+      <div><strong>{item.name}</strong><span>{usableSector(item)} · {action}</span></div>
       <b className={tone}>{headline}</b>
       <p><strong>{weightText(item)}</strong>{Number.isFinite(item.changeWeightPct) ? ` · ${item.changeWeightPct > 0 ? '+' : ''}${item.changeWeightPct.toFixed(2)} percentage points.` : ''}</p>
+      {Number.isFinite(exposureCr) ? <p>Approximate portfolio exposure {isExit ? 'reduced' : 'added'}: <strong>₹{num(exposureCr)} crore</strong> using latest AUM.</p> : null}
       <p>{item.ok
         ? (isExit
-          ? `Observed around ${item.eventPriceDate}; post-change move ${pct(item.postEventReturnPct)} from ₹${num(item.eventPrice)}.`
-          : `Observed around ${item.eventPriceDate}; move since observation ${pct(item.returnSinceEventPct)} from ₹${num(item.eventPrice)}.`)
+          ? `Market price near the start of the observed change: ₹${num(item.eventPrice)} on ${item.eventPriceDate}; subsequent market move ${pct(item.postEventReturnPct)}.`
+          : `Market price near the start of the observed change: ₹${num(item.eventPrice)} on ${item.eventPriceDate}; subsequent market move ${pct(item.returnSinceEventPct)}.`)
         : item.error}</p>
+      <small>Prices and AUM-derived exposure are reference estimates, not the fund's undisclosed execution price or transaction proceeds.</small>
     </article>
+  );
+}
+
+function nearestNav(rows, date, fallbackIndex) {
+  if (!rows?.length) return null;
+  const fallback = rows[Math.max(0, Math.min(rows.length - 1, fallbackIndex))];
+  if (!date) return fallback;
+  const target = new Date(date).getTime();
+  if (!Number.isFinite(target)) return fallback;
+  return rows.reduce((best, item) => Math.abs(new Date(item.date).getTime() - target) < Math.abs(new Date(best.date).getTime() - target) ? item : best, rows[0]);
+}
+
+function NavMovement({ series, previousAsOf, currentAsOf }) {
+  if (!series?.length) return null;
+  const end = nearestNav(series, currentAsOf, series.length - 1);
+  const start = nearestNav(series, previousAsOf, Math.max(0, series.length - 23));
+  const change = end && start && start.nav > 0 ? (end.nav / start.nav - 1) * 100 : null;
+  return (
+    <div className="nav-movement-panel">
+      <div><span>Fund NAV at period start</span><strong>₹{num(start?.nav)}</strong><small>{start?.date || 'Unavailable'}</small></div>
+      <div><span>Latest fund NAV</span><strong>₹{num(end?.nav)}</strong><small>{end?.date || 'Unavailable'}</small></div>
+      <div><span>NAV movement during change window</span><strong className={scoreTone(50 + (change || 0) * 2)}>{pct(change)}</strong><small>Market and portfolio effects combined</small></div>
+    </div>
+  );
+}
+
+function replacementPairs(entries, exits) {
+  const remaining = [...entries];
+  return exits.map(sold => {
+    if (!remaining.length) return { sold, bought: null };
+    let bestIndex = 0;
+    let bestScore = -Infinity;
+    remaining.forEach((bought, index) => {
+      const sameSector = usableSector(sold) === usableSector(bought) ? 10 : 0;
+      const weightDistance = Math.abs(Math.abs(sold.changeWeightPct || 0) - Math.abs(bought.changeWeightPct || 0));
+      const score = sameSector - weightDistance;
+      if (score > bestScore) { bestScore = score; bestIndex = index; }
+    });
+    return { sold, bought: remaining.splice(bestIndex, 1)[0] };
+  }).filter(item => item.bought);
+}
+
+function ReplacementMap({ entries, exits, aumCr }) {
+  const pairs = replacementPairs(entries, exits);
+  if (!pairs.length) return null;
+  return (
+    <div className="replacement-panel">
+      <div className="subsection-heading"><div><span className="eyebrow">Same-period allocation map</span><h3>What was reduced and what was added</h3></div><small>Pairing is inferred from sector and weight movement; filings do not identify transaction-to-transaction replacements.</small></div>
+      <div className="replacement-grid">{pairs.map(({ sold, bought }) => {
+        const soldCr = approxExposureCr(sold, aumCr);
+        const boughtCr = approxExposureCr(bought, aumCr);
+        return <article key={`${sold.name}-${bought.name}`}><div><span>Reduced / sold</span><strong>{sold.name}</strong><small>{Math.abs(sold.changeWeightPct || 0).toFixed(2)} pp{Number.isFinite(soldCr) ? ` · approx. ₹${num(soldCr)} cr` : ''}{Number.isFinite(sold.eventPrice) ? ` · market ₹${num(sold.eventPrice)}` : ''}</small></div><b>→</b><div><span>Added / probable replacement</span><strong>{bought.name}</strong><small>{Math.abs(bought.changeWeightPct || 0).toFixed(2)} pp{Number.isFinite(boughtCr) ? ` · approx. ₹${num(boughtCr)} cr` : ''}{Number.isFinite(bought.eventPrice) ? ` · market ₹${num(bought.eventPrice)}` : ''}</small></div></article>;
+      })}</div>
+    </div>
   );
 }
 
 function deriveSectors(holdings) {
   const totals = new Map();
   for (const item of holdings || []) {
-    const sector = item.sector || 'Other';
+    const sector = usableSector(item);
     const weight = Number(item.weight);
     if (!Number.isFinite(weight) || weight <= 0) continue;
     totals.set(sector, (totals.get(sector) || 0) + weight);
   }
-  return [...totals.entries()]
-    .map(([sector, weight]) => ({ sector, weight }))
-    .sort((a, b) => b.weight - a.weight);
+  return [...totals.entries()].map(([sector, weight]) => ({ sector, weight })).sort((a, b) => b.weight - a.weight);
 }
 
 function CurrentBook({ title, holdings, note }) {
-  if (!holdings?.length) return <div className="coverage-note"><strong>Portfolio loading.</strong> The recovery loader is retrying the selected fund’s holdings source.</div>;
+  if (!holdings?.length) return <div className="coverage-note"><strong>Portfolio loading.</strong> The recovery loader is retrying the selected fund's holdings source.</div>;
   return (
     <div className="current-book">
       <span>{title}</span>
       {note ? <small>{note}</small> : null}
-      {holdings.slice(0, 10).map(item => <p key={item.name}><strong>{item.name}</strong><b>{pct(item.weight)}</b></p>)}
+      {holdings.slice(0, 12).map(item => <p key={item.name}><strong>{item.name}</strong><b>{pct(item.weight)}</b></p>)}
+    </div>
+  );
+}
+
+function HoldingsTable({ holdings, holdingBasis }) {
+  if (!holdings?.length) return null;
+  return (
+    <div className="holdings-section">
+      <div className="subsection-heading"><div><span className="eyebrow">Portfolio holdings</span><h3>Stocks and securities held</h3></div><small>{holdingBasis}</small></div>
+      <div className="sector-table-wrap holdings-table-wrap"><table><thead><tr><th>Holding</th><th>Type</th><th>Sector / mandate</th><th>Portfolio weight</th><th>1M allocation change</th><th>1M market move</th><th>3M</th><th>6M</th></tr></thead><tbody>{holdings.map(item => <tr key={item.name}><td><strong>{item.name}</strong>{item.exposureSources?.length ? <small>Via {item.exposureSources.slice(0, 2).join(', ')}</small> : null}</td><td>{holdingTypeLabel(item)}</td><td>{usableSector(item)}</td><td>{pct(item.weight)}</td><td>{Number.isFinite(item.oneMonthWeightChange) ? movementText(item.oneMonthWeightChange) : 'Not reported'}</td><td>{pct(item.return1mPct)}</td><td>{pct(item.return3mPct)}</td><td>{pct(item.return6mPct)}</td></tr>)}</tbody></table></div>
+    </div>
+  );
+}
+
+function UnderlyingFunds({ funds }) {
+  if (!funds?.length) return null;
+  return (
+    <div className="underlying-section">
+      <div className="subsection-heading"><div><span className="eyebrow">Direct FoF holdings</span><h3>Underlying funds held directly</h3></div><small>Every underlying scheme is classified by mandate; resolved schemes also show their stock look-through coverage.</small></div>
+      <div className="underlying-grid">{funds.map(item => <article key={item.name}><span>{usableSector(item)}</span><strong>{item.name}</strong><div><b>{pct(item.weight)} direct weight</b><b>{Number.isFinite(item.oneMonthWeightChange) ? `${movementText(item.oneMonthWeightChange)} in 1M` : '1M change not reported'}</b></div><small>{item.lookThroughStatus === 'resolved' ? `${item.lookThroughHoldings} stocks · ${item.lookThroughSectors} sectors resolved` : item.holdingType === 'underlying-fund' ? 'Mandate data shown; stock look-through not returned' : holdingTypeLabel(item)}</small></article>)}</div>
     </div>
   );
 }
@@ -107,11 +209,18 @@ export default function AnalyticsTabs({ data }) {
   const entries = momentumData?.entries || [];
   const exits = momentumData?.exits || [];
   const snapshotCount = momentumData?.coverage?.snapshotCount || momentumData?.snapshot?.snapshotCount || (holdings.length ? 1 : 0);
-  const comparisonMode = momentumData?.coverage?.comparisonMode || momentumData?.snapshot?.comparisonMode || 'top-holdings-proxy';
-  const sourceLabel = momentumData?.snapshot?.factsheetLabel || researchSources.map(item => item.name).join(' + ') || 'Value Research Online + AdvisorKhoj';
+  const comparisonMode = momentumData?.coverage?.comparisonMode || momentumData?.snapshot?.comparisonMode || 'current-holdings-baseline';
+  const sourceLabel = momentumData?.snapshot?.factsheetLabel || researchSources.map(item => item.name).join(' + ') || 'Moneycontrol + Value Research Online';
   const sectorHistory = new Map((momentumData?.snapshot?.sectorHistory || []).map(item => [item.sector, item]));
   const currentAsOf = momentumData?.snapshot?.currentAsOf || momentumData?.managerChanges?.currentAsOf;
   const previousAsOf = momentumData?.snapshot?.previousAsOf || momentumData?.managerChanges?.previousAsOf;
+  const directHoldings = momentumData?.snapshot?.underlyingFunds?.length
+    ? momentumData.snapshot.underlyingFunds
+    : momentumData?.snapshot?.directHoldings || [];
+  const holdingBasis = momentumData?.snapshot?.holdingBasis || 'Direct securities reported by the selected fund.';
+  const aumCr = momentumData?.fundFacts?.aumCr;
+  const reportedChangeMode = comparisonMode === 'reported-one-month-allocation-change';
+  const datedComparison = snapshotCount >= 2 && !reportedChangeMode;
 
   if (activeTab === 'racecard') {
     return (
@@ -126,54 +235,57 @@ export default function AnalyticsTabs({ data }) {
   if (activeTab === 'sectors') {
     return (
       <section className="tab-content">
-        <div className="section-heading"><div><span className="eyebrow">Sector positioning</span><h2>Was the manager in the right sectors at the right time?</h2></div><b>{sourceLabel}</b></div>
+        <div className="section-heading"><div><span className="eyebrow">Sector positioning</span><h2>Sector weightage and the securities behind it</h2></div><b>{sourceLabel}</b></div>
         <div className="coverage-note sector-basis">
           <strong>Coverage basis:</strong> {momentumData?.snapshot?.sectorBasis || 'Current disclosed holdings grouped by reported or resolved sector'}.
-          {snapshotCount >= 2 ? ` Allocation change compares ${previousAsOf || 'the previous snapshot'} with ${currentAsOf || 'the current snapshot'}.` : ' Current sector weights are shown from the latest available holdings snapshot.'}
+          {datedComparison || reportedChangeMode ? ` Allocation change compares ${previousAsOf || 'the prior period'} with ${currentAsOf || 'the current portfolio'}.` : ' Current sector weights are shown from the latest available holdings snapshot.'}
         </div>
         {sectors.length ? (
           <div className="sector-table-wrap"><table><thead><tr><th>Sector</th><th>Current weight</th><th>Allocation change</th><th>1M</th><th>3M</th><th>6M</th><th>Status</th></tr></thead><tbody>{sectors.map(item => {
             const movement = sectorHistory.get(item.sector)?.changeWeightPct;
-            return <tr key={item.sector}><td>{item.sector}</td><td>{pct(item.weight)}</td><td className={Number.isFinite(movement) ? scoreTone(50 + movement * 4) : 'neutral'}>{movementText(movement)}</td><td>{pct(item.return1mPct)}</td><td className={scoreTone(50 + (item.return3mPct || 0) * 2)}>{pct(item.return3mPct)}</td><td>{pct(item.return6mPct)}</td><td>{item.ok ? 'Price matched' : 'Weight available'}</td></tr>;
+            return <tr key={item.sector}><td>{item.sector}</td><td>{pct(item.weight)}</td><td className={Number.isFinite(movement) ? scoreTone(50 + movement * 4) : 'neutral'}>{movementText(movement)}</td><td>{pct(item.return1mPct)}</td><td className={scoreTone(50 + (item.return3mPct || 0) * 2)}>{pct(item.return3mPct)}</td><td>{pct(item.return6mPct)}</td><td>{item.ok ? 'Market matched' : item.lookThrough ? 'Look-through weight' : 'Portfolio weight'}</td></tr>;
           })}</tbody></table></div>
         ) : <div className="coverage-note"><strong>Portfolio recovery in progress.</strong> The selected fund is being retried through the live source and official-snapshot fallback.</div>}
         <div className="portfolio-composition-grid">
           <AllocationStrip title="Asset allocation" rows={momentumData?.snapshot?.assetAllocation || momentumData?.fundFacts?.assetAllocation} />
           <AllocationStrip title="Market-cap mix" rows={momentumData?.snapshot?.marketCap || momentumData?.fundFacts?.marketCap} />
         </div>
-        {holdings.length ? <div className="holding-grid">{holdings.map(item => <article key={item.name}><span>{item.sector || 'Sector not classified'}</span><strong>{item.name}</strong><small>{pct(item.weight)} portfolio weight</small><div><b>1M {pct(item.return1mPct)}</b><b>3M {pct(item.return3mPct)}</b><b>6M {pct(item.return6mPct)}</b></div></article>)}</div> : null}
+        <HoldingsTable holdings={holdings} holdingBasis={holdingBasis} />
+        <UnderlyingFunds funds={directHoldings} />
       </section>
     );
   }
 
   if (activeTab === 'timing') {
+    const timingLabel = datedComparison ? `${comparisonMode === 'complete-portfolio' ? 'Complete portfolio' : 'Top-holdings'} comparison` : reportedChangeMode ? 'Moneycontrol 1M changes' : 'Current holdings baseline';
     return (
       <section className="tab-content">
-        <div className="section-heading"><div><span className="eyebrow">Trade timing</span><h2>Entries, exits and peak proximity</h2></div><b>{snapshotCount >= 2 ? `${comparisonMode === 'complete-portfolio' ? 'Complete portfolio' : 'Top-holdings'} comparison` : 'Current holdings baseline'}</b></div>
+        <div className="section-heading"><div><span className="eyebrow">Trade timing</span><h2>Entries, exits, replacements and NAV movement</h2></div><b>{timingLabel}</b></div>
         <div className="coverage-note">
-          <strong>{snapshotCount >= 2 ? 'Two dated source snapshots compared.' : 'Timing baseline established.'}</strong>{' '}
-          {snapshotCount >= 2
-            ? `${previousAsOf || 'Previous snapshot'} → ${currentAsOf || 'current snapshot'}. New, increased, reduced and exited positions are derived from the source disclosures; Yahoo is used only for price-path analysis.`
-            : 'The latest disclosed holdings are shown as the current timing baseline. No entry or exit date is invented when an earlier source snapshot is unavailable.'}
+          <strong>{datedComparison ? 'Two dated source snapshots compared.' : reportedChangeMode ? 'Reported one-month allocation changes loaded.' : 'Timing baseline established.'}</strong>{' '}
+          {datedComparison
+            ? `${previousAsOf || 'Previous snapshot'} → ${currentAsOf || 'current snapshot'}. New, increased, reduced and exited positions come from portfolio disclosures; Yahoo is used only for market-price context.`
+            : reportedChangeMode
+              ? `${previousAsOf || 'Prior month'} → ${currentAsOf || 'current portfolio'}. Weight changes are source-reported; market prices and NAV explain the same observation window but are not claimed as execution prices.`
+              : 'The latest disclosed holdings are shown once as the current baseline. No sale, purchase, or replacement is claimed without a prior disclosure or source-reported allocation change.'}
         </div>
+        <NavMovement series={fundSeries} previousAsOf={previousAsOf} currentAsOf={currentAsOf} />
         <div className="timing-columns">
           <div><h3>New / increased positions</h3>{entries.length
-            ? entries.map(item => <EventCard key={`${item.name}-${item.action}`} item={item} type="entry" />)
-            : snapshotCount >= 2
-              ? <div className="coverage-note"><strong>No qualifying additions detected.</strong> No new top holding or weight increase of at least 0.35 percentage points was found between the two source snapshots.</div>
-              : <CurrentBook title="Current disclosed positions" holdings={holdings} note="These are the latest positions; they are not labelled as new without a prior snapshot." />}</div>
+            ? entries.map(item => <EventCard key={`${item.name}-${item.action}`} item={item} type="entry" aumCr={aumCr} />)
+            : <div className="coverage-note"><strong>No qualifying additions detected.</strong> No reported new position or weight increase of at least 0.35 percentage points is available for this comparison window.</div>}</div>
           <div><h3>Exited / reduced positions</h3>{exits.length
-            ? exits.map(item => <EventCard key={`${item.name}-${item.action}`} item={item} type="exit" />)
-            : snapshotCount >= 2
-              ? <div className="coverage-note"><strong>No qualifying reductions detected.</strong> No complete exit or weight reduction of at least 0.35 percentage points was found between the two source snapshots.</div>
-              : <CurrentBook title="Retained holdings baseline" holdings={holdings} note="A prior dated disclosure is still required before any genuine reduction or exit is claimed." />}</div>
+            ? exits.map(item => <EventCard key={`${item.name}-${item.action}`} item={item} type="exit" aumCr={aumCr} />)
+            : <div className="coverage-note"><strong>No qualifying reductions detected.</strong> No reported complete exit or weight reduction of at least 0.35 percentage points is available for this comparison window.</div>}</div>
         </div>
+        <ReplacementMap entries={entries} exits={exits} aumCr={aumCr} />
+        {!entries.length && !exits.length ? <CurrentBook title="Current disclosed positions" holdings={directHoldings.length ? directHoldings : holdings} note="Shown once as the baseline; these positions are not mislabelled as both entries and exits." /> : null}
         <div className="turnover-panel">
           <div><span>Equity turnover</span><strong>{pct(momentumData?.snapshot?.turnover?.equityPct)}</strong></div>
           <div><span>Source snapshots</span><strong>{snapshotCount || 'Loading'}</strong></div>
-          <div><span>Comparison type</span><strong>{snapshotCount >= 2 ? (comparisonMode === 'complete-portfolio' ? 'Full' : 'Top holdings') : 'Baseline'}</strong></div>
+          <div><span>Comparison type</span><strong>{datedComparison ? (comparisonMode === 'complete-portfolio' ? 'Full' : 'Top holdings') : reportedChangeMode ? 'Reported 1M' : 'Baseline'}</strong></div>
           <div><span>Turnover score</span><strong>{Math.round(score.factors.turnoverEfficiency.score)}</strong></div>
-          <p>{score.factors.turnoverEfficiency.detail || 'Turnover awaits a Value Research Online or AdvisorKhoj fund record.'}</p>
+          <p>{score.factors.turnoverEfficiency.detail || 'Turnover awaits a Moneycontrol, Value Research Online, or AdvisorKhoj fund record.'}</p>
         </div>
       </section>
     );
@@ -184,7 +296,7 @@ export default function AnalyticsTabs({ data }) {
       <section className="tab-content">
         <div className="section-heading"><div><span className="eyebrow">Traditional quality</span><h2>The remaining 25% of the score</h2></div><b>{proxyName || 'Proxy pending'}</b></div>
         <div className="traditional-metrics">
-          <MetricCard label="CAGR" value={pct(metrics.cagrPct)} note="Manager-aware period" />
+          <MetricCard label="CAGR" value={pct(metrics.cagrPct)} note="Selected analysis period" />
           <MetricCard label="Annual alpha" value={pct(metrics.alphaPct)} note="Jensen-style alpha" />
           <MetricCard label="Information ratio" value={num(metrics.informationRatio)} note="Active return per unit of tracking error" />
           <MetricCard label="Sharpe ratio" value={num(metrics.sharpe)} note="Total-risk efficiency" />
@@ -210,8 +322,8 @@ export default function AnalyticsTabs({ data }) {
         <article><span>Fund universe and NAV verification</span><strong>AMFI NAVAll</strong><small>Scheme code {selectedFund?.preferredSchemeCode || 'pending'}</small><a href="https://portal.amfiindia.com/spages/NAVAll.txt" target="_blank" rel="noreferrer">Open AMFI feed</a></article>
         <article><span>NAV history</span><strong>MFapi.in</strong><small>Live scheme history and code resolution</small><a href="https://www.mfapi.in/docs/" target="_blank" rel="noreferrer">Open documentation</a></article>
       </div>
-      <div className="coverage-note">Manager, turnover, holdings, sector allocation and portfolio changes are sourced through Value Research Online and AdvisorKhoj. AMFI/MFapi and Yahoo are retained for scheme/NAV verification and market-price enrichment.</div>
-      <div className="coverage-note">{exactAssignment ? 'This manager–fund link is matched to a source-tracked scheme alias.' : 'The selected fund is an AMC fallback until Value Research Online or AdvisorKhoj confirms the manager–scheme assignment.'}</div>
+      <div className="coverage-note">Moneycontrol supplies exact-ISIN holdings, allocation changes, and FoF look-through portfolios. Value Research Online and AdvisorKhoj provide manager and disclosure cross-checks. AMFI/MFapi and Yahoo are retained for NAV and market-price context.</div>
+      <div className="coverage-note">{exactAssignment ? 'This manager–fund link is matched to a source-tracked scheme alias.' : 'The selected fund is an AMC fallback until a public source confirms the manager–scheme assignment.'}</div>
     </section>
   );
 }

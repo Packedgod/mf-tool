@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getMarketUniverse } from '@/lib/universe';
 import { generatedFundSnapshot } from '@/lib/generated-fund-snapshot';
-import { resolveFundResearch } from '@/lib/fallback-sources';
+import { enrichFundResearchLookThrough, resolveFundResearch } from '@/lib/fallback-sources';
 import { repairValueResearchFundMatch } from '@/lib/repair-vro-fund-match';
 import { refreshValueResearchPortfolio } from '@/lib/value-research-live-portfolio';
 
@@ -113,7 +113,7 @@ function liveSnapshot(fund, research) {
     current.advisorKhoj?.sectors,
     current.valueResearch?.sectors
   ), holdings);
-  const previousHoldings = normaliseHoldings(firstRows(
+  const previousHoldings = current.lookThrough?.enabled ? [] : normaliseHoldings(firstRows(
     previous?.holdings,
     previous?.valueResearch?.holdings,
     previous?.advisorKhoj?.holdings
@@ -152,6 +152,12 @@ function liveSnapshot(fund, research) {
     snapshot: {
       holdings,
       sectorWeights: sectors,
+      directHoldings: normaliseHoldings(current.directHoldings || current.moneycontrol?.directHoldings || []),
+      underlyingFunds: current.underlyingFunds || current.moneycontrol?.underlyingFunds || [],
+      lookThrough: current.lookThrough || null,
+      holdingBasis: current.lookThrough?.enabled
+        ? 'Look-through stocks aggregated from the Moneycontrol portfolios of AMFI-matched underlying funds.'
+        : 'Direct securities reported by the selected fund.',
       assetAllocation: current.assetAllocation || current.valueResearch?.assetAllocation || [],
       marketCap: current.marketCap || current.valueResearch?.marketCap || [],
       currentAsOf: current.portfolioAsOf || current.valueResearch?.navDate || current.advisorKhoj?.navDate || current.fetchedAt || null,
@@ -161,7 +167,7 @@ function liveSnapshot(fund, research) {
       sectorBasis: sectors.some(item => item.classificationPending)
         ? 'Latest disclosed holdings loaded; sector classification is awaiting source enrichment.'
         : sectors.some(item => /^Asset allocation:/i.test(item.sector))
-          ? 'Moneycontrol ISIN-validated asset allocation; this FoF source reports underlying funds instead of stock-sector classifications.'
+          ? 'Moneycontrol ISIN-validated asset allocation; underlying fund mandates are shown where stock look-through is unavailable.'
           : disclosurePending
             ? 'Fund identity is validated; the first portfolio disclosure is not yet published by the source.'
             : 'Current ISIN-validated Moneycontrol / Value Research portfolio snapshot.',
@@ -191,7 +197,7 @@ function liveSnapshot(fund, research) {
       researchDiagnostics: research?.diagnostics || null,
       registryMatch: research?.registryMatch || null
     },
-    engineVersion: '1.5.0-renamed-fund-snapshot'
+    engineVersion: '1.7.0-moneycontrol-look-through-trades'
   };
 }
 
@@ -201,10 +207,11 @@ function timeoutAfter(ms) {
   });
 }
 
-async function resolveSnapshotResearch(fund) {
+async function resolveSnapshotResearch(fund, families) {
   const resolved = await resolveFundResearch(fund);
   const repaired = await repairValueResearchFundMatch(resolved, fund);
-  return refreshValueResearchPortfolio(repaired);
+  const refreshed = await refreshValueResearchPortfolio(repaired);
+  return enrichFundResearchLookThrough(refreshed, fund, families);
 }
 
 export async function GET(request) {
@@ -213,10 +220,10 @@ export async function GET(request) {
   const schemeCode = searchParams.get('schemeCode');
 
   try {
+    const universe = await getMarketUniverse();
     let fund = suppliedFund(searchParams);
     const hasIsin = fund?.preferredIsin || fund?.variants?.some(item => item.isinGrowth || item.isinDividend);
     if (!fund || !hasIsin) {
-      const universe = await getMarketUniverse();
       const universeFund = universe.families.find(item => item.id === fundId)
         || universe.families.find(item => item.variants?.some(variant => String(variant.schemeCode) === String(schemeCode)));
       fund = universeFund || fund;
@@ -241,7 +248,7 @@ export async function GET(request) {
     }
 
     const research = await Promise.race([
-      resolveSnapshotResearch(researchFund),
+      resolveSnapshotResearch(researchFund, universe.families),
       timeoutAfter(42000)
     ]);
     const result = liveSnapshot(fund, research);
