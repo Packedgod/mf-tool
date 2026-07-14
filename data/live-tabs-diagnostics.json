@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-11T13:30:58.039Z",
+  "generatedAt": "2026-07-14T09:36:53.904Z",
   "node": "v20.20.2",
   "tests": [
     {
@@ -13,100 +13,83 @@
       },
       "intelligenceStatus": 200,
       "intelligenceOk": true,
-      "engineVersion": "1.2.0-live-fund-identity",
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio",
       "error": null,
       "sourceDiagnostics": {
         "registryMatch": {
-          "key": "hdfc flexi cap",
-          "score": 0.72,
-          "type": "live-selector"
+          "key": "hdfc flexi cap fund",
+          "score": 1,
+          "type": "exact"
         },
         "valueResearchIdentity": {
-          "repaired": true,
-          "accepted": true,
+          "repaired": false,
+          "accepted": false,
+          "skipped": true,
           "previousScore": 0.4533333333333333,
           "previousUrl": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "score": 0.72,
-          "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/"
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
+        },
+        "moneycontrolIdentity": {
+          "accepted": true,
+          "requestedIsin": "INF179K01UT0",
+          "returnedIsin": "INF179K01UT0",
+          "basis": "amfi-isin",
+          "returnedFundName": "HDFC Flexi Cap Fund -Direct Plan - Growth Option",
+          "requestedFundName": "HDFC Flexi Cap Fund - Growth Option - Direct Plan"
         },
         "research": {
           "liveValueResearch": true,
-          "liveAdvisorKhoj": true,
+          "liveMoneycontrol": true,
+          "liveAdvisorKhoj": false,
           "holdings": 6,
-          "sectors": 0,
-          "documents": 3,
-          "valueResearchError": null
+          "sectors": 11,
+          "documents": 0,
+          "valueResearchError": null,
+          "moneycontrolError": null,
+          "moneycontrolIdentity": {
+            "accepted": true,
+            "requestedIsin": "INF179K01UT0",
+            "returnedIsin": "INF179K01UT0",
+            "basis": "amfi-isin",
+            "returnedFundName": "HDFC Flexi Cap Fund -Direct Plan - Growth Option",
+            "requestedFundName": "HDFC Flexi Cap Fund - Growth Option - Direct Plan"
+          },
+          "moneycontrolCoverage": {
+            "holdings": 72,
+            "sectors": 11,
+            "assetAllocation": 3,
+            "marketCap": 4
+          }
         },
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:31:00.466Z",
+          "fetchedAt": "2026-07-14T09:36:54.856Z",
           "holdings": 5,
           "totalTopHoldingWeight": 30.56,
           "stale": false
         },
         "advisorIdentityValidation": {
-          "accepted": true,
-          "targetGroup": "hdfc",
-          "amcScore": 0.1111111111111111,
-          "fundScore": 0.3333333333333333,
-          "documentsBefore": 3,
-          "documentsAfter": 3
-        },
-        "documents": {
-          "attempted": 2,
-          "directDocuments": 1,
-          "resolvedDocuments": 10,
-          "rejectedAsOtherFunds": 16,
-          "selected": [
-            {
-              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Flexi%20Cap%20Fund%20-%2030%20June%202026.xlsx",
-              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
-              "score": 146.18
-            },
-            {
-              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Multi%20Cap%20Fund%20-%2030%20June%202026.xlsx",
-              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
-              "score": 139.12
-            },
-            {
-              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Diversified%20Equity%20All%20Cap%20Active%20FOF%20-%2030%20June%202026.xlsx",
-              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
-              "score": 136.43
-            },
-            {
-              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Technology%20Fund%20-%2030%20June%202026.xlsx",
-              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
-              "score": 132.5
-            },
-            {
-              "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20MNC%20Fund%20-%2030%20June%202026.xlsx",
-              "text": "Monthly Portfolio Disclosure - May 2026 — Document discovered in page source",
-              "score": 132.5
-            }
-          ],
-          "failures": []
+          "accepted": false,
+          "repaired": false,
+          "skipped": true,
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "holdings": 5,
-        "sectors": 2,
-        "entries": 5,
-        "exits": 5
+        "sectors": 1,
+        "entries": 0,
+        "exits": 0
       },
       "sources": [
-        {
-          "name": "AdvisorKhoj",
-          "type": "Live fund facts, risk metrics and portfolio-document discovery",
-          "url": "https://www.advisorkhoj.com/mutual-funds-research/HDFC-Flexi-Cap-Fund-Growth-Option-Direct-Plan"
-        },
         {
           "name": "Value Research Online",
           "type": "Public fund holdings and portfolio facts",
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/"
         },
         {
-          "name": "AdvisorKhoj-linked monthly portfolio disclosure",
-          "type": "Portfolio workbook linked by AdvisorKhoj",
-          "url": "https://files.hdfcfund.com/s3fs-public/2026-07/Monthly%20HDFC%20Flexi%20Cap%20Fund%20-%2030%20June%202026.xlsx"
+          "name": "Moneycontrol",
+          "type": "Identity-validated live holdings, allocation and fund facts",
+          "url": "https://www.moneycontrol.com/mutual-funds/nav/hdfc-flexi-cap-fund-direct-plan-/MHD1144"
         },
         {
           "name": "Yahoo Finance",
@@ -120,11 +103,11 @@
       "counts": {
         "managers": 1,
         "holdings": 5,
-        "sectors": 2,
-        "entries": 5,
-        "exits": 5,
-        "snapshotCount": 2,
-        "factorCoverage": 100
+        "sectors": 1,
+        "entries": 0,
+        "exits": 0,
+        "snapshotCount": 1,
+        "factorCoverage": 75
       },
       "holdings": [
         {
@@ -144,7 +127,7 @@
         },
         {
           "name": "SBI",
-          "sector": "Other",
+          "sector": "Financial Services",
           "weight": 4.3
         },
         {
@@ -154,19 +137,15 @@
         }
       ],
       "snapshot": {
-        "factsheetLabel": "AdvisorKhoj + Value Research Online + AdvisorKhoj-linked monthly portfolio disclosure",
-        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
-        "currentAsOf": "2026-07-11",
-        "previousAsOf": "2026-05-01",
+        "factsheetLabel": "Value Research Online + Moneycontrol",
+        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
+        "currentAsOf": "2026-07-13",
+        "previousAsOf": "2026-07-10T14:41:07.341Z",
         "comparisonMode": "top-holdings-proxy",
         "sectorWeights": [
           {
             "sector": "Financial Services",
-            "weight": 26.259999999999998
-          },
-          {
-            "sector": "Other",
-            "weight": 4.3
+            "weight": 30.56
           }
         ]
       },
@@ -183,7 +162,7 @@
       },
       "intelligenceStatus": 200,
       "intelligenceOk": true,
-      "engineVersion": "1.2.0-live-fund-identity",
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio",
       "error": null,
       "sourceDiagnostics": {
         "registryMatch": {
@@ -197,53 +176,56 @@
           "score": 0.52,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/"
         },
+        "moneycontrolIdentity": {
+          "accepted": true,
+          "requestedIsin": "INF879O01027",
+          "returnedIsin": "INF879O01027",
+          "basis": "amfi-isin",
+          "returnedFundName": "Parag Parikh Flexi Cap Direct Growth",
+          "requestedFundName": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth"
+        },
         "research": {
           "liveValueResearch": true,
-          "liveAdvisorKhoj": true,
+          "liveMoneycontrol": true,
+          "liveAdvisorKhoj": false,
           "holdings": 3,
-          "sectors": 0,
-          "documents": 3,
-          "valueResearchError": null
+          "sectors": 11,
+          "documents": 0,
+          "valueResearchError": null,
+          "moneycontrolError": null,
+          "moneycontrolIdentity": {
+            "accepted": true,
+            "requestedIsin": "INF879O01027",
+            "returnedIsin": "INF879O01027",
+            "basis": "amfi-isin",
+            "returnedFundName": "Parag Parikh Flexi Cap Direct Growth",
+            "requestedFundName": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth"
+          },
+          "moneycontrolCoverage": {
+            "holdings": 71,
+            "sectors": 11,
+            "assetAllocation": 3,
+            "marketCap": 4
+          }
         },
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:31:03.369Z",
+          "fetchedAt": "2026-07-14T09:36:55.848Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.5,
           "stale": false
         },
         "advisorIdentityValidation": {
-          "accepted": true,
-          "targetGroup": "ppfas",
-          "amcScore": 0,
-          "fundScore": 0.4,
-          "documentsBefore": 3,
-          "documentsAfter": 3
-        },
-        "documents": {
-          "attempted": 1,
-          "directDocuments": 2,
-          "resolvedDocuments": 2,
-          "rejectedAsOtherFunds": 0,
-          "selected": [
-            {
-              "url": "https://amc.ppfas.com/downloads/portfolio-disclosure/2026/PPFAS_Monthly_Portfolio_Report_May_31_2026.xls?08062026_1",
-              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 165
-            },
-            {
-              "url": "https://amc.ppfas.com/downloads/factsheet/2026/ppfas-mf-factsheet-for-May-2026.pdf?08062026_1",
-              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 73
-            }
-          ],
-          "failures": []
+          "accepted": false,
+          "repaired": false,
+          "skipped": true,
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "holdings": 5,
         "sectors": 4,
-        "entries": 5,
-        "exits": 5
+        "entries": 0,
+        "exits": 0
       },
       "sources": [
         {
@@ -252,14 +234,9 @@
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/"
         },
         {
-          "name": "AdvisorKhoj",
-          "type": "Live fund facts, risk metrics and portfolio-document discovery",
-          "url": "https://www.advisorkhoj.com/mutual-funds-research/Parag-Parikh-Flexi-Cap-Fund-Direct-Plan-Growth"
-        },
-        {
-          "name": "AdvisorKhoj-linked monthly portfolio disclosure",
-          "type": "Portfolio workbook linked by AdvisorKhoj",
-          "url": "https://amc.ppfas.com/downloads/portfolio-disclosure/2026/PPFAS_Monthly_Portfolio_Report_May_31_2026.xls?08062026_1"
+          "name": "Moneycontrol",
+          "type": "Identity-validated live holdings, allocation and fund facts",
+          "url": "https://www.moneycontrol.com/mutual-funds/nav/parag-parikh-flexi-cap-fund-direct-plan/MPP002"
         },
         {
           "name": "Yahoo Finance",
@@ -274,10 +251,10 @@
         "managers": 6,
         "holdings": 5,
         "sectors": 4,
-        "entries": 5,
-        "exits": 5,
-        "snapshotCount": 2,
-        "factorCoverage": 100
+        "entries": 0,
+        "exits": 0,
+        "snapshotCount": 1,
+        "factorCoverage": 75
       },
       "holdings": [
         {
@@ -292,7 +269,7 @@
         },
         {
           "name": "ITC",
-          "sector": "Consumer Defensive",
+          "sector": "Consumer Services",
           "weight": 6.07
         },
         {
@@ -307,10 +284,10 @@
         }
       ],
       "snapshot": {
-        "factsheetLabel": "Value Research Online + AdvisorKhoj + AdvisorKhoj-linked monthly portfolio disclosure",
-        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
-        "currentAsOf": "2026-07-10",
-        "previousAsOf": null,
+        "factsheetLabel": "Value Research Online + Moneycontrol",
+        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
+        "currentAsOf": "2026-07-13",
+        "previousAsOf": "2026-07-10T14:41:07.341Z",
         "comparisonMode": "top-holdings-proxy",
         "sectorWeights": [
           {
@@ -322,7 +299,7 @@
             "weight": 6.23
           },
           {
-            "sector": "Consumer Defensive",
+            "sector": "Consumer Services",
             "weight": 6.07
           },
           {
@@ -344,64 +321,67 @@
       },
       "intelligenceStatus": 200,
       "intelligenceOk": true,
-      "engineVersion": "1.2.0-live-fund-identity",
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio",
       "error": null,
       "sourceDiagnostics": {
         "registryMatch": {
-          "key": "sbi small cap",
-          "score": 0.72,
-          "type": "live-selector"
+          "key": "sbi small cap fund",
+          "score": 1,
+          "type": "exact"
         },
         "valueResearchIdentity": {
-          "repaired": true,
-          "accepted": true,
+          "repaired": false,
+          "accepted": false,
+          "skipped": true,
           "previousScore": 0.4533333333333333,
           "previousUrl": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "score": 0.72,
-          "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/"
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
+        },
+        "moneycontrolIdentity": {
+          "accepted": true,
+          "requestedIsin": "INF200K01T51",
+          "returnedIsin": "INF200K01T51",
+          "basis": "amfi-isin",
+          "returnedFundName": "SBI Small Cap Fund Direct Plan Growth",
+          "requestedFundName": "SBI Small Cap Fund - Direct Plan - Growth"
         },
         "research": {
           "liveValueResearch": true,
-          "liveAdvisorKhoj": true,
+          "liveMoneycontrol": true,
+          "liveAdvisorKhoj": false,
           "holdings": 3,
-          "sectors": 0,
-          "documents": 3,
-          "valueResearchError": null
+          "sectors": 9,
+          "documents": 0,
+          "valueResearchError": null,
+          "moneycontrolError": null,
+          "moneycontrolIdentity": {
+            "accepted": true,
+            "requestedIsin": "INF200K01T51",
+            "returnedIsin": "INF200K01T51",
+            "basis": "amfi-isin",
+            "returnedFundName": "SBI Small Cap Fund Direct Plan Growth",
+            "requestedFundName": "SBI Small Cap Fund - Direct Plan - Growth"
+          },
+          "moneycontrolCoverage": {
+            "holdings": 72,
+            "sectors": 9,
+            "assetAllocation": 3,
+            "marketCap": 4
+          }
         },
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:31:06.580Z",
+          "fetchedAt": "2026-07-14T09:36:56.783Z",
           "holdings": 4,
           "totalTopHoldingWeight": 14.08,
           "stale": false
         },
         "advisorIdentityValidation": {
-          "accepted": true,
-          "targetGroup": "sbi",
-          "amcScore": 0.1111111111111111,
-          "fundScore": 0.3333333333333333,
-          "documentsBefore": 3,
-          "documentsAfter": 3
-        },
-        "documents": {
-          "attempted": 1,
-          "directDocuments": 2,
-          "resolvedDocuments": 2,
-          "rejectedAsOtherFunds": 0,
-          "selected": [
-            {
-              "url": "https://www.sbimf.com/docs/default-source/scheme-portfolios/all-schemes-monthly-portfolio---as-on-31st-may-2026.xlsx?sfvrsn=1e792ce4_2",
-              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 165
-            },
-            {
-              "url": "https://www.sbimf.com/docs/default-source/scheme-factsheets/all-sbimf-schemes-factsheet-may-2026.pdf?sfvrsn=4c31a7bc_4",
-              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 73
-            }
-          ],
-          "failures": []
+          "accepted": false,
+          "repaired": false,
+          "skipped": true,
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "holdings": 4,
         "sectors": 3,
@@ -410,14 +390,14 @@
       },
       "sources": [
         {
-          "name": "AdvisorKhoj",
-          "type": "Live fund facts, risk metrics and portfolio-document discovery",
-          "url": "https://www.advisorkhoj.com/mutual-funds-research/SBI-Small-Cap-Fund-Direct-Plan-Growth"
-        },
-        {
           "name": "Value Research Online",
           "type": "Public fund holdings and portfolio facts",
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/"
+        },
+        {
+          "name": "Moneycontrol",
+          "type": "Identity-validated live holdings, allocation and fund facts",
+          "url": "https://www.moneycontrol.com/mutual-funds/nav/sbi-small-cap-fund-direct-plan-/MSA031"
         },
         {
           "name": "Yahoo Finance",
@@ -460,9 +440,10 @@
         }
       ],
       "snapshot": {
-        "factsheetLabel": "AdvisorKhoj + Value Research Online",
-        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
-        "currentAsOf": "2026-07-11",
+        "factsheetLabel": "Value Research Online + Moneycontrol",
+        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
+        "currentAsOf": "2026-07-13",
+        "previousAsOf": "2026-07-10T14:41:07.341Z",
         "comparisonMode": "top-holdings-proxy",
         "sectorWeights": [
           {
@@ -479,9 +460,7 @@
           }
         ]
       },
-      "failures": [
-        "https://www.sbimf.com/docs/default-source/scheme-portfolios/all-schemes-monthly-portfolio---as-on-31st-may-2026.xlsx?sfvrsn=1e792ce4_2: No usable holdings table found"
-      ]
+      "failures": []
     },
     {
       "query": "ICICI Prudential Balanced Advantage",
@@ -494,7 +473,7 @@
       },
       "intelligenceStatus": 200,
       "intelligenceOk": true,
-      "engineVersion": "1.2.0-live-fund-identity",
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio",
       "error": null,
       "sourceDiagnostics": {
         "registryMatch": {
@@ -508,43 +487,51 @@
           "score": 0.52,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/"
         },
+        "moneycontrolIdentity": {
+          "accepted": true,
+          "requestedIsin": "INF109K012B0",
+          "returnedIsin": "INF109K012B0",
+          "basis": "amfi-isin",
+          "returnedFundName": "ICICI Prudential Balanced Advantage Fund Direct Plan Growth",
+          "requestedFundName": "ICICI Prudential Balanced Advantage Fund - Direct Plan -  Growth"
+        },
         "research": {
           "liveValueResearch": true,
-          "liveAdvisorKhoj": true,
+          "liveMoneycontrol": true,
+          "liveAdvisorKhoj": false,
           "holdings": 5,
-          "sectors": 0,
-          "documents": 3,
-          "valueResearchError": null
+          "sectors": 11,
+          "documents": 0,
+          "valueResearchError": null,
+          "moneycontrolError": null,
+          "moneycontrolIdentity": {
+            "accepted": true,
+            "requestedIsin": "INF109K012B0",
+            "returnedIsin": "INF109K012B0",
+            "basis": "amfi-isin",
+            "returnedFundName": "ICICI Prudential Balanced Advantage Fund Direct Plan Growth",
+            "requestedFundName": "ICICI Prudential Balanced Advantage Fund - Direct Plan -  Growth"
+          },
+          "moneycontrolCoverage": {
+            "holdings": 80,
+            "sectors": 11,
+            "assetAllocation": 3,
+            "marketCap": 4
+          }
         },
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:31:13.421Z",
+          "fetchedAt": "2026-07-14T09:36:58.661Z",
           "holdings": 4,
           "totalTopHoldingWeight": 6.39,
           "stale": false
         },
         "advisorIdentityValidation": {
-          "accepted": true,
-          "targetGroup": "icici",
-          "amcScore": 0.2,
-          "fundScore": 0.4,
-          "documentsBefore": 3,
-          "documentsAfter": 3
-        },
-        "documents": {
-          "attempted": 2,
-          "directDocuments": 1,
-          "resolvedDocuments": 1,
-          "rejectedAsOtherFunds": 0,
-          "selected": [
-            {
-              "url": "https://digitalfactsheet.icicipruamc.com/fact/pdf/fund-factsheet-for-may-2026.pdf",
-              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 73
-            }
-          ],
-          "failures": []
+          "accepted": false,
+          "repaired": false,
+          "skipped": true,
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "holdings": 4,
         "sectors": 2,
@@ -558,9 +545,9 @@
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/"
         },
         {
-          "name": "AdvisorKhoj",
-          "type": "Live fund facts, risk metrics and portfolio-document discovery",
-          "url": "https://www.advisorkhoj.com/mutual-funds-research/ICICI-Prudential-Balanced-Advantage-Fund-Direct-Plan-Growth"
+          "name": "Moneycontrol",
+          "type": "Identity-validated live holdings, allocation and fund facts",
+          "url": "https://www.moneycontrol.com/mutual-funds/nav/icici-prudential-balanced-advantage-fund-direct-plan/MPI1142"
         },
         {
           "name": "Yahoo Finance",
@@ -603,9 +590,10 @@
         }
       ],
       "snapshot": {
-        "factsheetLabel": "Value Research Online + AdvisorKhoj",
-        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
-        "currentAsOf": "2026-07-11",
+        "factsheetLabel": "Value Research Online + Moneycontrol",
+        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
+        "currentAsOf": "2026-07-13",
+        "previousAsOf": "2026-07-10T14:41:07.341Z",
         "comparisonMode": "top-holdings-proxy",
         "sectorWeights": [
           {
@@ -618,9 +606,7 @@
           }
         ]
       },
-      "failures": [
-        "https://digitalfactsheet.icicipruamc.com/fact/pdf/fund-factsheet-for-may-2026.pdf: fetch failed"
-      ]
+      "failures": []
     },
     {
       "query": "Kotak Midcap Fund",
@@ -633,47 +619,70 @@
       },
       "intelligenceStatus": 200,
       "intelligenceOk": true,
-      "engineVersion": "1.2.0-live-fund-identity",
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio",
       "error": null,
       "sourceDiagnostics": {
         "registryMatch": {
-          "key": "kotak midcap",
-          "score": 0.62,
-          "type": "live-selector"
+          "key": "kotak equity savings fund",
+          "score": 0.6666666666666666,
+          "type": "fuzzy"
         },
         "valueResearchIdentity": {
-          "repaired": true,
-          "accepted": true,
+          "repaired": false,
+          "accepted": false,
+          "skipped": true,
           "previousScore": 0,
           "previousUrl": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/",
-          "score": 0.62,
-          "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/"
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
+        },
+        "moneycontrolIdentity": {
+          "accepted": true,
+          "requestedIsin": "INF174K01LV6",
+          "returnedIsin": "INF174K01LV6",
+          "basis": "amfi-isin",
+          "returnedFundName": "Kotak Midcap Fund Direct Reinvestment of Income Distribution cum Cap Wdrl",
+          "requestedFundName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option"
         },
         "research": {
           "liveValueResearch": true,
-          "liveAdvisorKhoj": true,
+          "liveMoneycontrol": true,
+          "liveAdvisorKhoj": false,
           "holdings": 7,
-          "sectors": 0,
-          "documents": 3,
-          "valueResearchError": null
+          "sectors": 10,
+          "documents": 0,
+          "valueResearchError": null,
+          "moneycontrolError": null,
+          "moneycontrolIdentity": {
+            "accepted": true,
+            "requestedIsin": "INF174K01LV6",
+            "returnedIsin": "INF174K01LV6",
+            "basis": "amfi-isin",
+            "returnedFundName": "Kotak Midcap Fund Direct Reinvestment of Income Distribution cum Cap Wdrl",
+            "requestedFundName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option"
+          },
+          "moneycontrolCoverage": {
+            "holdings": 71,
+            "sectors": 10,
+            "assetAllocation": 2,
+            "marketCap": 4
+          }
         },
         "exactValueResearchPortfolio": {
           "ok": true,
-          "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:31:45.827Z",
+          "url": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/",
+          "fetchedAt": "2026-07-14T09:36:59.446Z",
           "holdings": 5,
-          "totalTopHoldingWeight": 15.79,
+          "totalTopHoldingWeight": 11.51,
           "stale": false
         },
-        "advisorIdentityRejection": {
-          "rejected": true,
-          "requestedFund": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
-          "requestedFundHouse": "Kotak Mahindra Mutual Fund",
-          "existingUrl": "https://www.advisorkhoj.com/mutual-funds-research/Kotak-Midcap-Fund-Direct-Plan-IDCW-Payout-and-Re-investment-of-Income-Distribution-cum-capital-withdrawal-option",
-          "reason": "No alias-matched AdvisorKhoj page exposed a validated holdings, sector, or direct portfolio-document path."
+        "advisorIdentityValidation": {
+          "accepted": false,
+          "repaired": false,
+          "skipped": true,
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "holdings": 5,
-        "sectors": 3,
+        "sectors": 2,
         "entries": 0,
         "exits": 0
       },
@@ -681,7 +690,12 @@
         {
           "name": "Value Research Online",
           "type": "Public fund holdings and portfolio facts",
-          "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/"
+          "url": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/"
+        },
+        {
+          "name": "Moneycontrol",
+          "type": "Identity-validated live holdings, allocation and fund facts",
+          "url": "https://www.moneycontrol.com/mutual-funds/nav/kotak-midcap-dir-idcw-r/M9KS2311"
         },
         {
           "name": "Yahoo Finance",
@@ -693,58 +707,55 @@
         }
       ],
       "counts": {
-        "managers": 1,
+        "managers": 3,
         "holdings": 5,
-        "sectors": 3,
+        "sectors": 2,
         "entries": 0,
         "exits": 0,
         "snapshotCount": 1,
-        "factorCoverage": 65
+        "factorCoverage": 75
       },
       "holdings": [
         {
-          "name": "Fortis Healthcare",
-          "sector": "Healthcare",
-          "weight": 3.98
+          "name": "Kotak Liquid Direct-G",
+          "sector": "Other",
+          "weight": 6.57
         },
         {
-          "name": "Ipca Laboratories",
-          "sector": "Healthcare",
-          "weight": 3.11
+          "name": "Kotak Low Duration Direct-G",
+          "sector": "Other",
+          "weight": 1.66
         },
         {
-          "name": "Vishal Mega Mart",
-          "sector": "Consumer Services",
-          "weight": 3.06
+          "name": "Indus Infra Trust",
+          "sector": "Financial Services",
+          "weight": 1.32
         },
         {
-          "name": "GE Vernova T&D",
-          "sector": "Capital Goods",
-          "weight": 2.84
+          "name": "Muthoot Finance Ltd NCD 8.45 26/06/2029",
+          "sector": "Other",
+          "weight": 0.98
         },
         {
-          "name": "KEI",
-          "sector": "Consumer Services",
-          "weight": 2.8
+          "name": "Embassy Office Parks REIT SR XIII A Debenture 7.21 17/03/2028",
+          "sector": "Other",
+          "weight": 0.98
         }
       ],
       "snapshot": {
-        "factsheetLabel": "Value Research Online",
-        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
-        "currentAsOf": "2026-07-11",
+        "factsheetLabel": "Value Research Online + Moneycontrol",
+        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
+        "currentAsOf": "2026-07-13",
+        "previousAsOf": "2026-07-10T14:41:07.341Z",
         "comparisonMode": "top-holdings-proxy",
         "sectorWeights": [
           {
-            "sector": "Healthcare",
-            "weight": 7.09
+            "sector": "Other",
+            "weight": 10.190000000000001
           },
           {
-            "sector": "Consumer Services",
-            "weight": 5.859999999999999
-          },
-          {
-            "sector": "Capital Goods",
-            "weight": 2.84
+            "sector": "Financial Services",
+            "weight": 1.32
           }
         ]
       },
@@ -761,85 +772,83 @@
       },
       "intelligenceStatus": 200,
       "intelligenceOk": true,
-      "engineVersion": "1.2.0-live-fund-identity",
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio",
       "error": null,
       "sourceDiagnostics": {
         "registryMatch": {
-          "key": "axis large cap",
-          "score": 0.72,
-          "type": "live-selector"
+          "key": "axis large cap fund",
+          "score": 1,
+          "type": "exact"
         },
         "valueResearchIdentity": {
-          "repaired": true,
-          "accepted": true,
+          "repaired": false,
+          "accepted": false,
+          "skipped": true,
           "previousScore": 0.4533333333333333,
           "previousUrl": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "score": 0.72,
-          "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/"
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
+        },
+        "moneycontrolIdentity": {
+          "accepted": true,
+          "requestedIsin": "INF846K01DP8",
+          "returnedIsin": "INF846K01DP8",
+          "basis": "amfi-isin",
+          "returnedFundName": "Axis Large Cap Fund Direct Plan Growth",
+          "requestedFundName": "Axis Large Cap Fund - Direct Plan - Growth"
         },
         "research": {
           "liveValueResearch": true,
-          "liveAdvisorKhoj": true,
+          "liveMoneycontrol": true,
+          "liveAdvisorKhoj": false,
           "holdings": 5,
-          "sectors": 0,
-          "documents": 3,
-          "valueResearchError": null
+          "sectors": 11,
+          "documents": 0,
+          "valueResearchError": null,
+          "moneycontrolError": null,
+          "moneycontrolIdentity": {
+            "accepted": true,
+            "requestedIsin": "INF846K01DP8",
+            "returnedIsin": "INF846K01DP8",
+            "basis": "amfi-isin",
+            "returnedFundName": "Axis Large Cap Fund Direct Plan Growth",
+            "requestedFundName": "Axis Large Cap Fund - Direct Plan - Growth"
+          },
+          "moneycontrolCoverage": {
+            "holdings": 52,
+            "sectors": 11,
+            "assetAllocation": 3,
+            "marketCap": 3
+          }
         },
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-11T13:31:48.049Z",
+          "fetchedAt": "2026-07-14T09:37:00.126Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.84,
           "stale": false
         },
         "advisorIdentityValidation": {
-          "accepted": true,
-          "targetGroup": "axis",
-          "amcScore": 0.1111111111111111,
-          "fundScore": 0.3333333333333333,
-          "documentsBefore": 3,
-          "documentsAfter": 3
-        },
-        "documents": {
-          "attempted": 1,
-          "directDocuments": 2,
-          "resolvedDocuments": 2,
-          "rejectedAsOtherFunds": 0,
-          "selected": [
-            {
-              "url": "https://www.axismf.com/1/5/464/560/3622/4309/Monthly_Portfolio_31_05_26.xlsx",
-              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 117
-            },
-            {
-              "url": "https://www.axismf.com/1/5/1423/1484/1487/2872/4332/AxisFundFactsheetMay2026.pdf",
-              "text": "Mutual Fund Fact Sheets — Document discovered in page source",
-              "score": 73
-            }
-          ],
-          "failures": []
+          "accepted": false,
+          "repaired": false,
+          "skipped": true,
+          "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "holdings": 5,
         "sectors": 3,
-        "entries": 5,
-        "exits": 5
+        "entries": 0,
+        "exits": 0
       },
       "sources": [
-        {
-          "name": "AdvisorKhoj",
-          "type": "Live fund facts, risk metrics and portfolio-document discovery",
-          "url": "https://www.advisorkhoj.com/mutual-funds-research/Axis-Large-Cap-Fund-Direct-Plan-Growth"
-        },
         {
           "name": "Value Research Online",
           "type": "Public fund holdings and portfolio facts",
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/"
         },
         {
-          "name": "AdvisorKhoj-linked monthly portfolio disclosure",
-          "type": "Portfolio workbook linked by AdvisorKhoj",
-          "url": "https://www.axismf.com/1/5/464/560/3622/4309/Monthly_Portfolio_31_05_26.xlsx"
+          "name": "Moneycontrol",
+          "type": "Identity-validated live holdings, allocation and fund facts",
+          "url": "https://www.moneycontrol.com/mutual-funds/nav/axis-large-cap-fund-direct-plan/MAA181"
         },
         {
           "name": "Yahoo Finance",
@@ -854,10 +863,10 @@
         "managers": 2,
         "holdings": 5,
         "sectors": 3,
-        "entries": 5,
-        "exits": 5,
-        "snapshotCount": 2,
-        "factorCoverage": 100
+        "entries": 0,
+        "exits": 0,
+        "snapshotCount": 1,
+        "factorCoverage": 75
       },
       "holdings": [
         {
@@ -887,10 +896,10 @@
         }
       ],
       "snapshot": {
-        "factsheetLabel": "AdvisorKhoj + Value Research Online + AdvisorKhoj-linked monthly portfolio disclosure",
-        "sectorBasis": "Value Research top-holdings sector proxy with live market classifications",
-        "currentAsOf": "2026-07-11",
-        "previousAsOf": null,
+        "factsheetLabel": "Value Research Online + Moneycontrol",
+        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
+        "currentAsOf": "2026-07-13",
+        "previousAsOf": "2026-07-10T14:41:07.341Z",
         "comparisonMode": "top-holdings-proxy",
         "sectorWeights": [
           {
@@ -911,13 +920,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-11T13:31:50.682Z",
+    "generatedAt": "2026-07-14T09:37:00.384Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
-    "installLog": "\nadded 34 packages in 11s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    18.1 kB         105 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 372ms\n"
+    "installLog": "\nadded 35 packages in 6s\n",
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    22.6 kB         110 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 280ms\n"
   }
 }
