@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T12:45:21.780Z",
+  "generatedAt": "2026-07-14T15:56:09.080Z",
   "nav": [
     {
       "name": "Fund HDFC Flexi",
@@ -7,7 +7,7 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 2904,
+      "durationMs": 6363,
       "ok": true,
       "error": null,
       "points": 2099,
@@ -30,7 +30,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T12:45:24.674Z",
+        "fetchedAt": "2026-07-14T15:56:15.432Z",
         "stale": false,
         "warnings": []
       }
@@ -41,7 +41,7 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 727,
+      "durationMs": 770,
       "ok": true,
       "error": null,
       "points": 2098,
@@ -64,7 +64,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T12:45:25.408Z",
+        "fetchedAt": "2026-07-14T15:56:16.209Z",
         "stale": false,
         "warnings": []
       }
@@ -75,7 +75,7 @@
         "schemeCode": 125497
       },
       "status": 200,
-      "durationMs": 731,
+      "durationMs": 763,
       "ok": true,
       "error": null,
       "points": 2108,
@@ -98,7 +98,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T12:45:26.138Z",
+        "fetchedAt": "2026-07-14T15:56:16.972Z",
         "stale": false,
         "warnings": []
       }
@@ -113,7 +113,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 734,
+      "durationMs": 787,
       "ok": true,
       "error": null,
       "points": 498,
@@ -136,7 +136,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T12:45:26.875Z",
+        "fetchedAt": "2026-07-14T15:56:17.760Z",
         "stale": false,
         "warnings": []
       }
@@ -151,7 +151,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 22108,
+      "durationMs": 787,
       "ok": true,
       "error": null,
       "points": 277,
@@ -166,15 +166,15 @@
         "amfiLatest": {
           "schemeCode": 153529,
           "schemeName": "ANGEL ONE NIFTY 50 INDEX FUND-DIRECT-GROWTH",
-          "nav": 9.9587,
-          "date": "13-Jul-2026"
+          "nav": 9.8935,
+          "date": "14-Jul-2026"
         },
         "historyFallback": "mfapi-chunked-range",
         "requestedStartDate": "2018-01-01",
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T12:45:48.983Z",
+        "fetchedAt": "2026-07-14T15:56:18.547Z",
         "stale": false,
         "warnings": []
       }
@@ -189,7 +189,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 911,
+      "durationMs": 789,
       "ok": true,
       "error": null,
       "points": 1411,
@@ -212,7 +212,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T12:45:49.892Z",
+        "fetchedAt": "2026-07-14T15:56:19.336Z",
         "stale": false,
         "warnings": []
       }
@@ -227,7 +227,7 @@
         ]
       },
       "status": 503,
-      "durationMs": 15779,
+      "durationMs": 24516,
       "ok": false,
       "error": "MFapi history unavailable AMFI fallback also failed: AMFI historical NAV returned fewer than three observations for scheme 119173.",
       "points": 0,
@@ -243,16 +243,16 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 1148,
+      "durationMs": 1095,
       "ok": true,
       "error": null,
       "holdings": 5,
-      "sectors": 2,
+      "sectors": 3,
       "entries": 0,
       "exits": 0,
       "coverage": {
-        "requestedSymbols": 8,
-        "resolvedSymbols": 6,
+        "requestedSymbols": 9,
+        "resolvedSymbols": 7,
         "resolvedPct": 75,
         "sectorSeries": 1,
         "entrySeries": 0,
@@ -274,7 +274,7 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 855,
+      "durationMs": 909,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -305,7 +305,7 @@
         "schemeCode": 125497
       },
       "status": 200,
-      "durationMs": 1062,
+      "durationMs": 877,
       "ok": true,
       "error": null,
       "holdings": 4,
@@ -336,7 +336,7 @@
         "schemeCode": 120377
       },
       "status": 200,
-      "durationMs": 667,
+      "durationMs": 777,
       "ok": true,
       "error": null,
       "holdings": 4,
@@ -367,7 +367,7 @@
         "schemeCode": 119775
       },
       "status": 200,
-      "durationMs": 792,
+      "durationMs": 820,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -398,7 +398,7 @@
         "schemeCode": 120465
       },
       "status": 200,
-      "durationMs": 740,
+      "durationMs": 779,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -424,13 +424,13 @@
   ],
   "ok": false,
   "workflow": {
-    "generatedAt": "2026-07-14T15:50:36.814Z",
+    "generatedAt": "2026-07-14T15:56:53.633Z",
     "install": "success",
-    "build": "failure",
-    "start": "skipped",
-    "exercise": "skipped",
-    "installLog": "\nadded 35 packages in 6s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\nFailed to compile.\n\n./app/api/fund-intelligence/route.js\nError: Failed to read source code from /home/runner/work/mf-tool/mf-tool/app/api/fund-intelligence/route.js\n\nCaused by:\n    stream did not contain valid UTF-8\n\nImport trace for requested module:\n./app/api/fund-intelligence/route.js\n\n\n> Build failed because of webpack errors\n",
-    "serverLog": ""
+    "build": "success",
+    "start": "success",
+    "exercise": "success",
+    "installLog": "\nadded 35 packages in 5s\n",
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    33.3 kB         121 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/peer-benchmarks                 0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 275ms\n"
   }
 }
