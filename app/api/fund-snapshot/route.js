@@ -104,10 +104,12 @@ function liveSnapshot(fund, research) {
   const holdings = normaliseHoldings(firstRows(
     current.holdings,
     current.valueResearch?.holdings,
+    current.moneycontrol?.holdings,
     current.advisorKhoj?.holdings
   ));
   const sectors = normaliseSectors(firstRows(
     current.sectors,
+    current.moneycontrol?.sectors,
     current.advisorKhoj?.sectors,
     current.valueResearch?.sectors
   ), holdings);
@@ -117,11 +119,15 @@ function liveSnapshot(fund, research) {
     previous?.advisorKhoj?.holdings
   ));
   const snapshotCount = previousHoldings.length ? 2 : holdings.length ? 1 : 0;
+  const disclosurePending = !holdings.length && !sectors.length && Boolean(
+    current.moneycontrol?.identity?.accepted
+    || research?.valueResearchIdentity?.accepted
+  );
   const managers = firstRows(current.managers, current.valueResearch?.managers);
   const resolvedPct = holdings.length && sectors.length ? 70 : holdings.length || sectors.length ? 55 : 0;
 
   return {
-    ok: Boolean(holdings.length || sectors.length),
+    ok: Boolean(holdings.length || sectors.length || disclosurePending),
     fund: {
       id: fund.id,
       displayName: fund.displayName,
@@ -137,11 +143,11 @@ function liveSnapshot(fund, research) {
     fundFacts: {
       turnoverPct: current.turnoverPct ?? current.valueResearch?.turnoverPct ?? current.advisorKhoj?.turnoverPct,
       benchmark: current.benchmark || current.valueResearch?.benchmark || current.advisorKhoj?.benchmark,
-      expenseRatioPct: current.expenseRatioPct ?? current.valueResearch?.expenseRatioPct ?? current.advisorKhoj?.expenseRatioPct,
-      aumCr: current.aumCr ?? current.valueResearch?.aumCr ?? current.advisorKhoj?.aumCr,
-      riskMetrics: current.riskMetrics || current.advisorKhoj?.riskMetrics || null,
-      assetAllocation: current.assetAllocation || current.valueResearch?.assetAllocation || [],
-      marketCap: current.marketCap || current.valueResearch?.marketCap || []
+      expenseRatioPct: current.expenseRatioPct ?? current.valueResearch?.expenseRatioPct ?? current.moneycontrol?.expenseRatioPct ?? current.advisorKhoj?.expenseRatioPct,
+      aumCr: current.aumCr ?? current.valueResearch?.aumCr ?? current.moneycontrol?.aumCr ?? current.advisorKhoj?.aumCr,
+      riskMetrics: current.riskMetrics || current.moneycontrol?.riskMetrics || current.advisorKhoj?.riskMetrics || null,
+      assetAllocation: current.assetAllocation || current.valueResearch?.assetAllocation || current.moneycontrol?.assetAllocation || [],
+      marketCap: current.marketCap || current.valueResearch?.marketCap || current.moneycontrol?.marketCap || []
     },
     snapshot: {
       holdings,
@@ -154,8 +160,12 @@ function liveSnapshot(fund, research) {
       comparisonMode: snapshotCount >= 2 ? 'live-research-disclosure-comparison' : 'live-research-current-baseline',
       sectorBasis: sectors.some(item => item.classificationPending)
         ? 'Latest disclosed holdings loaded; sector classification is awaiting source enrichment.'
-        : 'Current Value Research Online / AdvisorKhoj sector snapshot.',
-      factsheetLabel: 'Bounded Value Research Online / AdvisorKhoj portfolio snapshot'
+        : sectors.some(item => /^Asset allocation:/i.test(item.sector))
+          ? 'Moneycontrol ISIN-validated asset allocation; this FoF source reports underlying funds instead of stock-sector classifications.'
+          : disclosurePending
+            ? 'Fund identity is validated; the first portfolio disclosure is not yet published by the source.'
+            : 'Current ISIN-validated Moneycontrol / Value Research portfolio snapshot.',
+      factsheetLabel: 'Moneycontrol / Value Research portfolio snapshot'
     },
     coverage: {
       requestedSymbols: holdings.length + sectors.length,
@@ -166,13 +176,16 @@ function liveSnapshot(fund, research) {
       exitSeries: 0,
       baselineEstablished: snapshotCount === 1,
       snapshotCount,
-      comparisonMode: snapshotCount >= 2 ? 'live-research-disclosure-comparison' : 'live-research-current-baseline'
+      comparisonMode: snapshotCount >= 2 ? 'live-research-disclosure-comparison' : 'live-research-current-baseline',
+      disclosurePending,
+      disclosureMessage: disclosurePending ? 'Fund identity and NAV are live; holdings-based momentum will activate automatically after the source publishes its first portfolio.' : null
     },
     sources: current.sources || [],
     sourceDiagnostics: {
       boundedLiveSnapshot: true,
       exactPortfolio: research?.exactValueResearchPortfolio || null,
       valueResearchIdentity: research?.valueResearchIdentity || null,
+      moneycontrolIdentity: current.moneycontrol?.identity || research?.diagnostics?.moneycontrolIdentity || null,
       holdings: holdings.length,
       sectors: sectors.length,
       researchDiagnostics: research?.diagnostics || null,
@@ -201,10 +214,12 @@ export async function GET(request) {
 
   try {
     let fund = suppliedFund(searchParams);
-    if (!fund) {
+    const hasIsin = fund?.preferredIsin || fund?.variants?.some(item => item.isinGrowth || item.isinDividend);
+    if (!fund || !hasIsin) {
       const universe = await getMarketUniverse();
-      fund = universe.families.find(item => item.id === fundId)
+      const universeFund = universe.families.find(item => item.id === fundId)
         || universe.families.find(item => item.variants?.some(variant => String(variant.schemeCode) === String(schemeCode)));
+      fund = universeFund || fund;
     }
 
     if (!fund) {
@@ -227,7 +242,7 @@ export async function GET(request) {
 
     const research = await Promise.race([
       resolveSnapshotResearch(researchFund),
-      timeoutAfter(32000)
+      timeoutAfter(42000)
     ]);
     const result = liveSnapshot(fund, research);
     if (!result.ok) {

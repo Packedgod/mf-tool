@@ -6,11 +6,20 @@ import { buildSyntheticProxy, computeMetrics, normaliseSeries } from '@/lib/anal
 import { calculateManagerScore } from '@/lib/momentum-engine';
 import { detailedMomentumSchemeId } from '@/lib/dynamic-proxies';
 
-const usefulMomentum = data => Boolean(
+const portfolioMomentum = data => Boolean(
   data?.holdings?.length
   || data?.sectors?.length
   || data?.snapshot?.sectorWeights?.length
 );
+
+const usefulMomentum = data => Boolean(
+  portfolioMomentum(data)
+  || data?.coverage?.disclosurePending
+);
+
+const momentumReadyMessage = (data, fallback) => data?.coverage?.disclosurePending
+  ? data.coverage.disclosureMessage || 'Fund identity is live; holdings-based momentum is waiting for the first published portfolio.'
+  : fallback;
 
 const usefulNav = data => Boolean(
   data?.fundSeries?.length >= 3
@@ -49,7 +58,7 @@ function mergeMomentum({ live, baseLive, snapshot, official, cached, fundId }) {
   const candidates = [live, baseLive, snapshot, official, cached].filter(Boolean);
   if (!candidates.length) return null;
 
-  const primary = candidates.find(usefulMomentum) || candidates[0];
+  const primary = candidates.find(portfolioMomentum) || candidates.find(usefulMomentum) || candidates[0];
   const holdings = firstRows(candidates, item => item?.holdings || item?.snapshot?.holdings);
   let sectors = firstRows(candidates, item => item?.sectors || item?.snapshot?.sectorWeights);
   if (!sectors.length && holdings.length) sectors = deriveSectors(holdings);
@@ -372,12 +381,12 @@ export default function useReliableManagerAnalytics(options = {}) {
     const generatedPromise = fetchJson(`/api/fund-snapshot?${params}`, {
       signal: controller.signal,
       attempts: 1,
-      timeoutMs: 15000
+      timeoutMs: 30000
     }).then(data => {
       if (controller.signal.aborted || requestId !== momentumRequestRef.current) return data;
       setGeneratedMomentum(data);
       if (usefulMomentum(data)) {
-        markReady('Momentum coverage synchronised from the latest source-tracked portfolio snapshot; live enrichment is continuing.');
+        markReady(momentumReadyMessage(data, 'Momentum coverage synchronised from the latest source-tracked portfolio snapshot; live enrichment is continuing.'));
       }
       return data;
     });
@@ -390,7 +399,7 @@ export default function useReliableManagerAnalytics(options = {}) {
       if (controller.signal.aborted || requestId !== momentumRequestRef.current) return data;
       setAuthoritativeMomentum(data);
       if (usefulMomentum(data)) {
-        markReady('Live manager holdings, sector positioning and timing coverage synchronised successfully.');
+        markReady(momentumReadyMessage(data, 'Live manager holdings, sector positioning and timing coverage synchronised successfully.'));
       }
       return data;
     });
@@ -416,8 +425,14 @@ export default function useReliableManagerAnalytics(options = {}) {
         || usefulMomentum(base.momentumData)
         || usefulMomentum(cachedAtStart);
       if (usable) {
+        const pending = results
+          .filter(result => result.status === 'fulfilled')
+          .map(result => result.value)
+          .find(value => value?.coverage?.disclosurePending);
         setMomentumLoadState('ready');
-        setMomentumLoadMessage(current => current.includes('synchronised')
+        setMomentumLoadMessage(current => pending
+          ? momentumReadyMessage(pending, current)
+          : current.includes('synchronised')
           ? current
           : 'Momentum coverage synchronised from the best available validated source.');
       } else {

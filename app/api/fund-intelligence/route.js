@@ -12,7 +12,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const maxDuration = 60;
 
-const ENGINE_VERSION = '1.2.0-live-fund-identity';
+const ENGINE_VERSION = '1.6.0-moneycontrol-isin-portfolio';
 const FUND_ALIASES = [
   { pattern: /kotak\s+midcap/i, aliases: ['Kotak Emerging Equity Fund', 'Kotak Emerging Equity Scheme'] },
   { pattern: /axis\s+large\s+cap/i, aliases: ['Axis Bluechip Fund'] },
@@ -94,7 +94,7 @@ function sanitiseHoldings(rows) {
   for (const item of rows || []) {
     const weight = Number(item?.weight);
     const name = String(item?.name || '').replace(/\s+/g, ' ').trim();
-    if (!validHoldingName(name) || !Number.isFinite(weight) || weight <= 0 || weight > 25) continue;
+    if (!validHoldingName(name) || !Number.isFinite(weight) || weight <= 0 || weight > 100) continue;
     const key = canonicalHolding(name);
     const existing = map.get(key);
     if (!existing || weight > existing.weight) map.set(key, { ...item, name, weight });
@@ -118,9 +118,10 @@ function sanitiseSectors(rows) {
     const sector = String(item?.sector || item?.name || '').replace(/\s+/g, ' ').trim();
     const weight = Number(item?.weight);
     if (!sector || !Number.isFinite(weight) || weight <= 0 || weight > 100) continue;
-    map.set(sector, (map.get(sector) || 0) + weight);
+    const existing = map.get(sector) || { weight: 0, allocationProxy: false };
+    map.set(sector, { weight: existing.weight + weight, allocationProxy: existing.allocationProxy || Boolean(item?.allocationProxy) });
   }
-  const sorted = [...map.entries()].map(([sector, weight]) => ({ sector, weight: Number(weight.toFixed(4)) })).sort((a, b) => b.weight - a.weight);
+  const sorted = [...map.entries()].map(([sector, value]) => ({ sector, weight: Number(value.weight.toFixed(4)), allocationProxy: value.allocationProxy })).sort((a, b) => b.weight - a.weight);
   const total = sorted.reduce((sum, item) => sum + item.weight, 0);
   return total <= 102 ? sorted : [];
 }
@@ -134,6 +135,7 @@ function sanitiseResearch(research) {
     current: {
       ...current,
       valueResearch: current.valueResearch ? { ...current.valueResearch, holdings: sanitiseHoldings(current.valueResearch.holdings) } : current.valueResearch,
+      moneycontrol: current.moneycontrol ? { ...current.moneycontrol, holdings: sanitiseHoldings(current.moneycontrol.holdings), sectors: sanitiseSectors(current.moneycontrol.sectors) } : current.moneycontrol,
       advisorKhoj: current.advisorKhoj ? { ...current.advisorKhoj, holdings: sanitiseHoldings(current.advisorKhoj.holdings), sectors: sanitiseSectors(current.advisorKhoj.sectors) } : current.advisorKhoj
     },
     previous: cleanSnapshot(research.previous),
@@ -173,7 +175,9 @@ function validateAdvisorKhojIdentity(research, fund) {
       current: {
         ...research.current,
         advisorKhoj: null,
-        sectors: research.current.valueResearch?.sectors || [],
+        sectors: research.current.valueResearch?.sectors?.length
+          ? research.current.valueResearch.sectors
+          : research.current.moneycontrol?.sectors || research.current.sectors || [],
         sources: (research.current.sources || []).filter(item => item.name !== 'AdvisorKhoj')
       },
       advisorIdentityRejection: {
@@ -246,8 +250,8 @@ export async function GET(request) {
     if (!publicResearch.ok) {
       return NextResponse.json({
         ok: false,
-        error: 'No Value Research Online or AdvisorKhoj fund record could be resolved.',
-        sourcesAttempted: ['Value Research Online', 'AdvisorKhoj'],
+        error: 'No Moneycontrol, Value Research Online, or AdvisorKhoj fund record could be resolved.',
+        sourcesAttempted: ['Moneycontrol', 'Value Research Online', 'AdvisorKhoj'],
         diagnostics: publicResearch.diagnostics,
         engineVersion: ENGINE_VERSION
       }, { status: 404 });
@@ -261,11 +265,15 @@ export async function GET(request) {
 
     const holdingCount = intelligence.holdings?.length || 0;
     const sectorCount = intelligence.sectors?.length || 0;
-    if (!holdingCount && !sectorCount) {
+    const disclosurePending = !holdingCount && !sectorCount && Boolean(
+      publicResearch.current?.moneycontrol?.identity?.accepted
+      || publicResearch.valueResearchIdentity?.accepted
+    );
+    if (!holdingCount && !sectorCount && !disclosurePending) {
       return NextResponse.json({
         ok: false,
         error: 'The selected fund matched the research universe, but its current holdings payload was empty. The UI will not render an empty sector or timing panel.',
-        detail: 'Value Research Online and AdvisorKhoj were resolved, but neither returned a validated holdings or sector table for this refresh.',
+        detail: 'Moneycontrol, Value Research Online, and AdvisorKhoj did not return a validated holdings or allocation table for this refresh.',
         fund: { id: selectedFund.id, displayName: selectedFund.displayName, fundHouse: selectedFund.fundHouse, preferredSchemeCode: selectedFund.preferredSchemeCode },
         diagnostics: {
           ...publicResearch.diagnostics,
@@ -284,10 +292,16 @@ export async function GET(request) {
     return NextResponse.json({
       ...intelligence,
       fund: { id: selectedFund.id, displayName: selectedFund.displayName, fundHouse: selectedFund.fundHouse, category: selectedFund.category, preferredSchemeCode: selectedFund.preferredSchemeCode },
-      researchPolicy: { managerAndPortfolio: ['Value Research Online', 'AdvisorKhoj'], navAndPriceEnrichment: ['AMFI', 'MFapi.in', 'Yahoo Finance'] },
+      coverage: {
+        ...(intelligence.coverage || {}),
+        disclosurePending,
+        disclosureMessage: disclosurePending ? 'Fund identity and NAV are live; holdings-based momentum will activate automatically after the source publishes its first portfolio.' : null
+      },
+      researchPolicy: { managerAndPortfolio: ['Moneycontrol (exact AMFI ISIN or strict fund-page match)', 'Value Research Online', 'AdvisorKhoj'], navAndPriceEnrichment: ['AMFI', 'MFapi.in', 'Yahoo Finance'] },
       sourceDiagnostics: {
         registryMatch: publicResearch.registryMatch,
         valueResearchIdentity: publicResearch.valueResearchIdentity,
+        moneycontrolIdentity: publicResearch.current?.moneycontrol?.identity || publicResearch.diagnostics?.moneycontrolIdentity,
         research: publicResearch.diagnostics,
         exactValueResearchPortfolio: publicResearch.exactValueResearchPortfolio,
         advisorIdentityRejection: publicResearch.advisorIdentityRejection,
@@ -304,7 +318,7 @@ export async function GET(request) {
   } catch (error) {
     return NextResponse.json({
       ok: false,
-      error: 'Value Research Online and AdvisorKhoj intelligence could not be loaded.',
+      error: 'Moneycontrol / Value Research portfolio intelligence could not be loaded.',
       detail: error instanceof Error ? error.message : String(error),
       engineVersion: ENGINE_VERSION
     }, { status: 503, headers: { 'Cache-Control': 'private, no-store, max-age=0, must-revalidate' } });

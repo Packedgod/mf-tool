@@ -4,11 +4,9 @@ import { getExtendedMomentumSnapshot } from "@/lib/extended-momentum-data";
 import { offlineYahooResult, OFFLINE_PRICE_SOURCE } from "@/lib/offline-market";
 import { logUpstreamError } from "@/lib/upstream-log";
 
-// When true, unreachable live price sources fall back to a clearly-labelled
-// deterministic offline sample series so the momentum-coverage UI stays
-// functional for local visualisation. Set MANAGERLENS_OFFLINE_PRICES=0 to
-// disable and surface a hard "price data unavailable" state instead.
-const OFFLINE_PRICES_ENABLED = process.env.MANAGERLENS_OFFLINE_PRICES !== "0";
+// Deterministic samples are available only for explicitly requested local
+// demos. Production must never silently substitute generated market prices.
+const OFFLINE_PRICES_ENABLED = process.env.MANAGERLENS_OFFLINE_PRICES === "1";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
