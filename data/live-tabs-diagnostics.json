@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T11:38:28.761Z",
+  "generatedAt": "2026-07-14T15:56:07.004Z",
   "node": "v20.20.2",
   "tests": [
     {
@@ -64,7 +64,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T11:38:29.454Z",
+          "fetchedAt": "2026-07-14T15:56:07.862Z",
           "holdings": 5,
           "totalTopHoldingWeight": 30.56,
           "stale": false
@@ -219,7 +219,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T11:38:33.417Z",
+          "fetchedAt": "2026-07-14T15:56:09.254Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.5,
           "stale": false
@@ -294,7 +294,7 @@
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
         "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-13",
+        "currentAsOf": "2026-07-14",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
@@ -380,7 +380,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T11:38:34.479Z",
+          "fetchedAt": "2026-07-14T15:56:10.136Z",
           "holdings": 4,
           "totalTopHoldingWeight": 14.08,
           "stale": false
@@ -530,7 +530,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T11:38:35.576Z",
+          "fetchedAt": "2026-07-14T15:56:11.067Z",
           "holdings": 4,
           "totalTopHoldingWeight": 6.39,
           "stale": false
@@ -620,10 +620,10 @@
       "query": "Kotak Midcap Fund",
       "universeStatus": 200,
       "fund": {
-        "id": "kotak mahindra mutual fund::kotak midcap fund re investment of income distribution cum capital withdrawal",
-        "displayName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
+        "id": "kotak mahindra mutual fund::kotak midcap fund",
+        "displayName": "Kotak Midcap Fund - Direct Plan - Growth",
         "fundHouse": "Kotak Mahindra Mutual Fund",
-        "preferredSchemeCode": 119774
+        "preferredSchemeCode": 119775
       },
       "intelligenceStatus": 200,
       "intelligenceOk": true,
@@ -631,42 +631,42 @@
       "error": null,
       "sourceDiagnostics": {
         "registryMatch": {
-          "key": "kotak equity savings fund",
-          "score": 0.6666666666666666,
-          "type": "fuzzy"
+          "key": "kotak midcap fund",
+          "score": 1,
+          "type": "exact"
         },
         "valueResearchIdentity": {
           "repaired": false,
           "accepted": false,
           "skipped": true,
-          "previousScore": 0,
-          "previousUrl": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/",
+          "previousScore": 0.37,
+          "previousUrl": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
           "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "moneycontrolIdentity": {
           "accepted": true,
-          "requestedIsin": "INF174K01LV6",
-          "returnedIsin": "INF174K01LV6",
+          "requestedIsin": "INF174K01LT0",
+          "returnedIsin": "INF174K01LT0",
           "basis": "amfi-isin",
-          "returnedFundName": "Kotak Midcap Fund Direct Reinvestment of Income Distribution cum Cap Wdrl",
-          "requestedFundName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option"
+          "returnedFundName": "Kotak Midcap Fund Direct Growth",
+          "requestedFundName": "Kotak Midcap Fund - Direct Plan - Growth"
         },
         "research": {
           "liveValueResearch": true,
           "liveMoneycontrol": true,
           "liveAdvisorKhoj": false,
-          "holdings": 7,
+          "holdings": 5,
           "sectors": 10,
           "documents": 0,
           "valueResearchError": null,
           "moneycontrolError": null,
           "moneycontrolIdentity": {
             "accepted": true,
-            "requestedIsin": "INF174K01LV6",
-            "returnedIsin": "INF174K01LV6",
+            "requestedIsin": "INF174K01LT0",
+            "returnedIsin": "INF174K01LT0",
             "basis": "amfi-isin",
-            "returnedFundName": "Kotak Midcap Fund Direct Reinvestment of Income Distribution cum Cap Wdrl",
-            "requestedFundName": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option"
+            "returnedFundName": "Kotak Midcap Fund Direct Growth",
+            "requestedFundName": "Kotak Midcap Fund - Direct Plan - Growth"
           },
           "moneycontrolCoverage": {
             "holdings": 71,
@@ -677,10 +677,10 @@
         },
         "exactValueResearchPortfolio": {
           "ok": true,
-          "url": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T11:38:36.425Z",
+          "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
+          "fetchedAt": "2026-07-14T15:56:11.851Z",
           "holdings": 5,
-          "totalTopHoldingWeight": 11.51,
+          "totalTopHoldingWeight": 15.79,
           "stale": false
         },
         "advisorIdentityValidation": {
@@ -690,7 +690,7 @@
           "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "holdings": 5,
-        "sectors": 2,
+        "sectors": 4,
         "entries": 0,
         "exits": 0
       },
@@ -698,12 +698,12 @@
         {
           "name": "Value Research Online",
           "type": "Public fund holdings and portfolio facts",
-          "url": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/"
+          "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/"
         },
         {
           "name": "Moneycontrol",
           "type": "Identity-validated live holdings, allocation and fund facts",
-          "url": "https://www.moneycontrol.com/mutual-funds/nav/kotak-midcap-dir-idcw-r/M9KS2311"
+          "url": "https://www.moneycontrol.com/mutual-funds/nav/kotak-midcap-fund-direct-plan/MKM528"
         },
         {
           "name": "Yahoo Finance",
@@ -715,9 +715,9 @@
         }
       ],
       "counts": {
-        "managers": 3,
+        "managers": 1,
         "holdings": 5,
-        "sectors": 2,
+        "sectors": 4,
         "entries": 0,
         "exits": 0,
         "snapshotCount": 1,
@@ -725,29 +725,29 @@
       },
       "holdings": [
         {
-          "name": "Kotak Liquid Direct-G",
-          "sector": "Sector classification pending",
-          "weight": 6.57
+          "name": "Fortis Healthcare",
+          "sector": "Healthcare",
+          "weight": 3.98
         },
         {
-          "name": "Kotak Low Duration Direct-G",
-          "sector": "Sector classification pending",
-          "weight": 1.66
+          "name": "Ipca Laboratories",
+          "sector": "Healthcare",
+          "weight": 3.11
         },
         {
-          "name": "Indus Infra Trust",
-          "sector": "Other",
-          "weight": 1.32
+          "name": "Vishal Mega Mart",
+          "sector": "Consumer Services",
+          "weight": 3.06
         },
         {
-          "name": "Muthoot Finance Ltd NCD 8.45 26/06/2029",
-          "sector": "Sector classification pending",
-          "weight": 0.98
+          "name": "GE Vernova T&D",
+          "sector": "Capital Goods",
+          "weight": 2.84
         },
         {
-          "name": "Embassy Office Parks REIT SR XIII A Debenture 7.21 17/03/2028",
+          "name": "KEI",
           "sector": "Sector classification pending",
-          "weight": 0.98
+          "weight": 2.8
         }
       ],
       "snapshot": {
@@ -758,12 +758,20 @@
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
           {
-            "sector": "Sector classification pending",
-            "weight": 10.190000000000001
+            "sector": "Healthcare",
+            "weight": 7.09
           },
           {
-            "sector": "Other",
-            "weight": 1.32
+            "sector": "Consumer Services",
+            "weight": 3.06
+          },
+          {
+            "sector": "Capital Goods",
+            "weight": 2.84
+          },
+          {
+            "sector": "Sector classification pending",
+            "weight": 2.8
           }
         ]
       },
@@ -831,7 +839,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T11:38:37.163Z",
+          "fetchedAt": "2026-07-14T15:56:12.797Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.84,
           "stale": false
@@ -932,13 +940,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-14T15:50:35.264Z",
+    "generatedAt": "2026-07-14T15:56:13.153Z",
     "install": "success",
-    "build": "failure",
-    "start": "skipped",
-    "exercise": "skipped",
+    "build": "success",
+    "start": "success",
+    "exercise": "success",
     "installLog": "\nadded 35 packages in 6s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\nFailed to compile.\n\n./app/api/fund-intelligence/route.js\nError: Failed to read source code from /home/runner/work/mf-tool/mf-tool/app/api/fund-intelligence/route.js\n\nCaused by:\n    stream did not contain valid UTF-8\n\nImport trace for requested module:\n./app/api/fund-intelligence/route.js\n\n\n> Build failed because of webpack errors\n",
-    "serverLog": ""
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    33.3 kB         121 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/peer-benchmarks                 0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 290ms\n"
   }
 }
