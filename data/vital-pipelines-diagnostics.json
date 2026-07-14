@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T09:36:56.579Z",
+  "generatedAt": "2026-07-14T10:43:16.512Z",
   "nav": [
     {
       "name": "Fund HDFC Flexi",
@@ -7,7 +7,7 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 4448,
+      "durationMs": 2775,
       "ok": true,
       "error": null,
       "points": 2099,
@@ -30,7 +30,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T09:37:01.016Z",
+        "fetchedAt": "2026-07-14T10:43:19.274Z",
         "stale": false,
         "warnings": []
       }
@@ -41,7 +41,7 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 821,
+      "durationMs": 772,
       "ok": true,
       "error": null,
       "points": 2098,
@@ -64,7 +64,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T09:37:01.844Z",
+        "fetchedAt": "2026-07-14T10:43:20.055Z",
         "stale": false,
         "warnings": []
       }
@@ -75,7 +75,7 @@
         "schemeCode": 125497
       },
       "status": 200,
-      "durationMs": 857,
+      "durationMs": 758,
       "ok": true,
       "error": null,
       "points": 2108,
@@ -98,7 +98,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T09:37:02.701Z",
+        "fetchedAt": "2026-07-14T10:43:20.813Z",
         "stale": false,
         "warnings": []
       }
@@ -113,7 +113,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 859,
+      "durationMs": 758,
       "ok": true,
       "error": null,
       "points": 498,
@@ -136,7 +136,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T09:37:03.562Z",
+        "fetchedAt": "2026-07-14T10:43:21.573Z",
         "stale": false,
         "warnings": []
       }
@@ -151,7 +151,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 837,
+      "durationMs": 788,
       "ok": true,
       "error": null,
       "points": 277,
@@ -174,7 +174,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T09:37:04.399Z",
+        "fetchedAt": "2026-07-14T10:43:22.360Z",
         "stale": false,
         "warnings": []
       }
@@ -189,7 +189,7 @@
         ]
       },
       "status": 200,
-      "durationMs": 833,
+      "durationMs": 759,
       "ok": true,
       "error": null,
       "points": 1411,
@@ -212,7 +212,7 @@
         "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
         "actualEndDate": "2026-07-14",
-        "fetchedAt": "2026-07-14T09:37:05.231Z",
+        "fetchedAt": "2026-07-14T10:43:23.118Z",
         "stale": false,
         "warnings": []
       }
@@ -227,7 +227,7 @@
         ]
       },
       "status": 503,
-      "durationMs": 17784,
+      "durationMs": 15723,
       "ok": false,
       "error": "MFapi history unavailable AMFI fallback also failed: AMFI historical NAV returned fewer than three observations for scheme 119173.",
       "points": 0,
@@ -243,7 +243,7 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 1042,
+      "durationMs": 1149,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -259,11 +259,12 @@
         "exitSeries": 0,
         "baselineEstablished": true,
         "snapshotCount": 1,
-        "comparisonMode": "top-holdings-proxy",
+        "comparisonMode": "current-holdings-baseline",
+        "changeEvidence": "baseline-only",
         "disclosurePending": false,
         "disclosureMessage": null
       },
-      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
+      "engineVersion": "1.7.0-moneycontrol-look-through-trades"
     },
     {
       "query": "Parag Parikh Flexi Cap",
@@ -273,7 +274,7 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 805,
+      "durationMs": 898,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -289,11 +290,12 @@
         "exitSeries": 0,
         "baselineEstablished": true,
         "snapshotCount": 1,
-        "comparisonMode": "top-holdings-proxy",
+        "comparisonMode": "current-holdings-baseline",
+        "changeEvidence": "baseline-only",
         "disclosurePending": false,
         "disclosureMessage": null
       },
-      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
+      "engineVersion": "1.7.0-moneycontrol-look-through-trades"
     },
     {
       "query": "SBI Small Cap",
@@ -303,7 +305,7 @@
         "schemeCode": 125497
       },
       "status": 200,
-      "durationMs": 896,
+      "durationMs": 802,
       "ok": true,
       "error": null,
       "holdings": 4,
@@ -319,11 +321,12 @@
         "exitSeries": 0,
         "baselineEstablished": true,
         "snapshotCount": 1,
-        "comparisonMode": "top-holdings-proxy",
+        "comparisonMode": "current-holdings-baseline",
+        "changeEvidence": "baseline-only",
         "disclosurePending": false,
         "disclosureMessage": null
       },
-      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
+      "engineVersion": "1.7.0-moneycontrol-look-through-trades"
     },
     {
       "query": "ICICI Prudential Balanced Advantage",
@@ -333,7 +336,7 @@
         "schemeCode": 120377
       },
       "status": 200,
-      "durationMs": 725,
+      "durationMs": 808,
       "ok": true,
       "error": null,
       "holdings": 4,
@@ -349,11 +352,12 @@
         "exitSeries": 0,
         "baselineEstablished": true,
         "snapshotCount": 1,
-        "comparisonMode": "top-holdings-proxy",
+        "comparisonMode": "current-holdings-baseline",
+        "changeEvidence": "baseline-only",
         "disclosurePending": false,
         "disclosureMessage": null
       },
-      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
+      "engineVersion": "1.7.0-moneycontrol-look-through-trades"
     },
     {
       "query": "Kotak Midcap Fund",
@@ -363,7 +367,7 @@
         "schemeCode": 119774
       },
       "status": 200,
-      "durationMs": 492,
+      "durationMs": 738,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -379,11 +383,12 @@
         "exitSeries": 0,
         "baselineEstablished": true,
         "snapshotCount": 1,
-        "comparisonMode": "top-holdings-proxy",
+        "comparisonMode": "current-holdings-baseline",
+        "changeEvidence": "baseline-only",
         "disclosurePending": false,
         "disclosureMessage": null
       },
-      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
+      "engineVersion": "1.7.0-moneycontrol-look-through-trades"
     },
     {
       "query": "Axis Large Cap Fund",
@@ -393,7 +398,7 @@
         "schemeCode": 120465
       },
       "status": 200,
-      "durationMs": 537,
+      "durationMs": 812,
       "ok": true,
       "error": null,
       "holdings": 5,
@@ -409,22 +414,23 @@
         "exitSeries": 0,
         "baselineEstablished": true,
         "snapshotCount": 1,
-        "comparisonMode": "top-holdings-proxy",
+        "comparisonMode": "current-holdings-baseline",
+        "changeEvidence": "baseline-only",
         "disclosurePending": false,
         "disclosureMessage": null
       },
-      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
+      "engineVersion": "1.7.0-moneycontrol-look-through-trades"
     }
   ],
   "ok": false,
   "workflow": {
-    "generatedAt": "2026-07-14T09:37:32.537Z",
+    "generatedAt": "2026-07-14T10:43:48.883Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
-    "installLog": "\nadded 35 packages in 6s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    22.6 kB         110 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 278ms\n"
+    "installLog": "\nadded 35 packages in 5s\n",
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    24.7 kB         112 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 277ms\n"
   }
 }
