@@ -1,6 +1,14 @@
 import { NextResponse } from "next/server";
 import { getMomentumSnapshot, SECTOR_MARKET_SYMBOLS } from "@/lib/momentum-data";
 import { getExtendedMomentumSnapshot } from "@/lib/extended-momentum-data";
+import { offlineYahooResult, OFFLINE_PRICE_SOURCE } from "@/lib/offline-market";
+import { logUpstreamError } from "@/lib/upstream-log";
+
+// When true, unreachable live price sources fall back to a clearly-labelled
+// deterministic offline sample series so the momentum-coverage UI stays
+// functional for local visualisation. Set MANAGERLENS_OFFLINE_PRICES=0 to
+// disable and surface a hard "price data unavailable" state instead.
+const OFFLINE_PRICES_ENABLED = process.env.MANAGERLENS_OFFLINE_PRICES !== "0";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -58,7 +66,14 @@ async function fetchYahoo(symbol) {
     if (cached && now - cached.at < STALE_MS) {
       return { ...cached.value, cache: "stale", warning: error instanceof Error ? error.message : String(error) };
     }
-    return { ok: false, symbol, error: error instanceof Error ? error.message : String(error), points: [] };
+    const message = error instanceof Error ? error.message : String(error);
+    logUpstreamError("momentum:yahoo", error, { symbol });
+    if (OFFLINE_PRICES_ENABLED) {
+      // Live prices are unreachable in this environment. Serve a deterministic,
+      // clearly-labelled offline sample so the coverage UI remains functional.
+      return { ...offlineYahooResult(symbol), warning: message };
+    }
+    return { ok: false, symbol, error: message, points: [] };
   }
 }
 
@@ -95,6 +110,8 @@ function marketStats(result) {
   return {
     ok: true,
     symbol: result.symbol,
+    offline: result.offline || false,
+    priceSource: result.source || null,
     current: points.at(-1)?.close,
     return1mPct: returnAt(points, 21),
     return3mPct: returnAt(points, 63),
@@ -196,6 +213,15 @@ export async function GET(request) {
   const broadStats = statsMap.get("^NSEI");
   const regime = classifyRegime(broadStats, sectors.filter(item => item.ok));
   const resolved = results.filter(([, item]) => item.ok).length;
+  const offlineCount = results.filter(([, item]) => item.ok && item.offline).length;
+  const priceDataMode = offlineCount === 0
+    ? "live"
+    : offlineCount === resolved
+      ? "offline-sample"
+      : "mixed";
+  const priceWarning = offlineCount > 0
+    ? "Live market prices are not reachable from this environment, so price-derived momentum factors use a deterministic OFFLINE SAMPLE series. These figures are for interface validation only and must not be used for advice."
+    : null;
 
   return NextResponse.json({
     ok: true,
@@ -214,6 +240,8 @@ export async function GET(request) {
       factsheetUrl: snapshot.factsheetUrl,
       factsheetLabel: snapshot.factsheetLabel
     },
+    priceDataMode,
+    priceWarning,
     broadMarket: broadStats ? { ...broadStats, points: undefined } : null,
     regime,
     sectors,
@@ -231,7 +259,9 @@ export async function GET(request) {
     },
     sources: [
       { name: snapshot.factsheetLabel, type: "Official AMC factsheet", url: snapshot.factsheetUrl, asOf: snapshot.asOf },
-      { name: "Yahoo Finance", type: "Live stock and sector price histories", asOf: new Date().toISOString() },
+      priceDataMode === "live"
+        ? { name: "Yahoo Finance", type: "Live stock and sector price histories", asOf: new Date().toISOString() }
+        : { name: OFFLINE_PRICE_SOURCE, type: "Deterministic offline price sample (live market data unreachable)", asOf: new Date().toISOString() },
       { name: "MFapi.in / AMFI", type: "Fund and comparison-proxy NAV data", asOf: "live" }
     ],
     fetchedAt: new Date().toISOString()
