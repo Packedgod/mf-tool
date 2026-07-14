@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-13T07:21:38.125Z",
+  "generatedAt": "2026-07-14T09:36:56.579Z",
   "nav": [
     {
       "name": "Fund HDFC Flexi",
@@ -7,10 +7,10 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 3165,
+      "durationMs": 4448,
       "ok": true,
       "error": null,
-      "points": 2098,
+      "points": 2099,
       "source": {
         "primary": "MFapi.in",
         "validation": "AMFI NAVAll",
@@ -22,15 +22,15 @@
         "amfiLatest": {
           "schemeCode": 118955,
           "schemeName": "HDFC Flexi Cap Fund - Growth Option - Direct Plan",
-          "nav": 2240.661,
-          "date": "10-Jul-2026"
+          "nav": 2241.197,
+          "date": "13-Jul-2026"
         },
         "historyFallback": "mfapi-chunked-range",
         "requestedStartDate": "2018-01-01",
-        "requestedEndDate": "2026-07-13",
+        "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
-        "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:21:41.276Z",
+        "actualEndDate": "2026-07-14",
+        "fetchedAt": "2026-07-14T09:37:01.016Z",
         "stale": false,
         "warnings": []
       }
@@ -41,10 +41,10 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 811,
+      "durationMs": 821,
       "ok": true,
       "error": null,
-      "points": 2097,
+      "points": 2098,
       "source": {
         "primary": "MFapi.in",
         "validation": "AMFI NAVAll",
@@ -56,15 +56,15 @@
         "amfiLatest": {
           "schemeCode": 122639,
           "schemeName": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
-          "nav": 90.9438,
-          "date": "10-Jul-2026"
+          "nav": 91.3166,
+          "date": "13-Jul-2026"
         },
         "historyFallback": "mfapi-chunked-range",
         "requestedStartDate": "2018-01-01",
-        "requestedEndDate": "2026-07-13",
+        "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
-        "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:21:42.097Z",
+        "actualEndDate": "2026-07-14",
+        "fetchedAt": "2026-07-14T09:37:01.844Z",
         "stale": false,
         "warnings": []
       }
@@ -75,10 +75,10 @@
         "schemeCode": 125497
       },
       "status": 200,
-      "durationMs": 804,
+      "durationMs": 857,
       "ok": true,
       "error": null,
-      "points": 2107,
+      "points": 2108,
       "source": {
         "primary": "MFapi.in",
         "validation": "AMFI NAVAll",
@@ -90,15 +90,15 @@
         "amfiLatest": {
           "schemeCode": 125497,
           "schemeName": "SBI Small Cap Fund - Direct Plan - Growth",
-          "nav": 208.3518,
-          "date": "10-Jul-2026"
+          "nav": 208.1546,
+          "date": "13-Jul-2026"
         },
         "historyFallback": "mfapi-chunked-range",
         "requestedStartDate": "2018-01-01",
-        "requestedEndDate": "2026-07-13",
+        "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
-        "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:21:42.901Z",
+        "actualEndDate": "2026-07-14",
+        "fetchedAt": "2026-07-14T09:37:02.701Z",
         "stale": false,
         "warnings": []
       }
@@ -113,10 +113,10 @@
         ]
       },
       "status": 200,
-      "durationMs": 808,
+      "durationMs": 859,
       "ok": true,
       "error": null,
-      "points": 497,
+      "points": 498,
       "source": {
         "primary": "MFapi.in",
         "validation": "AMFI NAVAll",
@@ -128,15 +128,15 @@
         "amfiLatest": {
           "schemeCode": 152731,
           "schemeName": "Axis Nifty 500 Index Fund - Direct Plan - Growth Option",
-          "nav": 10.2467,
-          "date": "10-Jul-2026"
+          "nav": 10.246,
+          "date": "13-Jul-2026"
         },
         "historyFallback": "mfapi-chunked-range",
         "requestedStartDate": "2018-01-01",
-        "requestedEndDate": "2026-07-13",
+        "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
-        "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:21:43.711Z",
+        "actualEndDate": "2026-07-14",
+        "fetchedAt": "2026-07-14T09:37:03.562Z",
         "stale": false,
         "warnings": []
       }
@@ -151,10 +151,10 @@
         ]
       },
       "status": 200,
-      "durationMs": 5331,
+      "durationMs": 837,
       "ok": true,
       "error": null,
-      "points": 276,
+      "points": 277,
       "source": {
         "primary": "MFapi.in",
         "validation": "AMFI NAVAll",
@@ -166,15 +166,15 @@
         "amfiLatest": {
           "schemeCode": 153529,
           "schemeName": "ANGEL ONE NIFTY 50 INDEX FUND-DIRECT-GROWTH",
-          "nav": 9.9572,
-          "date": "10-Jul-2026"
+          "nav": 9.9587,
+          "date": "13-Jul-2026"
         },
         "historyFallback": "mfapi-chunked-range",
         "requestedStartDate": "2018-01-01",
-        "requestedEndDate": "2026-07-13",
+        "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
-        "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:21:49.041Z",
+        "actualEndDate": "2026-07-14",
+        "fetchedAt": "2026-07-14T09:37:04.399Z",
         "stale": false,
         "warnings": []
       }
@@ -189,10 +189,10 @@
         ]
       },
       "status": 200,
-      "durationMs": 812,
+      "durationMs": 833,
       "ok": true,
       "error": null,
-      "points": 1410,
+      "points": 1411,
       "source": {
         "primary": "MFapi.in",
         "validation": "AMFI NAVAll",
@@ -204,15 +204,15 @@
         "amfiLatest": {
           "schemeCode": 148519,
           "schemeName": "Nippon India Nifty Smallcap 250 Index Fund - Direct Plan - Growth Option",
-          "nav": 35.8902,
-          "date": "10-Jul-2026"
+          "nav": 35.9942,
+          "date": "13-Jul-2026"
         },
         "historyFallback": "mfapi-chunked-range",
         "requestedStartDate": "2018-01-01",
-        "requestedEndDate": "2026-07-13",
+        "requestedEndDate": "2026-07-14",
         "actualStartDate": "2018-01-01",
-        "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:21:49.853Z",
+        "actualEndDate": "2026-07-14",
+        "fetchedAt": "2026-07-14T09:37:05.231Z",
         "stale": false,
         "warnings": []
       }
@@ -226,34 +226,12 @@
           "Liquid Fund Direct Growth"
         ]
       },
-      "status": 200,
-      "durationMs": 821,
-      "ok": true,
-      "error": null,
-      "points": 179,
-      "source": {
-        "primary": "MFapi.in",
-        "validation": "AMFI NAVAll",
-        "schemeCode": 154011,
-        "schemeName": "Capitalmind Liquid Fund - Direct-Growth",
-        "resolvedBy": "Ranked MFapi/AMFI search",
-        "matchedQuery": "Liquid Fund Direct Growth",
-        "amfiStatus": "validated",
-        "amfiLatest": {
-          "schemeCode": 154011,
-          "schemeName": "Capitalmind Liquid Fund - Direct-Growth",
-          "nav": 1042.0823,
-          "date": "12-Jul-2026"
-        },
-        "historyFallback": "mfapi-chunked-range",
-        "requestedStartDate": "2018-01-01",
-        "requestedEndDate": "2026-07-13",
-        "actualStartDate": "2018-01-01",
-        "actualEndDate": "2026-07-13",
-        "fetchedAt": "2026-07-13T07:21:50.675Z",
-        "stale": false,
-        "warnings": []
-      }
+      "status": 503,
+      "durationMs": 17784,
+      "ok": false,
+      "error": "MFapi history unavailable AMFI fallback also failed: AMFI historical NAV returned fewer than three observations for scheme 119173.",
+      "points": 0,
+      "source": null
     }
   ],
   "momentum": [
@@ -265,25 +243,27 @@
         "schemeCode": 118955
       },
       "status": 200,
-      "durationMs": 5814,
+      "durationMs": 1042,
       "ok": true,
       "error": null,
       "holdings": 5,
       "sectors": 1,
-      "entries": 5,
-      "exits": 5,
+      "entries": 0,
+      "exits": 0,
       "coverage": {
         "requestedSymbols": 7,
         "resolvedSymbols": 7,
-        "resolvedPct": 100,
+        "resolvedPct": 75,
         "sectorSeries": 1,
-        "entrySeries": 5,
-        "exitSeries": 4,
-        "baselineEstablished": false,
-        "snapshotCount": 2,
-        "comparisonMode": "top-holdings-proxy"
+        "entrySeries": 0,
+        "exitSeries": 0,
+        "baselineEstablished": true,
+        "snapshotCount": 1,
+        "comparisonMode": "top-holdings-proxy",
+        "disclosurePending": false,
+        "disclosureMessage": null
       },
-      "engineVersion": "1.2.0-live-fund-identity"
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
     },
     {
       "query": "Parag Parikh Flexi Cap",
@@ -293,25 +273,27 @@
         "schemeCode": 122639
       },
       "status": 200,
-      "durationMs": 2822,
+      "durationMs": 805,
       "ok": true,
       "error": null,
       "holdings": 5,
       "sectors": 4,
-      "entries": 5,
-      "exits": 5,
+      "entries": 0,
+      "exits": 0,
       "coverage": {
         "requestedSymbols": 10,
-        "resolvedSymbols": 8,
-        "resolvedPct": 100,
-        "sectorSeries": 2,
-        "entrySeries": 5,
-        "exitSeries": 4,
-        "baselineEstablished": false,
-        "snapshotCount": 2,
-        "comparisonMode": "top-holdings-proxy"
+        "resolvedSymbols": 9,
+        "resolvedPct": 75,
+        "sectorSeries": 3,
+        "entrySeries": 0,
+        "exitSeries": 0,
+        "baselineEstablished": true,
+        "snapshotCount": 1,
+        "comparisonMode": "top-holdings-proxy",
+        "disclosurePending": false,
+        "disclosureMessage": null
       },
-      "engineVersion": "1.2.0-live-fund-identity"
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
     },
     {
       "query": "SBI Small Cap",
@@ -320,16 +302,28 @@
         "displayName": "SBI Small Cap Fund - Direct Plan - Growth",
         "schemeCode": 125497
       },
-      "status": 424,
-      "durationMs": 5888,
-      "ok": false,
-      "error": "Value Research Online and AdvisorKhoj were resolved, but neither returned a validated holdings or sector table for this refresh.",
-      "holdings": 0,
-      "sectors": 0,
+      "status": 200,
+      "durationMs": 896,
+      "ok": true,
+      "error": null,
+      "holdings": 4,
+      "sectors": 3,
       "entries": 0,
       "exits": 0,
-      "coverage": null,
-      "engineVersion": "1.2.0-live-fund-identity"
+      "coverage": {
+        "requestedSymbols": 8,
+        "resolvedSymbols": 8,
+        "resolvedPct": 75,
+        "sectorSeries": 3,
+        "entrySeries": 0,
+        "exitSeries": 0,
+        "baselineEstablished": true,
+        "snapshotCount": 1,
+        "comparisonMode": "top-holdings-proxy",
+        "disclosurePending": false,
+        "disclosureMessage": null
+      },
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
     },
     {
       "query": "ICICI Prudential Balanced Advantage",
@@ -339,7 +333,7 @@
         "schemeCode": 120377
       },
       "status": 200,
-      "durationMs": 3065,
+      "durationMs": 725,
       "ok": true,
       "error": null,
       "holdings": 4,
@@ -355,9 +349,11 @@
         "exitSeries": 0,
         "baselineEstablished": true,
         "snapshotCount": 1,
-        "comparisonMode": "top-holdings-proxy"
+        "comparisonMode": "top-holdings-proxy",
+        "disclosurePending": false,
+        "disclosureMessage": null
       },
-      "engineVersion": "1.2.0-live-fund-identity"
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
     },
     {
       "query": "Kotak Midcap Fund",
@@ -367,25 +363,27 @@
         "schemeCode": 119774
       },
       "status": 200,
-      "durationMs": 38542,
+      "durationMs": 492,
       "ok": true,
       "error": null,
       "holdings": 5,
-      "sectors": 3,
+      "sectors": 2,
       "entries": 0,
       "exits": 0,
       "coverage": {
-        "requestedSymbols": 9,
-        "resolvedSymbols": 9,
-        "resolvedPct": 65,
-        "sectorSeries": 3,
+        "requestedSymbols": 8,
+        "resolvedSymbols": 3,
+        "resolvedPct": 75,
+        "sectorSeries": 1,
         "entrySeries": 0,
         "exitSeries": 0,
         "baselineEstablished": true,
         "snapshotCount": 1,
-        "comparisonMode": "top-holdings-proxy"
+        "comparisonMode": "top-holdings-proxy",
+        "disclosurePending": false,
+        "disclosureMessage": null
       },
-      "engineVersion": "1.2.0-live-fund-identity"
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
     },
     {
       "query": "Axis Large Cap Fund",
@@ -395,36 +393,38 @@
         "schemeCode": 120465
       },
       "status": 200,
-      "durationMs": 4884,
+      "durationMs": 537,
       "ok": true,
       "error": null,
       "holdings": 5,
       "sectors": 3,
-      "entries": 5,
-      "exits": 5,
+      "entries": 0,
+      "exits": 0,
       "coverage": {
         "requestedSymbols": 9,
         "resolvedSymbols": 9,
-        "resolvedPct": 100,
+        "resolvedPct": 75,
         "sectorSeries": 3,
-        "entrySeries": 5,
-        "exitSeries": 3,
-        "baselineEstablished": false,
-        "snapshotCount": 2,
-        "comparisonMode": "top-holdings-proxy"
+        "entrySeries": 0,
+        "exitSeries": 0,
+        "baselineEstablished": true,
+        "snapshotCount": 1,
+        "comparisonMode": "top-holdings-proxy",
+        "disclosurePending": false,
+        "disclosureMessage": null
       },
-      "engineVersion": "1.2.0-live-fund-identity"
+      "engineVersion": "1.6.0-moneycontrol-isin-portfolio"
     }
   ],
   "ok": false,
   "workflow": {
-    "generatedAt": "2026-07-13T07:22:58.358Z",
+    "generatedAt": "2026-07-14T09:37:32.537Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
-    "installLog": "\nadded 34 packages in 10s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    21.5 kB         109 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 432ms\n"
+    "installLog": "\nadded 35 packages in 6s\n",
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    22.6 kB         110 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 278ms\n"
   }
 }
