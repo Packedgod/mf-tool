@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useManagerAnalytics from '@/components/analytics/useDisplayedManagerAnalytics';
 import AnalyticsTabs, { TABS } from '@/components/analytics/AnalyticsTabs';
 import { ScoreRing } from '@/components/analytics/AnalyticsPanels';
@@ -26,10 +27,109 @@ function FundSelector({ exactFunds, amcFunds, selectedFundId, onChange, loading 
   );
 }
 
+function matchedAmfiCode(fund, query) {
+  const code = String(query || '').match(/\d{4,9}/)?.[0];
+  return fund.variants?.find(variant => String(variant.schemeCode) === code)?.schemeCode || fund.preferredSchemeCode;
+}
+
+function UnifiedSearch({ query, setQuery, open, setOpen, state, message, results, onSelect }) {
+  const rootRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const options = useMemo(() => {
+    const funds = (results.funds || []).map(item => ({ type: 'fund', item, key: `fund-${item.id}` }));
+    const managers = (results.managers || []).map(item => ({ type: 'manager', item, key: `manager-${item.id}` }));
+    const normalized = query.trim().toLowerCase();
+    const managerFirst = managers.some(option => String(option.item.name || '').toLowerCase().startsWith(normalized));
+    return managerFirst ? [...managers, ...funds] : [...funds, ...managers];
+  }, [query, results]);
+
+  useEffect(() => setActiveIndex(0), [query, options.length]);
+  useEffect(() => {
+    const close = event => {
+      if (!rootRef.current?.contains(event.target)) setOpen(false);
+    };
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [setOpen]);
+
+  const choose = option => {
+    if (option) onSelect(option.type, option.item);
+  };
+  const onKeyDown = event => {
+    if (event.key === 'Escape') {
+      setOpen(false);
+      return;
+    }
+    if (!open || !options.length) return;
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setActiveIndex(index => (index + 1) % options.length);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setActiveIndex(index => (index - 1 + options.length) % options.length);
+    } else if (event.key === 'Enter') {
+      event.preventDefault();
+      choose(options[activeIndex]);
+    }
+  };
+
+  return (
+    <div className="unified-search" ref={rootRef}>
+      <div className={`unified-search-field ${open ? 'open' : ''}`}>
+        <span className="unified-search-label">Search</span>
+        <input
+          value={query}
+          onChange={event => { setQuery(event.target.value); setOpen(true); }}
+          onFocus={event => { setOpen(true); event.currentTarget.select(); }}
+          onKeyDown={onKeyDown}
+          placeholder="Fund, manager, AMC or AMFI code"
+          role="combobox"
+          aria-label="Search funds, managers, AMCs or AMFI scheme codes"
+          aria-expanded={open}
+          aria-controls="unified-search-results"
+          aria-activedescendant={open && options[activeIndex] ? `unified-${options[activeIndex].key}` : undefined}
+          autoComplete="off"
+        />
+        <small>Names or AMFI codes</small>
+        {query ? <button type="button" className="unified-search-clear" onClick={() => { setQuery(''); setOpen(true); }} aria-label="Clear unified search">×</button> : null}
+      </div>
+      {open ? (
+        <div className={`unified-search-results ${state}`} id="unified-search-results" role="listbox">
+          <div className="unified-search-status"><span>{state === 'selecting' ? 'Opening' : state}</span><p>{message}</p></div>
+          {options.length ? <div className="unified-search-options">{options.map((option, index) => {
+            const isFund = option.type === 'fund';
+            const item = option.item;
+            return (
+              <button
+                type="button"
+                id={`unified-${option.key}`}
+                key={option.key}
+                role="option"
+                aria-selected={index === activeIndex}
+                className={index === activeIndex ? 'active' : ''}
+                onMouseEnter={() => setActiveIndex(index)}
+                onMouseDown={event => event.preventDefault()}
+                onClick={() => choose(option)}
+              >
+                <b>{isFund ? 'Fund' : 'Manager'}</b>
+                <span><strong>{isFund ? item.displayName : item.name}</strong><small>{isFund ? `${item.fundHouse} · ${item.category}` : `${item.amc} · ${item.role || 'Fund manager'}`}</small></span>
+                <em>{isFund ? `AMFI ${matchedAmfiCode(item, query)}` : `${item.schemeAliases?.length || 0} mapped funds`}</em>
+              </button>
+            );
+          })}</div> : null}
+          {options.length ? <div className="unified-search-totals">Showing {options.length} of {(results.totalFunds || 0) + (results.totalManagers || 0)} matches · Use ↑ ↓ and Enter</div> : null}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export default function AllManagerAnalyticsApp({ initialManagerName = '', initialAmfiCode = '' }) {
   const data = useManagerAnalytics({ initialManagerName, initialAmfiCode });
   const {
-    managers, manager, managerId, setManagerId, managerSearch, setManagerSearch, filteredManagers,
+    managers, manager, managerId, setManagerId, filteredManagers,
+    unifiedSearch, setUnifiedSearch, unifiedSearchOpen, setUnifiedSearchOpen,
+    unifiedSearchState, unifiedSearchMessage, unifiedResults, selectUnifiedResult,
     managerState, managerMessage, exactFunds, amcFunds, selectedFund, selectedFundId, setSelectedFundId,
     fundState, exactAssignment, proxyMode, setProxyMode, proxyCodeInput, setProxyCodeInput,
     proxyCodeStatus, validateProxyCode, selectedProxy, activeTab, setActiveTab,
@@ -42,6 +142,16 @@ export default function AllManagerAnalyticsApp({ initialManagerName = '', initia
     <div className="all-manager-app">
       <header className="topbar full-topbar">
         <div className="brand"><span className="brand-mark">ML</span><div><strong>ManagerLens</strong><small>India-wide manager and fund intelligence</small></div></div>
+        <UnifiedSearch
+          query={unifiedSearch}
+          setQuery={setUnifiedSearch}
+          open={unifiedSearchOpen}
+          setOpen={setUnifiedSearchOpen}
+          state={unifiedSearchState}
+          message={unifiedSearchMessage}
+          results={unifiedResults}
+          onSelect={selectUnifiedResult}
+        />
         <div className="top-actions">
           <span className={`registry-state ${managerState}`}>{managerState === 'ready' ? `${managers.length} managers` : managerState}</span>
           <button className="ghost-button" onClick={() => setAutoRefresh(value => !value)}>{autoRefresh ? 'Auto-refresh on' : 'Auto-refresh off'}</button>
@@ -52,7 +162,6 @@ export default function AllManagerAnalyticsApp({ initialManagerName = '', initia
       <div className="workspace full-workspace">
         <aside className="manager-rail full-manager-rail">
           <div className="rail-head"><div><span>Indian manager universe</span><h2>Fund managers</h2></div><b>{filteredManagers.length}</b></div>
-          <input className="manager-search" value={managerSearch} onChange={event => setManagerSearch(event.target.value)} placeholder="Search manager, AMC or fund" />
           <p className={`manager-load-note ${managerState}`}>{managerMessage}</p>
           <div className="manager-list">
             {filteredManagers.map(item => (
