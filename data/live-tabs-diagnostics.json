@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T10:55:41.082Z",
+  "generatedAt": "2026-07-14T11:11:32.841Z",
   "node": "v20.20.2",
   "tests": [
     {
@@ -64,7 +64,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T10:55:42.044Z",
+          "fetchedAt": "2026-07-14T11:11:33.655Z",
           "holdings": 5,
           "totalTopHoldingWeight": 30.56,
           "stale": false
@@ -127,7 +127,7 @@
         },
         {
           "name": "SBI",
-          "sector": "Sector classification pending",
+          "sector": "Other",
           "weight": 4.3
         },
         {
@@ -148,7 +148,7 @@
             "weight": 26.259999999999998
           },
           {
-            "sector": "Sector classification pending",
+            "sector": "Other",
             "weight": 4.3
           }
         ]
@@ -215,7 +215,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T10:55:43.254Z",
+          "fetchedAt": "2026-07-14T11:11:34.824Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.5,
           "stale": false
@@ -376,7 +376,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T10:55:44.306Z",
+          "fetchedAt": "2026-07-14T11:11:35.876Z",
           "holdings": 4,
           "totalTopHoldingWeight": 14.08,
           "stale": false
@@ -526,7 +526,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T10:55:45.531Z",
+          "fetchedAt": "2026-07-14T11:11:36.836Z",
           "holdings": 4,
           "totalTopHoldingWeight": 6.39,
           "stale": false
@@ -674,7 +674,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/28168/kotak-equity-savings-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T10:55:46.374Z",
+          "fetchedAt": "2026-07-14T11:11:37.577Z",
           "holdings": 5,
           "totalTopHoldingWeight": 11.51,
           "stale": false
@@ -827,7 +827,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T10:55:47.179Z",
+          "fetchedAt": "2026-07-14T11:11:38.261Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.84,
           "stale": false
@@ -924,13 +924,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-14T10:55:47.533Z",
+    "generatedAt": "2026-07-14T11:11:38.731Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
-    "installLog": "\nadded 35 packages in 5s\n",
+    "installLog": "\nadded 35 packages in 6s\n",
     "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    24.7 kB         112 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 256ms\n"
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 295ms\n"
   }
 }
