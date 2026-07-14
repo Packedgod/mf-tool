@@ -2,6 +2,7 @@ import './globals.css';
 import './universe.css';
 import './all-manager.css';
 import './analytics-enhancements.css';
+import './unified-search.css';
 import UniverseLauncher from '@/components/UniverseLauncher';
 
 export const metadata={
