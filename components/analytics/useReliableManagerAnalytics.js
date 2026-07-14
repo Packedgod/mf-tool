@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useManagerAnalytics from '@/components/analytics/useManagerAnalytics';
 import { buildSyntheticProxy, computeMetrics, normaliseSeries } from '@/lib/analytics';
-import { calculateManagerScore } from '@/lib/momentum-engine';
+import { calculateManagerLensScores } from '@/lib/scoring-v2';
 import { detailedMomentumSchemeId } from '@/lib/dynamic-proxies';
 
 const portfolioMomentum = data => Boolean(
@@ -265,6 +265,9 @@ export default function useReliableManagerAnalytics(options = {}) {
   const selectedFund = base.selectedFund;
   const schemeId = useMemo(() => detailedMomentumSchemeId(selectedFund), [selectedFund]);
   const [lastSuccessfulRefresh, setLastSuccessfulRefresh] = useState(null);
+  const [peerData, setPeerData] = useState(null);
+  const [peerState, setPeerState] = useState('idle');
+  const [peerMessage, setPeerMessage] = useState('Select a fund to build its comparison universe.');
 
   const proxyIdentity = base.proxyMode === 'custom'
     ? `custom:${base.proxyCodeStatus?.schemeCode || base.proxyCodeInput || ''}`
@@ -449,6 +452,44 @@ export default function useReliableManagerAnalytics(options = {}) {
     return () => controller.abort();
   }, [selectedFund?.id, selectedFund?.preferredSchemeCode, schemeId, momentumNonce]);
 
+  useEffect(() => {
+    setPeerData(null);
+    if (!selectedFund?.preferredSchemeCode) {
+      setPeerState('idle');
+      setPeerMessage('Select a fund to build its comparison universe.');
+      return undefined;
+    }
+    const controller = new AbortController();
+    const params = new URLSearchParams({
+      schemeCode: String(selectedFund.preferredSchemeCode),
+      startDate: base.analysisStart,
+      endDate: base.endDate,
+      riskFree: String(base.riskFree)
+    });
+    setPeerState('loading');
+    setPeerMessage('Building the same-category active Direct-Growth peer universe…');
+    fetchJson(`/api/peer-benchmarks?${params}`, {
+      signal: controller.signal,
+      attempts: 1,
+      timeoutMs: 65000
+    }).then(data => {
+      if (controller.signal.aborted) return;
+      setPeerData(data);
+      if (data.peerCount >= 6) {
+        setPeerState(data.comparability?.pointInTime ? 'ready' : 'provisional');
+        setPeerMessage(`${data.peerCount} comparable peers loaded. Current category membership is provisional until survivorship-free point-in-time membership is available.`);
+      } else {
+        setPeerState('insufficient');
+        setPeerMessage(`Only ${data.peerCount || 0} usable peers were returned; peer-relative pillars remain Not Rated.`);
+      }
+    }).catch(error => {
+      if (error?.name === 'AbortError') return;
+      setPeerState('error');
+      setPeerMessage(`${error.message} Peer-dependent pillars remain Not Rated.`);
+    });
+    return () => controller.abort();
+  }, [selectedFund?.id, selectedFund?.preferredSchemeCode, base.analysisStart, base.endDate, base.riskFree, base.selectedProxy?.id]);
+
   const mergedMomentumData = useMemo(() => mergeMomentum({
     live: authoritativeMomentum,
     baseLive: base.momentumData,
@@ -530,12 +571,15 @@ export default function useReliableManagerAnalytics(options = {}) {
     };
   }, [metricsBase, mergedMomentumData]);
 
-  const score = useMemo(() => calculateManagerScore({
-    schemeId: schemeId || 'generic',
+  const score = useMemo(() => calculateManagerLensScores({
+    fund: selectedFund,
+    manager: base.manager,
     snapshot: mergedMomentumData?.snapshot || null,
     market: mergedMomentumData,
-    traditional: metrics
-  }), [schemeId, mergedMomentumData, metrics]);
+    traditional: metrics,
+    peerData,
+    selectedProxy: base.selectedProxy
+  }), [selectedFund, base.manager, mergedMomentumData, metrics, peerData, base.selectedProxy]);
 
   const refreshAll = useCallback(async () => {
     setNavNonce(value => value + 1);
@@ -566,7 +610,10 @@ export default function useReliableManagerAnalytics(options = {}) {
     momentumMessage,
     metrics,
     score,
-    provisional: score.coveragePct < 60,
+    peerData,
+    peerState,
+    peerMessage,
+    provisional: score.headlines.fundQuality.status !== 'full',
     lastRefresh: lastSuccessfulRefresh || base.lastRefresh,
     refreshAll
   };

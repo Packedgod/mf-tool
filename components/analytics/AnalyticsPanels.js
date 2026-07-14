@@ -99,15 +99,40 @@ export function ScoreRing({ value, label, sublabel, provisional = false }) {
   );
 }
 
-export function FactorRow({ factorKey, factor }) {
-  const weight = MOMENTUM_WEIGHTS[factorKey] || 0;
-  const score = Number.isFinite(factor?.score) ? factor.score : 50;
+export function HeadlineScoreCard({ headline }) {
+  const rated = Number.isFinite(headline?.score);
+  const confidence = Number.isFinite(headline?.confidence) ? Math.round(headline.confidence) : 0;
+  const coverage = Number.isFinite(headline?.coveragePct) ? Math.round(headline.coveragePct) : 0;
+  const range = rated && headline?.range?.length === 2
+    ? `${Math.round(headline.range[0])}–${Math.round(headline.range[1])}`
+    : null;
   return (
-    <article className="factor-row">
-      <div className="factor-title"><strong>{LABELS[factorKey]}</strong><span>{weight}% weight</span></div>
-      <div className="factor-bar"><i style={{ width: `${Math.max(0, Math.min(100, score))}%` }} /></div>
-      <b className={scoreTone(score)}>{Math.round(score)}</b>
-      <p>{factor?.detail || 'Official portfolio or transaction history is not normalised yet. A neutral provisional value is used and coverage is reduced.'}</p>
+    <article className={`headline-score-card ${rated ? (headline?.status || 'rated') : 'not-rated'}`}>
+      <div className="headline-score-top"><span>{headline?.label}</span><b>{rated ? Math.round(headline.score) : 'NR'}</b></div>
+      <p>{headline?.detail}</p>
+      <div className="headline-score-meta">
+        <span>Confidence <strong>{confidence}/100</strong></span>
+        <span>Coverage <strong>{coverage}%</strong></span>
+        {range ? <span>Range <strong>{range}</strong></span> : null}
+      </div>
+      <div className="confidence-track" aria-label={`${headline?.label || 'Score'} confidence ${confidence} out of 100`}><i style={{ width: `${confidence}%` }} /></div>
+    </article>
+  );
+}
+
+export function FactorRow({ factorKey, factor }) {
+  const weight = factor?.weight ?? MOMENTUM_WEIGHTS[factorKey] ?? 0;
+  const score = Number.isFinite(factor?.score) ? factor.score : null;
+  const confidence = Number.isFinite(factor?.confidence) ? Math.round(factor.confidence) : 0;
+  const coverage = Number.isFinite(factor?.coveragePct) ? Math.round(factor.coveragePct) : 0;
+  const label = factor?.label || LABELS[factorKey] || factorKey;
+  return (
+    <article className={`factor-row ${Number.isFinite(score) ? 'rated' : 'not-rated'}`}>
+      <div className="factor-title"><strong>{label}</strong><span>{weight}% weight</span></div>
+      <div className="factor-bar"><i style={{ width: `${Number.isFinite(score) ? Math.max(0, Math.min(100, score)) : 0}%` }} /></div>
+      <b className={Number.isFinite(score) ? scoreTone(score) : 'neutral'}>{Number.isFinite(score) ? Math.round(score) : 'NR'}</b>
+      <p>{factor?.detail || 'Not Rated — required point-in-time evidence is unavailable.'}</p>
+      <small className="factor-confidence">Confidence {confidence}/100 · coverage {coverage}%{Number.isFinite(factor?.rawScore) ? ` · peer score ${Math.round(factor.rawScore)} before shrinkage` : ''}</small>
     </article>
   );
 }

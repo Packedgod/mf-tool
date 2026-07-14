@@ -2,8 +2,8 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { buildSyntheticProxy, computeMetrics, normaliseSeries } from '@/lib/analytics';
-import { calculateManagerScore } from '@/lib/momentum-engine';
-import { detailedMomentumSchemeId, proxyProfileForFund } from '@/lib/dynamic-proxies';
+import { calculateManagerLensScores } from '@/lib/scoring-v2';
+import { proxyProfileForFund } from '@/lib/dynamic-proxies';
 
 const today = () => new Date().toISOString().slice(0, 10);
 const yearsAgo = years => {
@@ -140,8 +140,7 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
   const proxyName = proxyMode === 'custom'
     ? proxyCodeStatus?.schemeName || (proxyCode ? `AMFI scheme ${proxyCode}` : 'Custom proxy')
     : selectedProxy?.label;
-  const detailedSchemeId = useMemo(() => detailedMomentumSchemeId(selectedFund), [selectedFund]);
-  const analysisStart = manager?.startDate && manager.startDate > startDate ? manager.startDate : startDate;
+  const analysisStart = startDate;
 
   const filteredManagers = useMemo(() => {
     const query = managerSearch.trim().toLowerCase();
@@ -211,13 +210,16 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
         : baseMetrics.warnings || []
     };
   }, [baseMetrics, momentumData]);
-  const score = useMemo(() => calculateManagerScore({
-    schemeId: detailedSchemeId || 'generic',
+  const score = useMemo(() => calculateManagerLensScores({
+    fund: selectedFund,
+    manager,
     snapshot: momentumData?.snapshot || null,
     market: momentumData,
-    traditional: metrics
-  }), [detailedSchemeId, momentumData, metrics]);
-  const provisional = score.coveragePct < 60;
+    traditional: metrics,
+    peerData: null,
+    selectedProxy
+  }), [selectedFund, manager, momentumData, metrics, selectedProxy]);
+  const provisional = score.headlines.fundQuality.status !== 'full';
 
   useEffect(() => {
     let cancelled = false;

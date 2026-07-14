@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import useManagerAnalytics from '@/components/analytics/useDisplayedManagerAnalytics';
 import AnalyticsTabs, { TABS } from '@/components/analytics/AnalyticsTabs';
-import { ScoreRing } from '@/components/analytics/AnalyticsPanels';
+import { HeadlineScoreCard } from '@/components/analytics/AnalyticsPanels';
 
 const PROXY_MODES = ['official', 'category', 'broad', 'defensive', 'custom'];
 
@@ -134,8 +134,8 @@ export default function AllManagerAnalyticsApp({ initialManagerName = '', initia
     fundState, exactAssignment, proxyMode, setProxyMode, proxyCodeInput, setProxyCodeInput,
     proxyCodeStatus, validateProxyCode, selectedProxy, activeTab, setActiveTab,
     startDate, setStartDate, endDate, setEndDate, riskFree, setRiskFree,
-    navState, navMessage, momentumData, momentumState, momentumMessage, lastRefresh,
-    autoRefresh, setAutoRefresh, score, provisional, refreshAll
+    navState, navMessage, momentumState, momentumMessage, peerState, peerMessage, lastRefresh,
+    autoRefresh, setAutoRefresh, score, refreshAll
   } = data;
 
   return (
@@ -193,20 +193,21 @@ export default function AllManagerAnalyticsApp({ initialManagerName = '', initia
 
           <section className="status-grid">
             <article className={navState}><span>Fund & proxy NAV</span><strong>{navState}</strong><p>{navMessage}</p></article>
-            <article className={momentumState}><span>Momentum coverage</span><strong>{momentumState}</strong><p>{momentumMessage}</p></article>
+            <article className={momentumState}><span>Portfolio evidence</span><strong>{momentumState}</strong><p>{momentumMessage}</p></article>
+            <article className={peerState}><span>Peer benchmark</span><strong>{peerState || 'idle'}</strong><p>{peerMessage}</p></article>
             <article><span>Last refresh</span><strong>{lastRefresh ? lastRefresh.toLocaleTimeString() : 'Pending'}</strong><p>Automatic refresh runs every 15 minutes while visible.</p></article>
           </section>
 
-          <section className="score-deck">
-            <ScoreRing value={score.overall} label="Overall" sublabel="75 / 25 model" provisional={provisional} />
-            <ScoreRing value={score.momentumScore} label="Momentum" sublabel="75% weight" provisional={provisional} />
-            <ScoreRing value={score.traditionalScore} label="Traditional" sublabel="25% weight" provisional={!data.fundSeries.length} />
-            <div className="score-summary">
-              <span className="eyebrow">{provisional ? 'Provisional score' : 'Current market-cycle score'}</span>
-              <h2>{momentumData?.regime?.label || selectedFund?.category || 'Select a fund'}</h2>
-              <p>{provisional ? 'The manager and fund are included, but the 75% portfolio-timing block is not complete until official holdings and transaction disclosures are normalised.' : momentumData?.regime?.explanation}</p>
-              <div><b>Factor coverage</b><strong>{Math.round(score.coveragePct)}%</strong></div>
-            </div>
+          <section className="score-deck score-deck-v2">
+            <HeadlineScoreCard headline={score.headlines.fundQuality} />
+            <HeadlineScoreCard headline={score.headlines.currentOpportunity} />
+            <HeadlineScoreCard headline={score.headlines.investorFit} />
+            <HeadlineScoreCard headline={{ ...score.headlines.dataConfidence, label: 'Data Confidence' }} />
+          </section>
+          <section className="scoring-standard-note">
+            <div><span className="eyebrow">ManagerLens methodology 2.0</span><h2>Peer-relative, confidence-shrunk and honest about missing evidence</h2></div>
+            <p><strong>50 means category median or no demonstrated edge.</strong> Missing evidence is shown as <b>Not Rated</b>, never converted to 50. A headline score is withheld until at least 70% of required factor weight and its mandatory risk evidence are available.</p>
+            <div><span>{score.model.label}</span><span>{score.peerContext?.peerCount || 0} usable peers</span><span>{score.recommendation.score === null ? score.recommendation.detail : `Recommendation ${Math.round(score.recommendation.score)}/100`}</span></div>
           </section>
 
           <section className="control-deck">

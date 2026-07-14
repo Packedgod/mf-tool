@@ -3,6 +3,7 @@ import './universe.css';
 import './all-manager.css';
 import './analytics-enhancements.css';
 import './unified-search.css';
+import './scoring-v2.css';
 import UniverseLauncher from '@/components/UniverseLauncher';
 
 export const metadata={

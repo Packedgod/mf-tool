@@ -3,8 +3,6 @@
 import {
   FactorRow,
   MetricCard,
-  MOMENTUM_KEYS,
-  TRADITIONAL_KEYS,
   PerformanceChart,
   money,
   num,
@@ -14,11 +12,23 @@ import {
 
 export const TABS = [
   ['racecard', 'Racecard'],
+  ['traditional', 'Fund quality'],
+  ['opportunity', 'Opportunity'],
+  ['investor', 'Investor fit'],
   ['sectors', 'Sector track'],
   ['timing', 'Entry / exit timing'],
-  ['traditional', 'Traditional 25%'],
   ['sources', 'Sources']
 ];
+
+const DIAGNOSTIC_LABELS = {
+  sectorBias: 'Recent sector return context',
+  sectorMomentum: 'Recent allocation-change context',
+  entryTiming: 'Approximate entry-price context',
+  exitTiming: 'Approximate post-exit context',
+  exitPeakProximity: 'Exit Price Context',
+  turnoverEfficiency: 'Reported portfolio turnover',
+  cycleFit: 'Observed market regime'
+};
 
 function AllocationStrip({ title, rows }) {
   if (!rows?.length) return null;
@@ -199,7 +209,7 @@ function UnderlyingFunds({ funds }) {
 export default function AnalyticsTabs({ data }) {
   const {
     activeTab, score, fundSeries, proxySeries, fundSource, selectedFund, proxyName,
-    momentumData, metrics, manager, exactAssignment
+    momentumData, metrics, manager, exactAssignment, peerData, peerState, peerMessage
   } = data;
   const managerSources = [manager?.source, ...(manager?.additionalSources || [])].filter(item => item?.url);
   const researchSources = (momentumData?.sources || []).filter(item => item?.url);
@@ -226,8 +236,35 @@ export default function AnalyticsTabs({ data }) {
     return (
       <section className="tab-content">
         <PerformanceChart fund={fundSeries} proxy={proxySeries} fundName={fundSource?.schemeName || selectedFund?.displayName || 'Fund'} proxyName={proxyName || 'Proxy'} />
-        <div className="factor-grid">{MOMENTUM_KEYS.map(key => <FactorRow key={key} factorKey={key} factor={score.factors[key]} />)}</div>
-        <div className="insight-panel"><span className="eyebrow">Race steward notes</span>{score.insights.map((item, index) => <p key={index}>• {item}</p>)}</div>
+        <div className="section-heading"><div><span className="eyebrow">Fund Quality pillars</span><h2>Twelve evidence tests — scored only when the required peer data exists</h2></div><b>{score.model.label}</b></div>
+        <div className="factor-grid quality-pillar-grid">{score.orderedQualityPillars.map(factor => <FactorRow key={factor.key} factorKey={factor.key} factor={factor} />)}</div>
+        <div className="section-heading"><div><span className="eyebrow">Additional insights</span><h2>Descriptive context excluded from the core score</h2></div><b>0% Fund Quality weight</b></div>
+        <div className="descriptive-diagnostic-grid">{Object.entries(DIAGNOSTIC_LABELS).map(([key, label]) => {
+          const factor = score.diagnostics?.factors?.[key];
+          return <article key={key}><span>{label}</span><strong>{factor?.detail || 'Evidence unavailable.'}</strong><small>Diagnostic only — no contribution to Fund Quality.</small></article>;
+        })}</div>
+        <div className="insight-panel"><span className="eyebrow">Publication guardrails</span>{score.guardrails.map((item, index) => <p key={index}>• {item}</p>)}</div>
+      </section>
+    );
+  }
+
+  if (activeTab === 'opportunity') {
+    return (
+      <section className="tab-content">
+        <div className="section-heading"><div><span className="eyebrow">Current Opportunity Score</span><h2>Present valuation, fundamentals, factor alignment and crowding</h2></div><b>{score.headlines.currentOpportunity.status === 'not-rated' ? 'Not Rated' : `${Math.round(score.headlines.currentOpportunity.score)}/100`}</b></div>
+        <div className="coverage-note"><strong>Separate from historical quality.</strong> A strong manager can have an unattractive current portfolio. Scores remain NR until point-in-time security fundamentals, valuation histories, ownership and liquidity inputs are available.</div>
+        <div className="factor-grid">{score.orderedOpportunityFactors.map(factor => <FactorRow key={factor.key} factorKey={factor.key} factor={factor} />)}</div>
+      </section>
+    );
+  }
+
+  if (activeTab === 'investor') {
+    return (
+      <section className="tab-content">
+        <div className="section-heading"><div><span className="eyebrow">Investor Fit Score</span><h2>Suitability depends on the investor, not only the fund</h2></div><b>{score.headlines.investorFit.status === 'not-rated' ? 'Not Rated' : `${Math.round(score.headlines.investorFit.score)}/100`}</b></div>
+        <div className="coverage-note"><strong>No generic recommendation is published.</strong> A verified SEBI Riskometer plus investor risk tolerance, horizon, goal, portfolio overlap, drawdown tolerance, liquidity and tax inputs are required.</div>
+        <div className="factor-grid">{score.orderedInvestorFitFactors.map(factor => <FactorRow key={factor.key} factorKey={factor.key} factor={factor} />)}</div>
+        <div className="coverage-note"><strong>Risk gates:</strong> Fit below 40 blocks a recommendation; confidence below 50 means insufficient evidence; recent manager or mandate changes require a provisional label.</div>
       </section>
     );
   }
@@ -284,8 +321,8 @@ export default function AnalyticsTabs({ data }) {
           <div><span>Equity turnover</span><strong>{pct(momentumData?.snapshot?.turnover?.equityPct)}</strong></div>
           <div><span>Source snapshots</span><strong>{snapshotCount || 'Loading'}</strong></div>
           <div><span>Comparison type</span><strong>{datedComparison ? (comparisonMode === 'complete-portfolio' ? 'Full' : 'Top holdings') : reportedChangeMode ? 'Reported 1M' : 'Baseline'}</strong></div>
-          <div><span>Turnover score</span><strong>{Math.round(score.factors.turnoverEfficiency.score)}</strong></div>
-          <p>{score.factors.turnoverEfficiency.detail || 'Turnover awaits a Moneycontrol, Value Research Online, or AdvisorKhoj fund record.'}</p>
+          <div><span>Scoring treatment</span><strong>Diagnostic only</strong></div>
+          <p>Turnover is reported as evidence but receives no core score until net trading value added, costs, liquidity and category-peer efficiency can be measured.</p>
         </div>
       </section>
     );
@@ -294,7 +331,8 @@ export default function AnalyticsTabs({ data }) {
   if (activeTab === 'traditional') {
     return (
       <section className="tab-content">
-        <div className="section-heading"><div><span className="eyebrow">Traditional quality</span><h2>The remaining 25% of the score</h2></div><b>{proxyName || 'Proxy pending'}</b></div>
+        <div className="section-heading"><div><span className="eyebrow">Fund Quality evidence</span><h2>NAV, benchmark and category-peer measurements</h2></div><b>{proxyName || 'Proxy pending'}</b></div>
+        <div className={`coverage-note peer-context ${peerState || 'idle'}`}><strong>{peerData?.peerCount ? `${peerData.peerCount} usable peers.` : 'Peer benchmark pending.'}</strong> {peerMessage}{peerData?.comparability?.note ? ` ${peerData.comparability.note}` : ''}</div>
         <div className="traditional-metrics">
           <MetricCard label="CAGR" value={pct(metrics.cagrPct)} note="Selected analysis period" />
           <MetricCard label="Annual alpha" value={pct(metrics.alphaPct)} note="Jensen-style alpha" />
@@ -302,12 +340,17 @@ export default function AnalyticsTabs({ data }) {
           <MetricCard label="Sharpe ratio" value={num(metrics.sharpe)} note="Total-risk efficiency" />
           <MetricCard label="Downside capture" value={pct(metrics.downCapturePct)} note="Below 100 indicates protection" />
           <MetricCard label="Maximum drawdown" value={pct(metrics.maxDrawdownPct)} note="Worst peak-to-trough decline" />
+          <MetricCard label="Conditional drawdown at risk" value={pct(metrics.conditionalDrawdownAtRiskPct)} note="Average of the worst 10% drawdown observations" />
+          <MetricCard label="Time under water" value={pct(metrics.timeUnderWaterPct)} note="Share of NAV observations below the prior peak" />
+          <MetricCard label="Recovery speed" value={Number.isFinite(metrics.recoveryDays) ? `${Math.round(metrics.recoveryDays)} trading days` : '—'} note="Average completed underwater spell" />
+          <MetricCard label="Negative-month alpha" value={pct(metrics.negativeMonthAlphaPct)} note="Average active return when the proxy fell" />
+          <MetricCard label="Tail-loss frequency" value={pct(metrics.tailLossFrequencyPct)} note="Share of daily returns at or below −2%" />
           <MetricCard label="Alpha persistence" value={Number.isFinite(metrics.alphaPersistenceScore) ? `${Math.round(metrics.alphaPersistenceScore)}/100` : '—'} note="Four-window consistency" />
           <MetricCard label="Manager value-add" value={money(metrics.managerValueAddNav)} note="Ending NAV difference versus proxy" />
           {momentumData?.fundFacts?.riskMetrics?.alpha !== undefined ? <MetricCard label="AdvisorKhoj alpha" value={pct(momentumData.fundFacts.riskMetrics.alpha)} note="Research-source cross-check" /> : null}
           {momentumData?.fundFacts?.riskMetrics?.sharpe !== undefined ? <MetricCard label="AdvisorKhoj Sharpe" value={num(momentumData.fundFacts.riskMetrics.sharpe)} note="Research-source cross-check" /> : null}
         </div>
-        <div className="factor-grid compact">{TRADITIONAL_KEYS.map(key => <FactorRow key={key} factorKey={key} factor={score.factors[key]} />)}</div>
+        <div className="factor-grid compact">{score.orderedQualityPillars.map(factor => <FactorRow key={factor.key} factorKey={factor.key} factor={factor} />)}</div>
       </section>
     );
   }
