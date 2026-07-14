@@ -86,6 +86,41 @@ export async function GET(request) {
       }, { headers: { "Cache-Control": "private, no-store, max-age=0" } });
     }
 
+    if (view === "search") {
+      const rawQuery = String(searchParams.get("q") || "").trim();
+      const query = rawQuery.toLowerCase().replace(/^amfi(?:\s+scheme)?\s*[:#-]?\s*/i, "");
+      if (!query) {
+        return NextResponse.json({ ok: true, funds: [], managers: [], totalFunds: 0, totalManagers: 0, fetchedAt: universe.fetchedAt });
+      }
+      const fundResult = searchUniverse(universe, { query, limit: 10, offset: 0 });
+      const managers = FULL_MANAGER_REGISTRY
+        .map(publicManager)
+        .filter(manager => [
+          manager.name,
+          ...manager.aliases,
+          manager.amc,
+          manager.role,
+          ...manager.schemeAliases
+        ].join(" ").toLowerCase().includes(query))
+        .sort((a, b) => {
+          const aName = a.name.toLowerCase();
+          const bName = b.name.toLowerCase();
+          const managerScore = name => name === query ? 3 : name.startsWith(query) ? 2 : 1;
+          return managerScore(bName) - managerScore(aName) || a.name.localeCompare(b.name);
+        });
+
+      return NextResponse.json({
+        ok: true,
+        funds: fundResult.results.map(compactFund),
+        managers: managers.slice(0, 8),
+        totalFunds: fundResult.total,
+        totalManagers: managers.length,
+        source: universe.source,
+        fetchedAt: universe.fetchedAt,
+        stale: universe.stale || false
+      }, { headers: { "Cache-Control": "private, no-store, max-age=0" } });
+    }
+
     if (view === "managerFunds") {
       const managerId = searchParams.get("managerId");
       const manager = FULL_MANAGER_REGISTRY.find(item => item.id === managerId);
