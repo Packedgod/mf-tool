@@ -88,6 +88,11 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
   const [managerState, setManagerState] = useState('loading');
   const [managerMessage, setManagerMessage] = useState('Loading the current Indian manager registry…');
   const [bootstrapData, setBootstrapData] = useState(null);
+  const [unifiedSearch, setUnifiedSearch] = useState('');
+  const [unifiedSearchOpen, setUnifiedSearchOpen] = useState(false);
+  const [unifiedSearchState, setUnifiedSearchState] = useState('idle');
+  const [unifiedSearchMessage, setUnifiedSearchMessage] = useState('Search by fund, manager, AMC or AMFI scheme code.');
+  const [unifiedResults, setUnifiedResults] = useState({ funds: [], managers: [], totalFunds: 0, totalManagers: 0 });
 
   const [exactFunds, setExactFunds] = useState([]);
   const [amcFunds, setAmcFunds] = useState([]);
@@ -150,6 +155,45 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
     ].join(' ').toLowerCase().includes(query));
   }, [managers, managerSearch]);
 
+  useEffect(() => {
+    const query = unifiedSearch.trim();
+    if (!unifiedSearchOpen || query.length < 2) {
+      setUnifiedSearchState('idle');
+      setUnifiedSearchMessage(query ? 'Enter at least two characters, or a complete AMFI code.' : 'Search by fund, manager, AMC or AMFI scheme code.');
+      setUnifiedResults({ funds: [], managers: [], totalFunds: 0, totalManagers: 0 });
+      return undefined;
+    }
+
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => {
+      setUnifiedSearchState('loading');
+      setUnifiedSearchMessage('Searching the live AMFI fund universe and manager registry…');
+      getJson(`/api/universe?view=search&q=${encodeURIComponent(query)}`, { signal: controller.signal })
+        .then(result => {
+          setUnifiedResults({
+            funds: result.funds || [],
+            managers: result.managers || [],
+            totalFunds: result.totalFunds || 0,
+            totalManagers: result.totalManagers || 0
+          });
+          setUnifiedSearchState('ready');
+          const total = (result.totalFunds || 0) + (result.totalManagers || 0);
+          setUnifiedSearchMessage(total ? `${total} matching funds and managers found.` : 'No matching fund, manager, AMC or AMFI code was found.');
+        })
+        .catch(error => {
+          if (error?.name === 'AbortError') return;
+          setUnifiedSearchState('error');
+          setUnifiedSearchMessage(error.message);
+          setUnifiedResults({ funds: [], managers: [], totalFunds: 0, totalManagers: 0 });
+        });
+    }, 220);
+
+    return () => {
+      window.clearTimeout(timer);
+      controller.abort();
+    };
+  }, [unifiedSearch, unifiedSearchOpen]);
+
   const baseMetrics = useMemo(() => computeMetrics(fundSeries, proxySeries, riskFree), [fundSeries, proxySeries, riskFree]);
   const metrics = useMemo(() => {
     const secondary = momentumData?.fundFacts?.riskMetrics || {};
@@ -205,6 +249,53 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
       });
     return () => { cancelled = true; };
   }, [initialManagerName, initialAmfiCode]);
+
+  const selectUnifiedResult = useCallback(async (type, item) => {
+    if (!item) return;
+    if (type === 'manager') {
+      setBootstrapData(null);
+      setManagers(previous => mergeManagerRecords(previous, [item]));
+      setManagerSearch('');
+      setManagerId(item.id);
+      setUnifiedSearch(item.name);
+      setUnifiedSearchOpen(false);
+      setUnifiedSearchState('ready');
+      setUnifiedSearchMessage(`Selected manager ${item.name}.`);
+      if (typeof window !== 'undefined') window.history.replaceState({}, '', `/?managerName=${encodeURIComponent(item.name)}`);
+      return;
+    }
+
+    setUnifiedSearchState('selecting');
+    setUnifiedSearchMessage(`Opening ${item.displayName} in ManagerLens…`);
+    setFundState('loading');
+    try {
+      const data = await getJson(`/api/fund-bootstrap?fundId=${encodeURIComponent(item.id)}&schemeCode=${encodeURIComponent(item.preferredSchemeCode)}`);
+      const targetManager = data.managers?.[0];
+      setManagers(previous => mergeManagerRecords(previous, data.managers || []));
+      setBootstrapData(data);
+      setExactFunds([data.fund]);
+      setAmcFunds([data.fund]);
+      setSelectedFundId(data.fund.id);
+      setManagerSearch('');
+      if (targetManager) setManagerId(targetManager.id);
+      setProxyMode('official');
+      setActiveTab('racecard');
+      setFundState('ready');
+      setUnifiedSearch(data.fund.displayName);
+      setUnifiedSearchOpen(false);
+      setUnifiedSearchState('ready');
+      setUnifiedSearchMessage(`Selected fund ${data.fund.displayName} by AMFI identity.`);
+      if (typeof window !== 'undefined') {
+        const managerParam = targetManager?.verified !== false ? `&managerName=${encodeURIComponent(targetManager.name)}` : '';
+        window.history.replaceState({}, '', `/?amfiCode=${encodeURIComponent(data.fund.preferredSchemeCode)}${managerParam}`);
+      }
+    } catch (error) {
+      setFundState('error');
+      setUnifiedSearchState('error');
+      setUnifiedSearchOpen(true);
+      setUnifiedSearchMessage(error.message);
+    }
+  }, []);
 
   useEffect(() => {
     if (!managerId) return undefined;
@@ -413,6 +504,8 @@ export default function useManagerAnalytics({ initialManagerName = '', initialAm
 
   return {
     managers, manager, managerId, setManagerId, managerSearch, setManagerSearch, filteredManagers,
+    unifiedSearch, setUnifiedSearch, unifiedSearchOpen, setUnifiedSearchOpen,
+    unifiedSearchState, unifiedSearchMessage, unifiedResults, selectUnifiedResult,
     managerState, managerMessage, exactFunds, amcFunds, selectedFund, selectedFundId, setSelectedFundId,
     fundState, exactAssignment, proxyMode, setProxyMode, proxyCodeInput, setProxyCodeInput,
     proxyCodeStatus, validateProxyCode, selectedProxy, proxyName, activeTab, setActiveTab,
