@@ -701,7 +701,7 @@ export const GENERATED_MANAGER_REGISTRY = [
 ];
 
 export const GENERATED_REGISTRY_META = {
-  "generatedAt": "2026-07-13T06:37:23.653Z",
+  "generatedAt": "2026-07-20T06:32:44.316Z",
   "officialSourcesScanned": 7,
   "records": 37,
   "officialSitesDiscovered": 41
