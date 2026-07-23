@@ -72,15 +72,30 @@ function preferredDirectGrowth(fund) {
     || fund?.variants?.[0];
 }
 
+// Peer-relative scoring needs a distribution to stand on; below this the median and MAD are
+// noise and every peer-based pillar is withheld.
+const MIN_VIABLE_PEERS = 6;
+
 function comparablePeers(universe, selectedFund) {
   const selectedPassive = passiveIdentity(selectedFund);
-  const candidates = universe.families
+  const inCategory = universe.families
     .filter(fund => fund.id !== selectedFund.id)
     .filter(fund => fund.category === selectedFund.category)
-    .filter(fund => passiveIdentity(fund) === selectedPassive)
     .map(fund => ({ fund, variant: preferredDirectGrowth(fund) }))
-    .filter(item => item.variant?.schemeCode)
+    .filter(item => item.variant?.schemeCode);
+
+  const strict = inCategory.filter(item => passiveIdentity(item.fund) === selectedPassive);
+
+  // Matching active-to-active and passive-to-passive is the right default, but in thin
+  // categories it can leave a fund with almost no peers — an index ELSS scheme had exactly
+  // one — which withholds 45% of Fund Quality weight. Where the strict set is too small to
+  // support a distribution, the whole category is used and the mixed basis is disclosed on
+  // the response rather than passed off as like-for-like.
+  const relaxed = strict.length >= MIN_VIABLE_PEERS ? strict : inCategory;
+  const candidates = relaxed
     .sort((left, right) => left.fund.fundHouse.localeCompare(right.fund.fundHouse) || left.fund.displayName.localeCompare(right.fund.displayName));
+  candidates.passiveLikeForLike = relaxed === strict;
+  candidates.strictCandidateCount = strict.length;
 
   const selected = [];
   const houses = new Set();
@@ -97,6 +112,8 @@ function comparablePeers(universe, selectedFund) {
       if (selected.length >= PEER_LIMIT) break;
     }
   }
+  selected.passiveLikeForLike = candidates.passiveLikeForLike;
+  selected.strictCandidateCount = candidates.strictCandidateCount;
   return selected;
 }
 
@@ -243,7 +260,11 @@ export async function GET(request) {
       },
       comparability: {
         sameCurrentSebiCategory: true,
-        activeLikeForLike: true,
+        activeLikeForLike: candidates.passiveLikeForLike !== false,
+        passiveLikeForLike: candidates.passiveLikeForLike !== false,
+        passiveBasisNote: candidates.passiveLikeForLike === false
+          ? `Only ${candidates.strictCandidateCount} same-style peer(s) exist in this category, too few for a distribution, so the peer set mixes active and index schemes from the same SEBI category.`
+          : null,
         directGrowthLikeForLike: true,
         minimumTrackRecordApplied: true,
         // The local membership ledger only becomes usable once it spans the comparison
