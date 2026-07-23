@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T10:03:40.199Z",
+  "generatedAt": "2026-07-23T10:24:21.030Z",
   "node": "v20.20.2",
   "tests": [
     {
@@ -64,9 +64,11 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:03:41.109Z",
-          "holdings": 5,
-          "totalTopHoldingWeight": 30.56,
+          "fetchedAt": "2026-07-23T10:24:21.813Z",
+          "holdings": 6,
+          "parsedFromFundPage": 5,
+          "supersededByRicherBook": true,
+          "totalTopHoldingWeight": 309.02,
           "stale": false
         },
         "advisorIdentityValidation": {
@@ -75,15 +77,15 @@
           "skipped": true,
           "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
-        "holdings": 5,
-        "sectors": 2,
+        "holdings": 0,
+        "sectors": 11,
         "entries": 0,
         "exits": 0
       },
       "sources": [
         {
           "name": "Value Research Online",
-          "type": "Public fund holdings and portfolio facts",
+          "type": "Live manager, holdings, turnover and fund facts",
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/"
         },
         {
@@ -106,54 +108,60 @@
       ],
       "counts": {
         "managers": 1,
-        "holdings": 5,
-        "sectors": 2,
+        "holdings": 0,
+        "sectors": 11,
         "entries": 0,
         "exits": 0,
         "snapshotCount": 1,
-        "factorCoverage": 75
+        "factorCoverage": 45
       },
-      "holdings": [
-        {
-          "name": "ICICI Bank",
-          "sector": "Sector classification pending",
-          "weight": 9.18
-        },
-        {
-          "name": "Axis Bank",
-          "sector": "Financial Services",
-          "weight": 6.84
-        },
-        {
-          "name": "HDFC Bank",
-          "sector": "Sector classification pending",
-          "weight": 6.77
-        },
-        {
-          "name": "SBI",
-          "sector": "Financial Services",
-          "weight": 4.3
-        },
-        {
-          "name": "SBI Life Insurance",
-          "sector": "Financial Services",
-          "weight": 3.47
-        }
-      ],
+      "holdings": [],
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
-        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-23",
+        "sectorBasis": "Moneycontrol ISIN-validated portfolio-sector table",
+        "currentAsOf": "23-Jul-2026",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
           {
-            "sector": "Sector classification pending",
-            "weight": 15.95
+            "sector": "Financial Services",
+            "weight": 36.28,
+            "allocationProxy": false
           },
           {
-            "sector": "Financial Services",
-            "weight": 14.610000000000001
+            "sector": "Consumer Cyclical",
+            "weight": 17.05,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Healthcare",
+            "weight": 11.63,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Industrials",
+            "weight": 10.05,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Technology",
+            "weight": 4.72,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Basic Materials",
+            "weight": 3.79,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Utilities",
+            "weight": 2.97,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Communication Services",
+            "weight": 2.87,
+            "allocationProxy": false
           }
         ]
       },
@@ -219,8 +227,10 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:03:47.024Z",
+          "fetchedAt": "2026-07-23T10:24:22.845Z",
           "holdings": 5,
+          "parsedFromFundPage": 5,
+          "supersededByRicherBook": false,
           "totalTopHoldingWeight": 31.5,
           "stale": false
         },
@@ -384,8 +394,10 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:03:48.482Z",
+          "fetchedAt": "2026-07-23T10:24:24.245Z",
           "holdings": 4,
+          "parsedFromFundPage": 4,
+          "supersededByRicherBook": false,
           "totalTopHoldingWeight": 14.08,
           "stale": false
         },
@@ -538,9 +550,11 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:03:50.049Z",
-          "holdings": 4,
-          "totalTopHoldingWeight": 6.39,
+          "fetchedAt": "2026-07-23T10:24:25.933Z",
+          "holdings": 5,
+          "parsedFromFundPage": 4,
+          "supersededByRicherBook": true,
+          "totalTopHoldingWeight": 113.72,
           "stale": false
         },
         "advisorIdentityValidation": {
@@ -549,15 +563,15 @@
           "skipped": true,
           "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
-        "holdings": 4,
-        "sectors": 2,
+        "holdings": 0,
+        "sectors": 11,
         "entries": 0,
         "exits": 0
       },
       "sources": [
         {
           "name": "Value Research Online",
-          "type": "Public fund holdings and portfolio facts",
+          "type": "Live manager, holdings, turnover and fund facts",
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/"
         },
         {
@@ -580,49 +594,60 @@
       ],
       "counts": {
         "managers": 4,
-        "holdings": 4,
-        "sectors": 2,
+        "holdings": 0,
+        "sectors": 11,
         "entries": 0,
         "exits": 0,
         "snapshotCount": 1,
-        "factorCoverage": 75
+        "factorCoverage": 45
       },
-      "holdings": [
-        {
-          "name": "Embassy Office",
-          "sector": "Other",
-          "weight": 2.91
-        },
-        {
-          "name": "HDFC Bank Ltd CD 15/02/2027",
-          "sector": "Sector classification pending",
-          "weight": 1.45
-        },
-        {
-          "name": "GOI Sec 6.90 15/04/2065",
-          "sector": "Sector classification pending",
-          "weight": 1.12
-        },
-        {
-          "name": "GOI Sec 7.24 18/08/2055",
-          "sector": "Sector classification pending",
-          "weight": 0.91
-        }
-      ],
+      "holdings": [],
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
-        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-23",
+        "sectorBasis": "Moneycontrol ISIN-validated portfolio-sector table",
+        "currentAsOf": "23-Jul-2026",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
           {
-            "sector": "Other",
-            "weight": 2.91
+            "sector": "Financial Services",
+            "weight": 20.42,
+            "allocationProxy": false
           },
           {
-            "sector": "Sector classification pending",
-            "weight": 3.4800000000000004
+            "sector": "Consumer Cyclical",
+            "weight": 17.25,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Industrials",
+            "weight": 8.8,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Technology",
+            "weight": 5.75,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Basic Materials",
+            "weight": 4.91,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Real Estate",
+            "weight": 4.64,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Energy",
+            "weight": 3.66,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Consumer Defensive",
+            "weight": 3.25,
+            "allocationProxy": false
           }
         ]
       },
@@ -690,9 +715,11 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:03:50.894Z",
+          "fetchedAt": "2026-07-23T10:24:26.617Z",
           "holdings": 5,
-          "totalTopHoldingWeight": 15.79,
+          "parsedFromFundPage": 5,
+          "supersededByRicherBook": true,
+          "totalTopHoldingWeight": 208.32,
           "stale": false
         },
         "advisorIdentityValidation": {
@@ -701,15 +728,15 @@
           "skipped": true,
           "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
-        "holdings": 5,
-        "sectors": 4,
+        "holdings": 0,
+        "sectors": 10,
         "entries": 0,
         "exits": 0
       },
       "sources": [
         {
           "name": "Value Research Online",
-          "type": "Public fund holdings and portfolio facts",
+          "type": "Live manager, holdings, turnover and fund facts",
           "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/"
         },
         {
@@ -732,62 +759,60 @@
       ],
       "counts": {
         "managers": 1,
-        "holdings": 5,
-        "sectors": 4,
+        "holdings": 0,
+        "sectors": 10,
         "entries": 0,
         "exits": 0,
         "snapshotCount": 1,
-        "factorCoverage": 75
+        "factorCoverage": 45
       },
-      "holdings": [
-        {
-          "name": "Fortis Healthcare",
-          "sector": "Healthcare",
-          "weight": 3.98
-        },
-        {
-          "name": "Ipca Laboratories",
-          "sector": "Healthcare",
-          "weight": 3.11
-        },
-        {
-          "name": "Vishal Mega Mart",
-          "sector": "Consumer Services",
-          "weight": 3.06
-        },
-        {
-          "name": "GE Vernova T&D",
-          "sector": "Capital Goods",
-          "weight": 2.84
-        },
-        {
-          "name": "KEI",
-          "sector": "Sector classification pending",
-          "weight": 2.8
-        }
-      ],
+      "holdings": [],
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
-        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-23",
+        "sectorBasis": "Moneycontrol ISIN-validated portfolio-sector table",
+        "currentAsOf": "23-Jul-2026",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
           {
+            "sector": "Financial Services",
+            "weight": 28.02,
+            "allocationProxy": false
+          },
+          {
             "sector": "Healthcare",
-            "weight": 7.09
+            "weight": 15.84,
+            "allocationProxy": false
           },
           {
-            "sector": "Consumer Services",
-            "weight": 3.06
+            "sector": "Consumer Cyclical",
+            "weight": 15.42,
+            "allocationProxy": false
           },
           {
-            "sector": "Capital Goods",
-            "weight": 2.84
+            "sector": "Industrials",
+            "weight": 13.14,
+            "allocationProxy": false
           },
           {
-            "sector": "Sector classification pending",
-            "weight": 2.8
+            "sector": "Basic Materials",
+            "weight": 10.7,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Technology",
+            "weight": 8.23,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Real Estate",
+            "weight": 2.08,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Communication Services",
+            "weight": 1.89,
+            "allocationProxy": false
           }
         ]
       },
@@ -855,9 +880,11 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:03:52.673Z",
+          "fetchedAt": "2026-07-23T10:24:27.498Z",
           "holdings": 5,
-          "totalTopHoldingWeight": 31.84,
+          "parsedFromFundPage": 5,
+          "supersededByRicherBook": true,
+          "totalTopHoldingWeight": 207.96,
           "stale": false
         },
         "advisorIdentityValidation": {
@@ -866,15 +893,15 @@
           "skipped": true,
           "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
-        "holdings": 5,
-        "sectors": 4,
+        "holdings": 0,
+        "sectors": 9,
         "entries": 0,
         "exits": 0
       },
       "sources": [
         {
           "name": "Value Research Online",
-          "type": "Public fund holdings and portfolio facts",
+          "type": "Live manager, holdings, turnover and fund facts",
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/"
         },
         {
@@ -897,62 +924,60 @@
       ],
       "counts": {
         "managers": 2,
-        "holdings": 5,
-        "sectors": 4,
+        "holdings": 0,
+        "sectors": 9,
         "entries": 0,
         "exits": 0,
         "snapshotCount": 1,
-        "factorCoverage": 75
+        "factorCoverage": 45
       },
-      "holdings": [
-        {
-          "name": "ICICI Bank",
-          "sector": "Sector classification pending",
-          "weight": 9.63
-        },
-        {
-          "name": "HDFC Bank",
-          "sector": "Sector classification pending",
-          "weight": 7.86
-        },
-        {
-          "name": "Larsen & Toubro",
-          "sector": "Capital Goods",
-          "weight": 4.98
-        },
-        {
-          "name": "Bajaj Finance",
-          "sector": "Financial Services",
-          "weight": 4.71
-        },
-        {
-          "name": "Bharti Airtel",
-          "sector": "Telecommunication",
-          "weight": 4.66
-        }
-      ],
+      "holdings": [],
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
-        "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-23",
+        "sectorBasis": "Moneycontrol ISIN-validated portfolio-sector table",
+        "currentAsOf": "23-Jul-2026",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
           {
-            "sector": "Sector classification pending",
-            "weight": 17.490000000000002
-          },
-          {
-            "sector": "Capital Goods",
-            "weight": 4.98
-          },
-          {
             "sector": "Financial Services",
-            "weight": 4.71
+            "weight": 34.69,
+            "allocationProxy": false
           },
           {
-            "sector": "Telecommunication",
-            "weight": 4.66
+            "sector": "Consumer Cyclical",
+            "weight": 17.09,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Healthcare",
+            "weight": 10.91,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Industrials",
+            "weight": 10.83,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Basic Materials",
+            "weight": 5.37,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Communication Services",
+            "weight": 4.66,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Consumer Defensive",
+            "weight": 4.47,
+            "allocationProxy": false
+          },
+          {
+            "sector": "Technology",
+            "weight": 3.89,
+            "allocationProxy": false
           }
         ]
       },
@@ -960,13 +985,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-23T10:03:53.778Z",
+    "generatedAt": "2026-07-23T10:24:27.867Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
     "installLog": "\nadded 34 packages in 7s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n▲ Next.js 16.2.11 (Turbopack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 8.9s\n  Running TypeScript ...\n  Finished TypeScript in 93ms ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/3) ...\n✓ Generating static pages using 3 workers (3/3) in 168ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ƒ /\n├ ○ /_not-found\n├ ƒ /api/fund-bootstrap\n├ ƒ /api/fund-intelligence\n├ ƒ /api/fund-snapshot\n├ ƒ /api/live/code\n├ ƒ /api/live/health\n├ ƒ /api/live/series\n├ ƒ /api/momentum\n├ ƒ /api/peer-benchmarks\n├ ƒ /api/universe\n└ ○ /universe\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n▲ Next.js 16.2.11\n- Local:         http://localhost:3000\n- Network:       http://10.1.1.112:3000\n✓ Ready in 145ms\n"
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n▲ Next.js 16.2.11 (Turbopack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 8.4s\n  Running TypeScript ...\n  Finished TypeScript in 87ms ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/3) ...\n✓ Generating static pages using 3 workers (3/3) in 162ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ƒ /\n├ ○ /_not-found\n├ ƒ /api/fund-bootstrap\n├ ƒ /api/fund-intelligence\n├ ƒ /api/fund-snapshot\n├ ƒ /api/live/code\n├ ƒ /api/live/health\n├ ƒ /api/live/series\n├ ƒ /api/momentum\n├ ƒ /api/peer-benchmarks\n├ ƒ /api/universe\n└ ○ /universe\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n▲ Next.js 16.2.11\n- Local:         http://localhost:3000\n- Network:       http://10.1.0.182:3000\n✓ Ready in 128ms\n"
   }
 }
