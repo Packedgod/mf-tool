@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-14T15:56:07.004Z",
+  "generatedAt": "2026-07-23T10:03:40.199Z",
   "node": "v20.20.2",
   "tests": [
     {
@@ -55,7 +55,7 @@
             "requestedFundName": "HDFC Flexi Cap Fund - Growth Option - Direct Plan"
           },
           "moneycontrolCoverage": {
-            "holdings": 72,
+            "holdings": 77,
             "sectors": 11,
             "assetAllocation": 3,
             "marketCap": 4
@@ -64,7 +64,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T15:56:07.862Z",
+          "fetchedAt": "2026-07-23T10:03:41.109Z",
           "holdings": 5,
           "totalTopHoldingWeight": 30.56,
           "stale": false
@@ -76,7 +76,7 @@
           "reason": "An identity-validated Moneycontrol portfolio is already available."
         },
         "holdings": 5,
-        "sectors": 3,
+        "sectors": 2,
         "entries": 0,
         "exits": 0
       },
@@ -96,6 +96,10 @@
           "type": "Price history only for holdings and sector indices"
         },
         {
+          "name": "Yahoo Finance quoteSummary",
+          "type": "Security-level valuation, profitability and growth fundamentals"
+        },
+        {
           "name": "AMFI / MFapi.in",
           "type": "Fund identity and NAV history only"
         }
@@ -103,7 +107,7 @@
       "counts": {
         "managers": 1,
         "holdings": 5,
-        "sectors": 3,
+        "sectors": 2,
         "entries": 0,
         "exits": 0,
         "snapshotCount": 1,
@@ -127,7 +131,7 @@
         },
         {
           "name": "SBI",
-          "sector": "Other",
+          "sector": "Financial Services",
           "weight": 4.3
         },
         {
@@ -139,7 +143,7 @@
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
         "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-13",
+        "currentAsOf": "2026-07-23",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
@@ -149,11 +153,7 @@
           },
           {
             "sector": "Financial Services",
-            "weight": 10.31
-          },
-          {
-            "sector": "Other",
-            "weight": 4.3
+            "weight": 14.610000000000001
           }
         ]
       },
@@ -210,7 +210,7 @@
             "requestedFundName": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth"
           },
           "moneycontrolCoverage": {
-            "holdings": 71,
+            "holdings": 80,
             "sectors": 11,
             "assetAllocation": 3,
             "marketCap": 4
@@ -219,7 +219,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T15:56:09.254Z",
+          "fetchedAt": "2026-07-23T10:03:47.024Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.5,
           "stale": false
@@ -249,6 +249,10 @@
         {
           "name": "Yahoo Finance",
           "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "Yahoo Finance quoteSummary",
+          "type": "Security-level valuation, profitability and growth fundamentals"
         },
         {
           "name": "AMFI / MFapi.in",
@@ -294,7 +298,7 @@
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
         "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-14",
+        "currentAsOf": "2026-07-22",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
@@ -358,7 +362,7 @@
           "liveMoneycontrol": true,
           "liveAdvisorKhoj": false,
           "holdings": 3,
-          "sectors": 9,
+          "sectors": 10,
           "documents": 0,
           "valueResearchError": null,
           "moneycontrolError": null,
@@ -371,8 +375,8 @@
             "requestedFundName": "SBI Small Cap Fund - Direct Plan - Growth"
           },
           "moneycontrolCoverage": {
-            "holdings": 72,
-            "sectors": 9,
+            "holdings": 74,
+            "sectors": 10,
             "assetAllocation": 3,
             "marketCap": 4
           }
@@ -380,7 +384,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T15:56:10.136Z",
+          "fetchedAt": "2026-07-23T10:03:48.482Z",
           "holdings": 4,
           "totalTopHoldingWeight": 14.08,
           "stale": false
@@ -410,6 +414,10 @@
         {
           "name": "Yahoo Finance",
           "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "Yahoo Finance quoteSummary",
+          "type": "Security-level valuation, profitability and growth fundamentals"
         },
         {
           "name": "AMFI / MFapi.in",
@@ -450,7 +458,7 @@
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
         "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-13",
+        "currentAsOf": "2026-07-23",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
@@ -530,7 +538,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T15:56:11.067Z",
+          "fetchedAt": "2026-07-23T10:03:50.049Z",
           "holdings": 4,
           "totalTopHoldingWeight": 6.39,
           "stale": false
@@ -560,6 +568,10 @@
         {
           "name": "Yahoo Finance",
           "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "Yahoo Finance quoteSummary",
+          "type": "Security-level valuation, profitability and growth fundamentals"
         },
         {
           "name": "AMFI / MFapi.in",
@@ -600,7 +612,7 @@
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
         "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-13",
+        "currentAsOf": "2026-07-23",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
@@ -669,7 +681,7 @@
             "requestedFundName": "Kotak Midcap Fund - Direct Plan - Growth"
           },
           "moneycontrolCoverage": {
-            "holdings": 71,
+            "holdings": 72,
             "sectors": 10,
             "assetAllocation": 2,
             "marketCap": 4
@@ -678,7 +690,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T15:56:11.851Z",
+          "fetchedAt": "2026-07-23T10:03:50.894Z",
           "holdings": 5,
           "totalTopHoldingWeight": 15.79,
           "stale": false
@@ -708,6 +720,10 @@
         {
           "name": "Yahoo Finance",
           "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "Yahoo Finance quoteSummary",
+          "type": "Security-level valuation, profitability and growth fundamentals"
         },
         {
           "name": "AMFI / MFapi.in",
@@ -753,7 +769,7 @@
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
         "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-13",
+        "currentAsOf": "2026-07-23",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
@@ -817,7 +833,7 @@
           "liveMoneycontrol": true,
           "liveAdvisorKhoj": false,
           "holdings": 5,
-          "sectors": 11,
+          "sectors": 9,
           "documents": 0,
           "valueResearchError": null,
           "moneycontrolError": null,
@@ -830,8 +846,8 @@
             "requestedFundName": "Axis Large Cap Fund - Direct Plan - Growth"
           },
           "moneycontrolCoverage": {
-            "holdings": 52,
-            "sectors": 11,
+            "holdings": 50,
+            "sectors": 9,
             "assetAllocation": 3,
             "marketCap": 3
           }
@@ -839,7 +855,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-14T15:56:12.797Z",
+          "fetchedAt": "2026-07-23T10:03:52.673Z",
           "holdings": 5,
           "totalTopHoldingWeight": 31.84,
           "stale": false
@@ -869,6 +885,10 @@
         {
           "name": "Yahoo Finance",
           "type": "Price history only for holdings and sector indices"
+        },
+        {
+          "name": "Yahoo Finance quoteSummary",
+          "type": "Security-level valuation, profitability and growth fundamentals"
         },
         {
           "name": "AMFI / MFapi.in",
@@ -914,7 +934,7 @@
       "snapshot": {
         "factsheetLabel": "Value Research Online + Moneycontrol",
         "sectorBasis": "Moneycontrol / Value Research top-holdings allocation with live market classifications",
-        "currentAsOf": "2026-07-13",
+        "currentAsOf": "2026-07-23",
         "previousAsOf": null,
         "comparisonMode": "current-holdings-baseline",
         "sectorWeights": [
@@ -940,13 +960,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-14T15:56:13.153Z",
+    "generatedAt": "2026-07-23T10:03:53.778Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
-    "installLog": "\nadded 35 packages in 6s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n  ▲ Next.js 14.2.35\n\n   Creating an optimized production build ...\n ✓ Compiled successfully\n   Linting and checking validity of types ...\n   Collecting page data ...\n   Generating static pages (0/5) ...\n   Generating static pages (1/5) \r\n   Generating static pages (2/5) \r\n   Generating static pages (3/5) \r\n ✓ Generating static pages (5/5)\n   Finalizing page optimization ...\n   Collecting build traces ...\n\nRoute (app)                              Size     First Load JS\n┌ ƒ /                                    33.3 kB         121 kB\n├ ○ /_not-found                          873 B          88.1 kB\n├ ƒ /api/fund-bootstrap                  0 B                0 B\n├ ƒ /api/fund-intelligence               0 B                0 B\n├ ƒ /api/fund-snapshot                   0 B                0 B\n├ ƒ /api/live/code                       0 B                0 B\n├ ƒ /api/live/health                     0 B                0 B\n├ ƒ /api/live/series                     0 B                0 B\n├ ƒ /api/momentum                        0 B                0 B\n├ ƒ /api/peer-benchmarks                 0 B                0 B\n├ ƒ /api/universe                        0 B                0 B\n└ ○ /universe                            2.78 kB        98.8 kB\n+ First Load JS shared by all            87.3 kB\n  ├ chunks/117-9776bcfde68b9ed6.js       31.7 kB\n  ├ chunks/fd9d1056-88c8a1669018f964.js  53.6 kB\n  └ other shared chunks (total)          1.89 kB\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n  ▲ Next.js 14.2.35\n  - Local:        http://localhost:3000\n\n ✓ Starting...\n ✓ Ready in 290ms\n"
+    "installLog": "\nadded 34 packages in 7s\n",
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n▲ Next.js 16.2.11 (Turbopack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 8.9s\n  Running TypeScript ...\n  Finished TypeScript in 93ms ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/3) ...\n✓ Generating static pages using 3 workers (3/3) in 168ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ƒ /\n├ ○ /_not-found\n├ ƒ /api/fund-bootstrap\n├ ƒ /api/fund-intelligence\n├ ƒ /api/fund-snapshot\n├ ƒ /api/live/code\n├ ƒ /api/live/health\n├ ƒ /api/live/series\n├ ƒ /api/momentum\n├ ƒ /api/peer-benchmarks\n├ ƒ /api/universe\n└ ○ /universe\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n▲ Next.js 16.2.11\n- Local:         http://localhost:3000\n- Network:       http://10.1.1.112:3000\n✓ Ready in 145ms\n"
   }
 }
