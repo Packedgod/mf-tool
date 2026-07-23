@@ -274,6 +274,9 @@ function probableManagerName(value) {
 
   if (clean.length < 4 || clean.length > 60) return null;
   if (/benchmark|scheme|fund|portfolio|risk|return|nav|since inception|equity|debt|hybrid/i.test(clean)) return null;
+  // Factsheets credit teams as well as individuals ("research analysts", "investment team"),
+  // and those phrases pass every structural test a person's name would.
+  if (/\b(research|analyst|analysts|team|dedicated|committee|desk|department|management|advisor|advisors|trustee|trustees|associate|associates)\b/i.test(clean)) return null;
   // A person's name carries no digits, and needs at least a given name and a surname.
   if (/\d/.test(clean)) return null;
   if (!/^[A-Za-z][A-Za-z.'\- ]*$/.test(clean)) return null;

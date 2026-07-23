@@ -19,6 +19,10 @@ function publicManager(manager) {
     role: manager.role,
     startDate: manager.startDate || null,
     startLabel: manager.startLabel || null,
+    // Kept in step with the same projection in fund-bootstrap: this is a whitelist, so
+    // factsheet tenure is lost here unless it is named explicitly.
+    managingSince: manager.managingSince || null,
+    managingSinceInception: Boolean(manager.managingSinceInception),
     style: manager.style || null,
     decisions: manager.decisions || [],
     schemeAliases: manager.schemeAliases || [],

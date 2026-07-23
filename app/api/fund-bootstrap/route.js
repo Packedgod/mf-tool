@@ -41,6 +41,11 @@ function publicManager(manager, fund) {
     role: manager.role || 'Fund manager',
     startDate: manager.startDate || null,
     startLabel: manager.startLabel || null,
+    // Scheme-level tenure parsed from AMC factsheets. This projection is a whitelist, so
+    // without these two lines the dates reach the registry and then get dropped at the API
+    // boundary, leaving manager stability permanently unrated.
+    managingSince: manager.managingSince || null,
+    managingSinceInception: Boolean(manager.managingSinceInception),
     style: manager.style || 'Scheme-level manager record resolved from a public fund source.',
     decisions: manager.decisions || ['Portfolio construction', 'Sector positioning', 'Entry and exit discipline', 'Risk control'],
     schemeAliases: [...new Set([...(manager.schemeAliases || []), fund.displayName, fund.preferredSchemeName].filter(Boolean))],
