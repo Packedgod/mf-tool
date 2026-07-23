@@ -120,18 +120,46 @@ export function HeadlineScoreCard({ headline }) {
   );
 }
 
+function humanise(key) {
+  return String(key)
+    .replace(/Pct$|Cr$/, '')
+    .replace(/([A-Z])/g, ' $1')
+    .replace(/^./, character => character.toUpperCase())
+    .trim();
+}
+
+function formatEvidence(value) {
+  const magnitude = Math.abs(value);
+  if (magnitude >= 1000) return Math.round(value).toLocaleString('en-IN');
+  if (magnitude >= 10) return value.toFixed(1);
+  return value.toFixed(2);
+}
+
 export function FactorRow({ factorKey, factor }) {
   const weight = factor?.weight ?? MOMENTUM_WEIGHTS[factorKey] ?? 0;
   const score = Number.isFinite(factor?.score) ? factor.score : null;
   const confidence = Number.isFinite(factor?.confidence) ? Math.round(factor.confidence) : 0;
   const coverage = Number.isFinite(factor?.coveragePct) ? Math.round(factor.coveragePct) : 0;
   const label = factor?.label || LABELS[factorKey] || factorKey;
+  const evidence = Object.entries(factor?.evidence || {})
+    .map(([key, item]) => ({ key, value: item?.value, score: item?.score ?? item?.result?.score }))
+    .filter(item => Number.isFinite(item.value) || Number.isFinite(item.score))
+    .slice(0, 5);
   return (
-    <article className={`factor-row ${Number.isFinite(score) ? 'rated' : 'not-rated'}`}>
+    <article className={`factor-row ${Number.isFinite(score) ? 'is-rated rated' : 'is-not-rated not-rated'}`}>
       <div className="factor-title"><strong>{label}</strong><span>{weight}% weight</span></div>
       <div className="factor-bar"><i style={{ width: `${Number.isFinite(score) ? Math.max(0, Math.min(100, score)) : 0}%` }} /></div>
       <b className={Number.isFinite(score) ? scoreTone(score) : 'neutral'}>{Number.isFinite(score) ? Math.round(score) : 'NR'}</b>
       <p>{factor?.detail || 'Not Rated — required point-in-time evidence is unavailable.'}</p>
+      {evidence.length ? (
+        <div className="factor-evidence">
+          {evidence.map(item => (
+            <span key={item.key} title={`${humanise(item.key)}${Number.isFinite(item.score) ? ` · sub-score ${Math.round(item.score)}/100` : ''}`}>
+              {humanise(item.key)} <b>{Number.isFinite(item.value) ? formatEvidence(item.value) : `${Math.round(item.score)}/100`}</b>
+            </span>
+          ))}
+        </div>
+      ) : null}
       <small className="factor-confidence">Confidence {confidence}/100 · coverage {coverage}%{Number.isFinite(factor?.rawScore) ? ` · peer score ${Math.round(factor.rawScore)} before shrinkage` : ''}</small>
     </article>
   );

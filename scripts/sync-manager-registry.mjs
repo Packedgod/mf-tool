@@ -202,13 +202,82 @@ function probableScheme(line) {
   return true;
 }
 
+const MONTHS = {
+  jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5,
+  jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11
+};
+
+// Factsheet tenure lines are written a dozen different ways across AMCs. Everything is
+// normalised to a month-precision ISO date; a day-level value would imply a precision the
+// documents mostly do not carry.
+function parseTenureDate(value) {
+  const text = cleanName(value);
+  if (!text) return null;
+
+  const dmy = text.match(/\b(\d{1,2})[\s\-\/.]*(?:st|nd|rd|th)?[\s\-\/.]+([A-Za-z]{3,9}|\d{1,2})[\s\-\/.]+(\d{4})\b/);
+  if (dmy) {
+    const monthToken = dmy[2].toLowerCase();
+    const month = /^\d+$/.test(monthToken) ? Number(monthToken) - 1 : MONTHS[monthToken.slice(0, 3)];
+    if (Number.isInteger(month) && month >= 0 && month <= 11) {
+      return `${dmy[3]}-${String(month + 1).padStart(2, '0')}-01`;
+    }
+  }
+
+  // Month-first phrasing ("Nov 21, 2016") is as common as day-first in these documents.
+  const mdy = text.match(/\b([A-Za-z]{3,9})[\s.]+(\d{1,2})(?:st|nd|rd|th)?[\s,]+(\d{4})\b/);
+  if (mdy) {
+    const month = MONTHS[mdy[1].toLowerCase().slice(0, 3)];
+    if (Number.isInteger(month)) return `${mdy[3]}-${String(month + 1).padStart(2, '0')}-01`;
+  }
+
+  const monthYear = text.match(/\b([A-Za-z]{3,9})[\s,\-]+(\d{4})\b/);
+  if (monthYear) {
+    const month = MONTHS[monthYear[1].toLowerCase().slice(0, 3)];
+    if (Number.isInteger(month)) return `${monthYear[2]}-${String(month + 1).padStart(2, '0')}-01`;
+  }
+
+  return null;
+}
+
+// "Managing the scheme since <date>" and its variants, including the common "since
+// inception" phrasing which conveys tenure without naming a date.
+function extractTenure(text) {
+  // Up to a few words may sit between the verb and the date marker ("Managed by the fund
+  // w.e.f. ..."), and the date itself may be dot-separated, so the tail is length-bounded
+  // rather than stopped at the first period.
+  const match = String(text || '').match(
+    /manag(?:ing|ed)\b[\w\s]{0,30}?\b(?:since|from|w\.?\s?e\.?\s?f\.?)\s*[:\-–—]?\s*([^;|)]{0,32})/i
+  );
+  if (!match) return null;
+  const tail = match[1] || '';
+  if (/inception/i.test(tail)) return { since: null, sinceInception: true };
+  const since = parseTenureDate(tail);
+  return since ? { since, sinceInception: false } : null;
+}
+
+const HONORIFICS = /^(?:mr|mrs|ms|miss|dr|shri|smt|sri|prof)\.?\s+/i;
+
 function probableManagerName(value) {
-  const clean = cleanName(value)
-    .replace(/\b(and|co-manager|for equity|for debt|overseas securities|effective from).*$/i, '')
+  // The trailing \b matters: without it "and" matches inside surnames such as "Andani"
+  // and silently truncates the name to its first word.
+  let clean = cleanName(value)
+    .replace(/\b(?:and|co-manager|for equity|for debt|overseas securities|effective from)\b.*$/i, '')
     .trim();
-  if (clean.length < 4 || clean.length > 90) return null;
-  if (/benchmark|scheme|fund|portfolio|risk|return|nav|since inception/i.test(clean)) return null;
-  if (!/[A-Za-z]/.test(clean)) return null;
+
+  // PDF text extraction keeps the field label glued to the value ("Name: Mr. Raj Mehta"),
+  // which previously became part of the manager's stored name.
+  clean = cleanName(clean.replace(/^(?:name|fund manager(?:s)?|managed by|manager)\s*[:\-–—]\s*/i, ''));
+  while (HONORIFICS.test(clean)) clean = cleanName(clean.replace(HONORIFICS, ''));
+
+  // Trim any tenure or qualification clause that ran on from the name.
+  clean = cleanName(clean.replace(/\s*[,(\-–—]?\s*(?:manag(?:ing|ed)|total experience|experience|b\.?\s?tech|m\.?b\.?a|c\.?f\.?a|c\.?a\b).*$/i, ''));
+
+  if (clean.length < 4 || clean.length > 60) return null;
+  if (/benchmark|scheme|fund|portfolio|risk|return|nav|since inception|equity|debt|hybrid/i.test(clean)) return null;
+  // A person's name carries no digits, and needs at least a given name and a surname.
+  if (/\d/.test(clean)) return null;
+  if (!/^[A-Za-z][A-Za-z.'\- ]*$/.test(clean)) return null;
+  if (clean.split(/\s+/).filter(part => part.length > 1).length < 2) return null;
   return clean;
 }
 
@@ -224,6 +293,10 @@ function extractAssignments(text, source) {
     const managerText = managerMatch[1] || lines[index + 1] || '';
     const names = managerText.split(/\s*(?:,|&|\/|\band\b)\s*/i).map(probableManagerName).filter(Boolean);
     if (!names.length) continue;
+
+    // The tenure clause usually trails the manager name or sits on one of the next few
+    // lines, so a small window is searched rather than the current line alone.
+    const tenure = extractTenure(lines.slice(index, index + 4).join(' '));
 
     let schemeName = null;
     for (let cursor = index - 1; cursor >= Math.max(0, index - 24); cursor -= 1) {
@@ -241,6 +314,8 @@ function extractAssignments(text, source) {
         amc: source.host,
         role: 'Fund manager',
         schemeAliases: [schemeName],
+        managingSince: tenure?.since || null,
+        managingSinceInception: tenure?.sinceInception || false,
         verified: true,
         confidence: 0.82,
         sourceType: 'Official AMC factsheet — automated extraction',
@@ -261,9 +336,14 @@ function mergeRecords(records) {
       map.set(key, record);
       continue;
     }
+    // The earliest dated tenure across a manager's factsheets is the one that reflects how
+    // long they have actually run money at the AMC.
+    const since = [previous.managingSince, record.managingSince].filter(Boolean).sort()[0] || null;
     map.set(key, {
       ...previous,
       schemeAliases: [...new Set([...(previous.schemeAliases || []), ...(record.schemeAliases || [])])],
+      managingSince: since,
+      managingSinceInception: previous.managingSinceInception || record.managingSinceInception,
       confidence: Math.max(previous.confidence || 0, record.confidence || 0),
       source: record.source
     });
