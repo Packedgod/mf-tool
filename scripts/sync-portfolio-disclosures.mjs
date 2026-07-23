@@ -7,16 +7,12 @@
 //   npm run sync:portfolios              # top schemes from the AMFI universe
 //   npm run sync:portfolios -- 120503 119551
 //   npm run sync:portfolios -- --limit 60
+import { register } from 'node:module';
 import { pathToFileURL } from 'node:url';
-import path from 'node:path';
 
-// The lib modules use Next's "@/" alias, so resolve it before importing them.
-const root = path.resolve(import.meta.dirname, '..');
-const { register } = await import('node:module');
-register(
-  `data:text/javascript,export function resolve(s,c,n){if(s.startsWith("@/")){const r=s.slice(2);return n(${JSON.stringify(pathToFileURL(root).href)}+"/"+(/\\.[a-z]+$/i.test(r)?r:r+".js"),c);}return n(s,c);}`,
-  pathToFileURL(path.join(root, '/')).href
-);
+// The lib modules use Next's "@/" alias, so the resolver has to be registered before any
+// of them are imported — hence the dynamic imports below rather than static ones.
+register('./alias-loader.mjs', import.meta.url);
 
 const { getMarketUniverse } = await import('@/lib/universe');
 const { resolveFundResearch } = await import('@/lib/fallback-sources');
@@ -25,7 +21,11 @@ const { archivedMonths, archiveCoverage } = await import('@/lib/portfolio-archiv
 const args = process.argv.slice(2);
 const limitFlag = args.indexOf('--limit');
 const limit = limitFlag >= 0 ? Number(args[limitFlag + 1]) || 40 : 40;
-const explicitCodes = args.filter(value => /^\d+$/.test(value));
+
+// The value belonging to --limit must be removed before scanning for scheme codes,
+// otherwise "--limit 3" is read as a request for scheme 3. AMFI codes are 4-9 digits.
+const positional = args.filter((value, index) => index !== limitFlag && index !== limitFlag + 1);
+const explicitCodes = positional.filter(value => /^\d{4,9}$/.test(value));
 
 function log(message) {
   process.stdout.write(`${message}\n`);
