@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-23T10:24:21.030Z",
+  "generatedAt": "2026-07-23T11:02:52.669Z",
   "node": "v20.20.2",
   "tests": [
     {
@@ -64,7 +64,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/16026/hdfc-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:24:21.813Z",
+          "fetchedAt": "2026-07-23T11:02:53.414Z",
           "holdings": 6,
           "parsedFromFundPage": 5,
           "supersededByRicherBook": true,
@@ -227,7 +227,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/19701/parag-parikh-flexi-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:24:22.845Z",
+          "fetchedAt": "2026-07-23T11:03:02.103Z",
           "holdings": 5,
           "parsedFromFundPage": 5,
           "supersededByRicherBook": false,
@@ -394,7 +394,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15787/sbi-small-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:24:24.245Z",
+          "fetchedAt": "2026-07-23T11:03:04.500Z",
           "holdings": 4,
           "parsedFromFundPage": 4,
           "supersededByRicherBook": false,
@@ -550,7 +550,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15829/icici-prudential-balanced-advantage-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:24:25.933Z",
+          "fetchedAt": "2026-07-23T11:03:06.586Z",
           "holdings": 5,
           "parsedFromFundPage": 4,
           "supersededByRicherBook": true,
@@ -715,7 +715,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/17134/kotak-midcap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:24:26.617Z",
+          "fetchedAt": "2026-07-23T11:03:07.207Z",
           "holdings": 5,
           "parsedFromFundPage": 5,
           "supersededByRicherBook": true,
@@ -880,7 +880,7 @@
         "exactValueResearchPortfolio": {
           "ok": true,
           "url": "https://www.valueresearchonline.com/funds/15682/axis-large-cap-fund-direct-plan/",
-          "fetchedAt": "2026-07-23T10:24:27.498Z",
+          "fetchedAt": "2026-07-23T11:03:07.791Z",
           "holdings": 5,
           "parsedFromFundPage": 5,
           "supersededByRicherBook": true,
@@ -985,13 +985,13 @@
     }
   ],
   "workflow": {
-    "generatedAt": "2026-07-23T10:24:27.867Z",
+    "generatedAt": "2026-07-23T11:03:08.195Z",
     "install": "success",
     "build": "success",
     "start": "success",
     "exercise": "success",
     "installLog": "\nadded 34 packages in 7s\n",
-    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n▲ Next.js 16.2.11 (Turbopack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 8.4s\n  Running TypeScript ...\n  Finished TypeScript in 87ms ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/3) ...\n✓ Generating static pages using 3 workers (3/3) in 162ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ƒ /\n├ ○ /_not-found\n├ ƒ /api/fund-bootstrap\n├ ƒ /api/fund-intelligence\n├ ƒ /api/fund-snapshot\n├ ƒ /api/live/code\n├ ƒ /api/live/health\n├ ƒ /api/live/series\n├ ƒ /api/momentum\n├ ƒ /api/peer-benchmarks\n├ ƒ /api/universe\n└ ○ /universe\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
-    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n▲ Next.js 16.2.11\n- Local:         http://localhost:3000\n- Network:       http://10.1.0.182:3000\n✓ Ready in 128ms\n"
+    "buildLog": "\n> managerlens@0.9.0 build\n> next build\n\n⚠ No build cache found. Please configure build caching for faster rebuilds. Read more: https://nextjs.org/docs/messages/no-cache\nAttention: Next.js now collects completely anonymous telemetry regarding usage.\nThis information is used to shape Next.js' roadmap and prioritize features.\nYou can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:\nhttps://nextjs.org/telemetry\n\n▲ Next.js 16.2.11 (Turbopack)\n\n  Creating an optimized production build ...\n✓ Compiled successfully in 8.7s\n  Running TypeScript ...\n  Finished TypeScript in 108ms ...\n  Collecting page data using 3 workers ...\n  Generating static pages using 3 workers (0/3) ...\n✓ Generating static pages using 3 workers (3/3) in 177ms\n  Finalizing page optimization ...\n\nRoute (app)\n┌ ƒ /\n├ ○ /_not-found\n├ ƒ /api/fund-bootstrap\n├ ƒ /api/fund-intelligence\n├ ƒ /api/fund-snapshot\n├ ƒ /api/live/code\n├ ƒ /api/live/health\n├ ƒ /api/live/series\n├ ƒ /api/momentum\n├ ƒ /api/peer-benchmarks\n├ ƒ /api/universe\n└ ○ /universe\n\n\n○  (Static)   prerendered as static content\nƒ  (Dynamic)  server-rendered on demand\n\n",
+    "serverLog": "\n> managerlens@0.9.0 start\n> next start\n\n▲ Next.js 16.2.11\n- Local:         http://localhost:3000\n- Network:       http://10.1.0.118:3000\n✓ Ready in 131ms\n"
   }
 }
