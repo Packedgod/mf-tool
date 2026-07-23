@@ -3,13 +3,15 @@ import { buildSyntheticProxy, computeMetrics, normaliseSeries } from '@/lib/anal
 import { proxyProfileForFund } from '@/lib/dynamic-proxies';
 import { getMarketUniverse } from '@/lib/universe';
 import { liveSeries } from '@/lib/upstream';
+import { membershipCoverage, coversWindow } from '@/lib/universe-history';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const maxDuration = 60;
 
-const PEER_LIMIT = 12;
+const PEER_LIMIT = 16;
 const MIN_HISTORY_YEARS = 3;
+const MIN_ALIGNED_OBSERVATIONS = 250;
 const DISTRIBUTION_KEYS = [
   'alphaPct',
   'informationRatio',
@@ -24,7 +26,13 @@ const DISTRIBUTION_KEYS = [
   'tailLossFrequencyPct',
   'sharpe',
   'activeReturnPct',
-  'volatilityPct'
+  'volatilityPct',
+  'positiveMonthHitRatePct',
+  'upCapturePct',
+  'overallCapturePct',
+  'beta',
+  'trackingErrorPct',
+  'cagrPct'
 ];
 
 function cache() {
@@ -92,21 +100,41 @@ function comparablePeers(universe, selectedFund) {
   return selected;
 }
 
+// Name-similarity resolution sometimes lands on a dormant scheme that carries the right
+// name but no NAV history. Each alternative query is retried independently and the
+// longest usable series wins, so one bad match cannot blank the whole benchmark.
+async function resolveComponentSeries(component, startDate, endDate) {
+  const attempts = [component.queries, ...(component.queries || []).map(query => [query])];
+  let best = null;
+  for (const queries of attempts) {
+    try {
+      const result = await liveSeries({ queries, startDate, endDate });
+      const rows = normaliseSeries(result.data);
+      if (rows.length >= 3 && (!best || rows.length > best.rows.length)) best = { rows, source: result.source };
+      if (best && best.rows.length >= 500) break;
+    } catch {}
+  }
+  if (!best) throw new Error(`No candidate for "${component.queries?.[0] || 'proxy component'}" returned usable NAV history.`);
+  return best;
+}
+
 async function proxySeriesFor(fund, startDate, endDate) {
   const proxy = proxyProfileForFund(fund).official;
-  const settled = await Promise.allSettled((proxy.components || []).map(component => liveSeries({
-    queries: component.queries,
-    startDate,
-    endDate
-  })));
+  const settled = await Promise.allSettled((proxy.components || [])
+    .map(component => resolveComponentSeries(component, startDate, endDate)));
   const usable = settled.map((result, index) => result.status === 'fulfilled'
     ? {
-      rows: normaliseSeries(result.value.data),
+      rows: result.value.rows,
       weight: Number(proxy.components[index]?.weight) || 0,
       source: result.value.source
     }
     : null).filter(item => item?.rows?.length >= 3);
-  if (!usable.length) throw new Error('The category-aligned comparison proxy returned no usable NAV history.');
+  if (!usable.length) {
+    const why = settled.map((result, index) => result.status === 'rejected'
+      ? `component ${index}: ${result.reason?.message || result.reason}`
+      : `component ${index}: ${result.value.rows.length} rows`).join('; ');
+    throw new Error(`The category-aligned comparison proxy returned no usable NAV history (${why}).`);
+  }
   const total = usable.reduce((sum, item) => sum + item.weight, 0) || usable.length;
   return {
     proxy,
@@ -152,12 +180,23 @@ export async function GET(request) {
     if (!selectedFund) return NextResponse.json({ ok: false, error: 'The selected AMFI code was not found in the current universe.' }, { status: 404 });
     const candidates = comparablePeers(universe, selectedFund);
     const proxyBundle = await proxySeriesFor(selectedFund, startDate, endDate);
+    // The comparison window is bounded by the proxy, not by the peer. Peers are required to
+    // cover most of that shared window rather than an absolute observation count, so a
+    // short-history proxy no longer disqualifies every long-history peer in the category.
+    // Capped at the stated minimum track record: liquid and debt schemes publish NAV on
+    // every calendar day while equity schemes publish only on trading days, so demanding
+    // near-total overlap with a long daily-quoting proxy would reject every valid peer.
+    const proxyObservations = Math.max(0, proxyBundle.rows.length - 1);
+    const requiredOverlap = Math.max(
+      MIN_ALIGNED_OBSERVATIONS,
+      Math.min(Math.floor(proxyObservations * 0.85), MIN_HISTORY_YEARS * 252)
+    );
     const settled = await mapConcurrent(candidates, 6, async ({ fund, variant }) => {
       const result = await liveSeries({ schemeCode: variant.schemeCode, startDate, endDate });
       const rows = normaliseSeries(result.data);
       const metrics = computeMetrics(rows, proxyBundle.rows, riskFree);
-      if (!Number.isFinite(metrics.years) || metrics.years < MIN_HISTORY_YEARS || metrics.alignedObservations < 500) {
-        throw new Error('Insufficient comparable history.');
+      if (!Number.isFinite(metrics.years) || metrics.years < MIN_HISTORY_YEARS || metrics.alignedObservations < requiredOverlap) {
+        throw new Error(`Insufficient comparable history (rows=${rows.length}, years=${Number(metrics.years).toFixed(2)}, aligned=${metrics.alignedObservations}, required=${requiredOverlap}).`);
       }
       return {
         fundId: fund.id,
@@ -173,6 +212,14 @@ export async function GET(request) {
       metric,
       distribution(peers.map(peer => peer.metrics?.[metric]))
     ]));
+    // The comparison window reaches back roughly proxyObservations trading days; the ledger
+    // is only allowed to claim point-in-time membership if it started before that.
+    const membership = await membershipCoverage();
+    const windowStart = new Date(Date.now() - (proxyObservations / 252) * 365.25 * 86400000)
+      .toISOString()
+      .slice(0, 10);
+    const membershipWindowCovered = await coversWindow(windowStart);
+
     const value = {
       ok: true,
       category: selectedFund.category,
@@ -180,6 +227,11 @@ export async function GET(request) {
       plan: 'Direct',
       option: 'Growth',
       minimumHistoryYears: MIN_HISTORY_YEARS,
+      comparisonWindow: {
+        proxyObservations,
+        requiredOverlap,
+        effectiveYears: proxyObservations / 252
+      },
       requestedPeers: candidates.length,
       peerCount: peers.length,
       peers: peers.map(({ metrics, ...peer }) => ({ ...peer, observations: metrics.observations, alignedObservations: metrics.alignedObservations })),
@@ -194,10 +246,24 @@ export async function GET(request) {
         activeLikeForLike: true,
         directGrowthLikeForLike: true,
         minimumTrackRecordApplied: true,
-        pointInTime: false,
-        note: 'Current category membership is used. Historical point-in-time membership and dead/merged fund coverage are not yet available, so confidence is capped.'
+        // The local membership ledger only becomes usable once it spans the comparison
+        // window; until then the peer set is still today's survivors and says so.
+        pointInTime: membershipWindowCovered,
+        membershipLedger: {
+          observedDays: membership.observedDays,
+          startedOn: membership.startedOn,
+          trackedSchemes: membership.trackedSchemes,
+          retiredSchemes: membership.retiredSchemes
+        },
+        note: membershipWindowCovered
+          ? `Point-in-time category membership is reconstructed from ${membership.observedDays} days of locally banked AMFI universe snapshots, including ${membership.retiredSchemes} schemes since merged or closed.`
+          : `Current category membership is used, so the peer set excludes funds that merged or closed and confidence is capped. A local membership ledger has been banking daily AMFI snapshots${membership.startedOn ? ` since ${membership.startedOn} (${membership.observedDays} days, ${membership.trackedSchemes} schemes)` : ''} and will supply point-in-time peer sets once it spans the ${Math.round(proxyObservations / 252 * 12)}-month comparison window.`
       },
       failures: settled.filter(item => item.status === 'rejected').length,
+      failureReasons: settled
+        .filter(item => item.status === 'rejected')
+        .map(item => String(item.reason?.message || item.reason))
+        .reduce((tally, reason) => ({ ...tally, [reason]: (tally[reason] || 0) + 1 }), {}),
       fetchedAt: new Date().toISOString()
     };
     cache().set(key, { at: Date.now(), value });

@@ -7,13 +7,18 @@
     "build": "next build",
     "start": "next start",
     "sync:managers": "node scripts/sync-manager-registry.mjs",
-    "sync:vro": "node scripts/sync-vro-sitemap-universe.mjs"
+    "sync:vro": "node scripts/sync-vro-sitemap-universe.mjs",
+    "sync:portfolios": "node scripts/sync-portfolio-disclosures.mjs"
+  },
+  "overrides": {
+    "sharp": "^0.35.3",
+    "postcss": "^8.5.10"
   },
   "dependencies": {
-    "next": "14.2.35",
+    "next": "^16.2.11",
     "pdf-parse": "1.1.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "xlsx": "0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.3/xlsx-0.20.3.tgz"
   }
 }

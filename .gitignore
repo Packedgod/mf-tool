@@ -5,3 +5,7 @@ node_modules
 .env.local
 *.log
 .DS_Store
+
+# Locally accumulated point-in-time journals (membership ledger, EPS history,
+# month-end portfolio archive). Machine-local and append-only; not source.
+data/journal/

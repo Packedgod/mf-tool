@@ -1,7 +1,20 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useReliableManagerAnalytics from '@/components/analytics/useReliableManagerAnalytics';
+import { calculateManagerLensScores } from '@/lib/scoring-v2';
+
+const PROFILE_STORAGE_KEY = 'managerlens.investorProfile.v1';
+
+export const DEFAULT_INVESTOR_PROFILE = {
+  riskTolerance: 'moderate',
+  horizon: 'long',
+  goal: 'growth',
+  maxDrawdownPct: 30,
+  liquidityNeed: 'low',
+  taxBracket: 'high',
+  mode: 'sip'
+};
 
 function hasNav(data) {
   return Boolean(data?.fundSeries?.length >= 3 && data?.proxySeries?.length >= 3);
@@ -176,8 +189,36 @@ export default function useDisplayedManagerAnalytics(options = {}) {
   const momentumReady = hasMomentumPayload(momentumData);
   const hardFailure = !momentumReady && (guardExpired || (guardError && data.momentumState === 'error'));
 
+  const [investorProfile, setInvestorProfileState] = useState(null);
+  useEffect(() => {
+    const stored = window.localStorage.getItem(PROFILE_STORAGE_KEY);
+    if (stored) setInvestorProfileState({ ...DEFAULT_INVESTOR_PROFILE, ...JSON.parse(stored) });
+  }, []);
+  const setInvestorProfile = useCallback(next => {
+    setInvestorProfileState(next);
+    if (next) window.localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(next));
+    else window.localStorage.removeItem(PROFILE_STORAGE_KEY);
+  }, []);
+
+  // Recomputed here rather than reused from the reliable hook so that scoring sees the
+  // guard-snapshot merge, which is where holdings and sector books often arrive.
+  const score = useMemo(() => calculateManagerLensScores({
+    fund: selectedFund,
+    manager: data.manager,
+    snapshot: momentumData?.snapshot || null,
+    market: momentumData,
+    traditional: data.metrics,
+    peerData: data.peerData,
+    selectedProxy: data.selectedProxy,
+    investorProfile
+  }), [selectedFund, data.manager, momentumData, data.metrics, data.peerData, data.selectedProxy, investorProfile]);
+
   return {
     ...data,
+    score,
+    provisional: score.headlines.fundQuality.status !== 'full',
+    investorProfile,
+    setInvestorProfile,
     momentumData,
     navState: navReady ? 'ready' : data.navState,
     navMessage: navReady

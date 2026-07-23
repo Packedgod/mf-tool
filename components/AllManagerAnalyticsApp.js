@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import useManagerAnalytics from '@/components/analytics/useDisplayedManagerAnalytics';
 import AnalyticsTabs, { TABS } from '@/components/analytics/AnalyticsTabs';
 import { HeadlineScoreCard } from '@/components/analytics/AnalyticsPanels';
+import InvestorProfilePanel from '@/components/analytics/InvestorProfilePanel';
 
 const PROXY_MODES = ['official', 'category', 'broad', 'defensive', 'custom'];
 
@@ -135,7 +136,8 @@ export default function AllManagerAnalyticsApp({ initialManagerName = '', initia
     proxyCodeStatus, validateProxyCode, selectedProxy, activeTab, setActiveTab,
     startDate, setStartDate, endDate, setEndDate, riskFree, setRiskFree,
     navState, navMessage, momentumState, momentumMessage, peerState, peerMessage, lastRefresh,
-    autoRefresh, setAutoRefresh, score, refreshAll
+    autoRefresh, setAutoRefresh, score, refreshAll,
+    investorProfile, setInvestorProfile
   } = data;
 
   return (
@@ -204,9 +206,11 @@ export default function AllManagerAnalyticsApp({ initialManagerName = '', initia
             <HeadlineScoreCard headline={score.headlines.investorFit} />
             <HeadlineScoreCard headline={{ ...score.headlines.dataConfidence, label: 'Data Confidence' }} />
           </section>
+          <InvestorProfilePanel profile={investorProfile} onChange={setInvestorProfile} />
+
           <section className="scoring-standard-note">
-            <div><span className="eyebrow">ManagerLens methodology 2.0</span><h2>Peer-relative, confidence-shrunk and honest about missing evidence</h2></div>
-            <p><strong>50 means category median or no demonstrated edge.</strong> Missing evidence is shown as <b>Not Rated</b>, never converted to 50. A headline score is withheld until at least 70% of required factor weight and its mandatory risk evidence are available.</p>
+            <div><span className="eyebrow">ManagerLens methodology 2.1</span><h2>Peer-relative, confidence-shrunk and honest about missing evidence</h2></div>
+            <p><strong>50 means category median or no demonstrated edge.</strong> Missing evidence is shown as <b>Not Rated</b>, never converted to 50. Fund Quality is withheld below 70% of required factor weight, Current Opportunity below 60%, and every factor states the share of evidence behind it.</p>
             <div><span>{score.model.label}</span><span>{score.peerContext?.peerCount || 0} usable peers</span><span>{score.recommendation.score === null ? score.recommendation.detail : `Recommendation ${Math.round(score.recommendation.score)}/100`}</span></div>
           </section>
 
