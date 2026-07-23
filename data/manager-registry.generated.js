@@ -58,26 +58,6 @@ export const GENERATED_MANAGER_REGISTRY = [
     }
   },
   {
-    "id": "research-analysts-amc-ppfas-com",
-    "name": "research analysts.",
-    "amc": "amc.ppfas.com",
-    "role": "Fund manager",
-    "schemeAliases": [
-      "An employee of the asset management company such as a mutual fund or life insurer, who manages investment of the scheme.",
-      "An employee of the asset management company such as a mutual fund or life insurer, who manages investment of the scheme. He is usually"
-    ],
-    "managingSince": null,
-    "managingSinceInception": false,
-    "verified": true,
-    "confidence": 0.82,
-    "sourceType": "Official AMC factsheet — automated extraction",
-    "source": {
-      "label": "amc.ppfas.com official factsheet",
-      "url": "https://amc.ppfas.com/downloads/factsheet/2020/ppfas-mf-factsheet-march-2020.pdf?10072021",
-      "asOf": "march-2020"
-    }
-  },
-  {
     "id": "harish-krishnan-mutualfund-adityabirlacapital-com",
     "name": "Harish Krishnan",
     "amc": "mutualfund.adityabirlacapital.com",
@@ -637,70 +617,12 @@ export const GENERATED_MANAGER_REGISTRY = [
       "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
       "asOf": "july-2026"
     }
-  },
-  {
-    "id": "research-analysts-mutualfund-adityabirlacapital-com",
-    "name": "research analysts.",
-    "amc": "mutualfund.adityabirlacapital.com",
-    "role": "Fund manager",
-    "schemeAliases": [
-      "Aditya Birla Sun Life CRISIL Liquid Overnight ETF"
-    ],
-    "managingSince": null,
-    "managingSinceInception": false,
-    "verified": true,
-    "confidence": 0.82,
-    "sourceType": "Official AMC factsheet — automated extraction",
-    "source": {
-      "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
-    }
-  },
-  {
-    "id": "research-analysts-www-samcomf-com",
-    "name": "research analysts.",
-    "amc": "samcomf.com",
-    "role": "Fund manager",
-    "schemeAliases": [
-      "investments of the scheme. He/She is usually part of a larger team"
-    ],
-    "managingSince": null,
-    "managingSinceInception": false,
-    "verified": true,
-    "confidence": 0.82,
-    "sourceType": "Official AMC factsheet — automated extraction",
-    "source": {
-      "label": "www.samcomf.com official factsheet",
-      "url": "https://www.samcomf.com/amc-document-download/SamcoMutualFundFactsheetJune2022_1657029919.pdf",
-      "asOf": "June2022"
-    }
-  },
-  {
-    "id": "an-employee-of-the-asset-management-www-samcomf-com",
-    "name": "An employee of the asset management",
-    "amc": "samcomf.com",
-    "role": "Fund manager",
-    "schemeAliases": [
-      "(The product labelling assigned during the New Fund Offer is based on internal assessment of the Scheme Characteristics or model",
-      "(A n open-ended dynamic equity scheme investing across large cap, mid cap, small cap stocks)"
-    ],
-    "managingSince": null,
-    "managingSinceInception": false,
-    "verified": true,
-    "confidence": 0.82,
-    "sourceType": "Official AMC factsheet — automated extraction",
-    "source": {
-      "label": "www.samcomf.com official factsheet",
-      "url": "https://www.samcomf.com/amc-document-download/SamcoMutualFundFactsheetJune2022_1657029919.pdf",
-      "asOf": "June2022"
-    }
   }
 ];
 
 export const GENERATED_REGISTRY_META = {
-  "generatedAt": "2026-07-23T10:23:45.917Z",
+  "generatedAt": "2026-07-23T10:40:01.167Z",
   "officialSourcesScanned": 7,
-  "records": 33,
+  "records": 29,
   "officialSitesDiscovered": 41
 };
