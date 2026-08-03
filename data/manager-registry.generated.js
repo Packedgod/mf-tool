@@ -60,7 +60,7 @@ export const GENERATED_MANAGER_REGISTRY = [
 ];
 
 export const GENERATED_REGISTRY_META = {
-  "generatedAt": "2026-07-27T06:49:32.858Z",
+  "generatedAt": "2026-08-03T06:44:08.909Z",
   "officialSourcesScanned": 6,
   "records": 3,
   "officialSitesDiscovered": 41
