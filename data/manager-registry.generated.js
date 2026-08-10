@@ -56,12 +56,573 @@ export const GENERATED_MANAGER_REGISTRY = [
       "url": "https://amc.ppfas.com/downloads/factsheet/2021/ppfas-mf-factsheet-june-2021.pdf?10072021",
       "asOf": "june-2021"
     }
+  },
+  {
+    "id": "harish-krishnan-mutualfund-adityabirlacapital-com",
+    "name": "Harish Krishnan",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "Experience in Managing the Fund: 0.1 Years",
+      "Experience in Managing the Fund: 1.5 Years",
+      "INVESTMENT FUNDS/MUTUAL FUNDS99.35 %"
+    ],
+    "managingSince": "2023-11-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "dhaval-joshi-mutualfund-adityabirlacapital-com",
+    "name": "Dhaval Joshi",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 2.7 Years",
+      "Experience in Managing the Fund: 1.7 Years",
+      "Fund Snapshot",
+      "6Aditya Birla Sun Life Balanced Advantage Fund84"
+    ],
+    "managingSince": "2022-11-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "kunal-sangoi-mutualfund-adityabirlacapital-com",
+    "name": "Kunal Sangoi",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "6Aditya Birla Sun Life Global Excellence Equity Fund of Fund234"
+    ],
+    "managingSince": "2014-01-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "harshil-suvarnkar-mutualfund-adityabirlacapital-com",
+    "name": "Harshil Suvarnkar",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 1.7 Years",
+      "Experience in Managing the Fund: 5.3 Years",
+      "Experience in Managing the Fund: 0.1 Years",
+      "Fund Snapshot",
+      "Experience in Managing the Fund: 1.8 Years",
+      "Experience in Managing the Fund: 12.0 Years",
+      "Experience in Managing the Fund: 16.8 Years",
+      "Experience in Managing the Fund: 1.5 Years",
+      "Experience in Managing the Fund: 4.4 Years",
+      "Experience in Managing the Fund: 1.6 Years",
+      "Experience in Managing the Fund: 2.0 Years",
+      "Experience in Managing the Fund: 1.3 Years",
+      "2Aditya Birla Sun Life Small Cap Fund27"
+    ],
+    "managingSince": "2021-03-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "vishal-gajwani-mutualfund-adityabirlacapital-com",
+    "name": "Vishal Gajwani",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "18Aditya Birla Sun Life CRISIL Broad Based Gilt ETF215"
+    ],
+    "managingSince": "2024-11-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "pavas-pethia-mutualfund-adityabirlacapital-com",
+    "name": "Pavas Pethia",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "2Aditya Birla Sun Life Mid Cap Fund"
+    ],
+    "managingSince": "2026-05-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "dhaval-shah-mutualfund-adityabirlacapital-com",
+    "name": "Dhaval Shah",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "2Aditya Birla Sun Life Business Cycle Fund41"
+    ],
+    "managingSince": "2019-07-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "dhaval-gala-mutualfund-adityabirlacapital-com",
+    "name": "Dhaval Gala",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "Fund Index + 5% of Domestic prices of Gold + 5% of",
+      "3Aditya Birla Sun Life Transportation and Logistics Fund63"
+    ],
+    "managingSince": "2015-08-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "chanchal-khandelwal-mutualfund-adityabirlacapital-com",
+    "name": "Chanchal Khandelwal",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "Experience in Managing the Fund: 5.3 Years",
+      "4Aditya Birla Sun Life Multi Asset Allocation Fund91"
+    ],
+    "managingSince": "2015-08-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "jonas-bhutta-mutualfund-adityabirlacapital-com",
+    "name": "Jonas Bhutta",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "4Aditya Birla Sun Life Equity Hybrid 95 Fund"
+    ],
+    "managingSince": "2022-09-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "kartikeya-singh-mutualfund-adityabirlacapital-com",
+    "name": "Kartikeya Singh",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 2.0 Years",
+      "3Aditya Birla Sun Life Retirement Fund -The 30s Plan67"
+    ],
+    "managingSince": "2026-05-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "mohit-sharma-mutualfund-adityabirlacapital-com",
+    "name": "Mohit Sharma",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "Experience in Managing the Fund: 5.3 Years",
+      "Experience in Managing the Fund: 11.5 Years",
+      "Experience in Managing the Fund: 6.7 Years",
+      "Experience in Managing the Fund: 15.0 Years",
+      "Experience in Managing the Fund: 11.8 Years",
+      "Experience in Managing the Fund: 5.9 Years",
+      "Experience in Managing the Fund: 11.2 Years",
+      "Experience in Managing the Fund: 3.4 Years",
+      "1Aditya Birla Sun Life Quant Fund59"
+    ],
+    "managingSince": "2017-04-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "lovelish-solanki-mutualfund-adityabirlacapital-com",
+    "name": "Lovelish Solanki",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "Experience in Managing the Fund: 1.7 Years",
+      "16Aditya Birla Sun Life CRISIL IBX SDL Jun 2032 Index Fund211"
+    ],
+    "managingSince": "2014-12-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "krina-mehta-mutualfund-adityabirlacapital-com",
+    "name": "Krina Mehta",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 1.3 Years",
+      "3Aditya Birla Sun Life Balanced Advantage Fund84"
+    ],
+    "managingSince": "2025-10-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "rohit-karan-mutualfund-adityabirlacapital-com",
+    "name": "Rohit Karan",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 5.3 Years",
+      "Experience in Managing the Fund: 9.3 Years",
+      "1Aditya Birla Sun Life Arbitrage Fund76"
+    ],
+    "managingSince": "2026-04-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "bhupesh-bameta-mutualfund-adityabirlacapital-com",
+    "name": "Bhupesh Bameta",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 1.7 Years",
+      "Fund Snapshot",
+      "Experience in Managing the Fund: 3.9 Years",
+      "Experience in Managing the Fund: 2.7 Years",
+      "2Aditya Birla Sun Life Balanced Advantage Fund84"
+    ],
+    "managingSince": "2020-08-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "sachin-wankhede-mutualfund-adityabirlacapital-com",
+    "name": "Sachin Wankhede",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 3.4 Years",
+      "Fund Snapshot",
+      "13Aditya Birla Sun Life US Treasury 3-10 Year Bonds ETFs Passive FOF237"
+    ],
+    "managingSince": "2022-01-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "kaustubh-gupta-mutualfund-adityabirlacapital-com",
+    "name": "Kaustubh Gupta",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "3Aditya Birla Sun Life Gold ETF180"
+    ],
+    "managingSince": "2009-09-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "sunaina-da-cunha-mutualfund-adityabirlacapital-com",
+    "name": "Sunaina Da Cunha",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 15.0 Years",
+      "Fund Snapshot",
+      "10Aditya Birla Sun Life CRISIL Broad Based Gilt ETF215"
+    ],
+    "managingSince": "2014-06-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "sanjay-pawar-mutualfund-adityabirlacapital-com",
+    "name": "Sanjay Pawar",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 5.1 Years",
+      "Fund Snapshot",
+      "Experience in Managing the Fund: 1.3 Years",
+      "Experience in Managing the Fund: 3.3 Years",
+      "5Aditya Birla Sun Life CRISIL Liquid Overnight ETF218"
+    ],
+    "managingSince": "2022-07-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "anuj-jain-mutualfund-adityabirlacapital-com",
+    "name": "Anuj Jain",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 9.3 Years",
+      "4Aditya Birla Sun Life CRISIL Liquid Overnight ETF218"
+    ],
+    "managingSince": "2021-03-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "monika-gandhi-mutualfund-adityabirlacapital-com",
+    "name": "Monika Gandhi",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 12.0 Years",
+      "1Aditya Birla Sun Life Money Manager Fund104"
+    ],
+    "managingSince": "2021-03-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "priya-sridhar-mutualfund-adityabirlacapital-com",
+    "name": "Priya Sridhar",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "1Aditya Birla Sun Life Savings Fund107"
+    ],
+    "managingSince": "2024-12-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "vighnesh-gupta-mutualfund-adityabirlacapital-com",
+    "name": "Vighnesh Gupta",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "Experience in Managing the Fund: 2.0 Years",
+      "Experience in Managing the Fund: 1.9 Years",
+      "22Aditya Birla Sun Life Silver ETF Fund of Fund232"
+    ],
+    "managingSince": "2023-11-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "sanjay-godambe-mutualfund-adityabirlacapital-com",
+    "name": "Sanjay Godambe",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Experience in Managing the Fund: 2.1 Years",
+      "Experience in Managing the Fund: 3.7 Years",
+      "Experience in Managing the Fund: 3.3 Years",
+      "Experience in Managing the Fund: 2.5 Years",
+      "Experience in Managing the Fund: 1.9 Years",
+      "6Aditya Birla Sun Life US Treasury 3-10 Year Bonds ETFs Passive FOF237"
+    ],
+    "managingSince": "2022-10-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
+  },
+  {
+    "id": "vinod-bhat-mutualfund-adityabirlacapital-com",
+    "name": "Vinod Bhat",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "6Aditya Birla Sun Life CRISIL 10 Year Gilt ETF217"
+    ],
+    "managingSince": "2019-08-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
+      "asOf": "july-2026"
+    }
   }
 ];
 
 export const GENERATED_REGISTRY_META = {
-  "generatedAt": "2026-08-03T06:44:08.909Z",
-  "officialSourcesScanned": 6,
-  "records": 3,
+  "generatedAt": "2026-08-10T05:02:45.034Z",
+  "officialSourcesScanned": 7,
+  "records": 29,
   "officialSitesDiscovered": 41
 };
