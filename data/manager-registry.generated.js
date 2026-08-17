@@ -64,9 +64,9 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
-      "Experience in Managing the Fund: 0.1 Years",
-      "Experience in Managing the Fund: 1.5 Years",
-      "INVESTMENT FUNDS/MUTUAL FUNDS99.35 %"
+      "Experience in Managing the Fund: 0.2 Years",
+      "Experience in Managing the Fund: 1.6 Years",
+      "INVESTMENT FUNDS/MUTUAL FUNDS97.42 %"
     ],
     "managingSince": "2023-11-01",
     "managingSinceInception": false,
@@ -75,8 +75,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -88,7 +88,7 @@ export const GENERATED_MANAGER_REGISTRY = [
       "Experience in Managing the Fund: 2.7 Years",
       "Experience in Managing the Fund: 1.7 Years",
       "Fund Snapshot",
-      "6Aditya Birla Sun Life Balanced Advantage Fund84"
+      "6Aditya Birla Sun Life Balanced Advantage Fund83"
     ],
     "managingSince": "2022-11-01",
     "managingSinceInception": false,
@@ -97,8 +97,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -108,7 +108,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
-      "6Aditya Birla Sun Life Global Excellence Equity Fund of Fund234"
+      "6Aditya Birla Sun Life Global Excellence Equity Fund of Fund231"
     ],
     "managingSince": "2014-01-01",
     "managingSinceInception": false,
@@ -117,8 +117,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -128,17 +128,16 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Experience in Managing the Fund: 1.7 Years",
-      "Experience in Managing the Fund: 5.3 Years",
-      "Experience in Managing the Fund: 0.1 Years",
+      "Experience in Managing the Fund: 5.4 Years",
+      "Experience in Managing the Fund: 0.2 Years",
       "Fund Snapshot",
       "Experience in Managing the Fund: 1.8 Years",
-      "Experience in Managing the Fund: 12.0 Years",
+      "Experience in Managing the Fund: 12.1 Years",
       "Experience in Managing the Fund: 16.8 Years",
-      "Experience in Managing the Fund: 1.5 Years",
-      "Experience in Managing the Fund: 4.4 Years",
       "Experience in Managing the Fund: 1.6 Years",
-      "Experience in Managing the Fund: 2.0 Years",
-      "Experience in Managing the Fund: 1.3 Years",
+      "Experience in Managing the Fund: 4.5 Years",
+      "Experience in Managing the Fund: 2.1 Years",
+      "Experience in Managing the Fund: 1.4 Years",
       "2Aditya Birla Sun Life Small Cap Fund27"
     ],
     "managingSince": "2021-03-01",
@@ -148,8 +147,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -159,7 +158,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
-      "18Aditya Birla Sun Life CRISIL Broad Based Gilt ETF215"
+      "18Aditya Birla Sun Life CRISIL Broad Based Gilt ETF212"
     ],
     "managingSince": "2024-11-01",
     "managingSinceInception": false,
@@ -168,8 +167,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -179,7 +178,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
-      "2Aditya Birla Sun Life Mid Cap Fund"
+      "2Aditya Birla Sun Life Mid Cap Fund25"
     ],
     "managingSince": "2026-05-01",
     "managingSinceInception": false,
@@ -188,8 +187,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -208,8 +207,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -229,8 +228,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -240,8 +239,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
-      "Experience in Managing the Fund: 5.3 Years",
-      "4Aditya Birla Sun Life Multi Asset Allocation Fund91"
+      "Experience in Managing the Fund: 5.4 Years",
+      "4Aditya Birla Sun Life Multi Asset Allocation Fund89"
     ],
     "managingSince": "2015-08-01",
     "managingSinceInception": false,
@@ -250,8 +249,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -270,8 +269,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -280,7 +279,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "amc": "mutualfund.adityabirlacapital.com",
     "role": "Fund manager",
     "schemeAliases": [
-      "Experience in Managing the Fund: 2.0 Years",
+      "Experience in Managing the Fund: 2.1 Years",
       "3Aditya Birla Sun Life Retirement Fund -The 30s Plan67"
     ],
     "managingSince": "2026-05-01",
@@ -290,8 +289,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -301,14 +300,14 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
-      "Experience in Managing the Fund: 5.3 Years",
-      "Experience in Managing the Fund: 11.5 Years",
-      "Experience in Managing the Fund: 6.7 Years",
-      "Experience in Managing the Fund: 15.0 Years",
-      "Experience in Managing the Fund: 11.8 Years",
-      "Experience in Managing the Fund: 5.9 Years",
-      "Experience in Managing the Fund: 11.2 Years",
-      "Experience in Managing the Fund: 3.4 Years",
+      "Experience in Managing the Fund: 5.4 Years",
+      "Experience in Managing the Fund: 11.6 Years",
+      "Experience in Managing the Fund: 6.8 Years",
+      "Experience in Managing the Fund: 15.1 Years",
+      "Experience in Managing the Fund: 11.9 Years",
+      "Experience in Managing the Fund: 6.0 Years",
+      "Experience in Managing the Fund: 11.3 Years",
+      "Experience in Managing the Fund: 3.5 Years",
       "1Aditya Birla Sun Life Quant Fund59"
     ],
     "managingSince": "2017-04-01",
@@ -318,8 +317,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -330,7 +329,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "schemeAliases": [
       "Fund Snapshot",
       "Experience in Managing the Fund: 1.7 Years",
-      "16Aditya Birla Sun Life CRISIL IBX SDL Jun 2032 Index Fund211"
+      "16Aditya Birla Sun Life CRISIL IBX SDL Jun 2032 Index Fund208"
     ],
     "managingSince": "2014-12-01",
     "managingSinceInception": false,
@@ -339,8 +338,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -349,8 +348,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "amc": "mutualfund.adityabirlacapital.com",
     "role": "Fund manager",
     "schemeAliases": [
-      "Experience in Managing the Fund: 1.3 Years",
-      "3Aditya Birla Sun Life Balanced Advantage Fund84"
+      "Experience in Managing the Fund: 1.4 Years",
+      "3Aditya Birla Sun Life Balanced Advantage Fund83"
     ],
     "managingSince": "2025-10-01",
     "managingSinceInception": false,
@@ -359,8 +358,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -369,7 +368,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "amc": "mutualfund.adityabirlacapital.com",
     "role": "Fund manager",
     "schemeAliases": [
-      "Experience in Managing the Fund: 5.3 Years",
+      "Experience in Managing the Fund: 5.4 Years",
       "Experience in Managing the Fund: 9.3 Years",
       "1Aditya Birla Sun Life Arbitrage Fund76"
     ],
@@ -380,8 +379,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -392,9 +391,9 @@ export const GENERATED_MANAGER_REGISTRY = [
     "schemeAliases": [
       "Experience in Managing the Fund: 1.7 Years",
       "Fund Snapshot",
-      "Experience in Managing the Fund: 3.9 Years",
+      "Experience in Managing the Fund: 4.0 Years",
       "Experience in Managing the Fund: 2.7 Years",
-      "2Aditya Birla Sun Life Balanced Advantage Fund84"
+      "2Aditya Birla Sun Life Balanced Advantage Fund83"
     ],
     "managingSince": "2020-08-01",
     "managingSinceInception": false,
@@ -403,8 +402,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -413,19 +412,18 @@ export const GENERATED_MANAGER_REGISTRY = [
     "amc": "mutualfund.adityabirlacapital.com",
     "role": "Fund manager",
     "schemeAliases": [
-      "Experience in Managing the Fund: 3.4 Years",
-      "Fund Snapshot",
-      "13Aditya Birla Sun Life US Treasury 3-10 Year Bonds ETFs Passive FOF237"
+      "Experience in Managing the Fund: 3.5 Years",
+      "13Aditya Birla Sun Life US Treasury 3-10 Year Bonds ETFs Passive FOF234"
     ],
-    "managingSince": "2022-01-01",
+    "managingSince": "2023-01-01",
     "managingSinceInception": false,
     "verified": true,
     "confidence": 0.82,
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -435,7 +433,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
-      "3Aditya Birla Sun Life Gold ETF180"
+      "1Aditya Birla Sun Life Multi Asset Allocation Fund89"
     ],
     "managingSince": "2009-09-01",
     "managingSinceInception": false,
@@ -444,8 +442,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -454,9 +452,9 @@ export const GENERATED_MANAGER_REGISTRY = [
     "amc": "mutualfund.adityabirlacapital.com",
     "role": "Fund manager",
     "schemeAliases": [
-      "Experience in Managing the Fund: 15.0 Years",
+      "Experience in Managing the Fund: 15.1 Years",
       "Fund Snapshot",
-      "10Aditya Birla Sun Life CRISIL Broad Based Gilt ETF215"
+      "10Aditya Birla Sun Life CRISIL Broad Based Gilt ETF212"
     ],
     "managingSince": "2014-06-01",
     "managingSinceInception": false,
@@ -465,8 +463,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -477,9 +475,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "schemeAliases": [
       "Experience in Managing the Fund: 5.1 Years",
       "Fund Snapshot",
-      "Experience in Managing the Fund: 1.3 Years",
-      "Experience in Managing the Fund: 3.3 Years",
-      "5Aditya Birla Sun Life CRISIL Liquid Overnight ETF218"
+      "Experience in Managing the Fund: 1.4 Years",
+      "4Aditya Birla Sun Life Credit Risk Fund130"
     ],
     "managingSince": "2022-07-01",
     "managingSinceInception": false,
@@ -488,8 +485,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -499,7 +496,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Experience in Managing the Fund: 9.3 Years",
-      "4Aditya Birla Sun Life CRISIL Liquid Overnight ETF218"
+      "1Aditya Birla Sun Life Liquid Fund99"
     ],
     "managingSince": "2021-03-01",
     "managingSinceInception": false,
@@ -508,8 +505,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -518,8 +515,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "amc": "mutualfund.adityabirlacapital.com",
     "role": "Fund manager",
     "schemeAliases": [
-      "Experience in Managing the Fund: 12.0 Years",
-      "1Aditya Birla Sun Life Money Manager Fund104"
+      "Experience in Managing the Fund: 12.1 Years",
+      "1Aditya Birla Sun Life Money Manager Fund102"
     ],
     "managingSince": "2021-03-01",
     "managingSinceInception": false,
@@ -528,8 +525,28 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
+    }
+  },
+  {
+    "id": "mehul-dama-mutualfund-adityabirlacapital-com",
+    "name": "Mehul Dama",
+    "amc": "mutualfund.adityabirlacapital.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Fund Snapshot",
+      "Funds Managed By Mr. Vinod Bhat"
+    ],
+    "managingSince": "2026-07-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "mutualfund.adityabirlacapital.com official factsheet",
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -538,8 +555,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "amc": "mutualfund.adityabirlacapital.com",
     "role": "Fund manager",
     "schemeAliases": [
-      "Fund Snapshot",
-      "1Aditya Birla Sun Life Savings Fund107"
+      "Experience in Managing the Fund: 0.06 Years",
+      "1Aditya Birla Sun Life Savings Fund105"
     ],
     "managingSince": "2024-12-01",
     "managingSinceInception": false,
@@ -548,8 +565,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -559,9 +576,9 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
+      "Experience in Managing the Fund: 2.1 Years",
       "Experience in Managing the Fund: 2.0 Years",
-      "Experience in Managing the Fund: 1.9 Years",
-      "22Aditya Birla Sun Life Silver ETF Fund of Fund232"
+      "25Aditya Birla Sun Life Silver ETF Fund of Fund229"
     ],
     "managingSince": "2023-11-01",
     "managingSinceInception": false,
@@ -570,8 +587,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -580,12 +597,12 @@ export const GENERATED_MANAGER_REGISTRY = [
     "amc": "mutualfund.adityabirlacapital.com",
     "role": "Fund manager",
     "schemeAliases": [
-      "Experience in Managing the Fund: 2.1 Years",
-      "Experience in Managing the Fund: 3.7 Years",
-      "Experience in Managing the Fund: 3.3 Years",
-      "Experience in Managing the Fund: 2.5 Years",
-      "Experience in Managing the Fund: 1.9 Years",
-      "6Aditya Birla Sun Life US Treasury 3-10 Year Bonds ETFs Passive FOF237"
+      "Experience in Managing the Fund: 2.2 Years",
+      "Experience in Managing the Fund: 3.8 Years",
+      "Experience in Managing the Fund: 3.4 Years",
+      "Experience in Managing the Fund: 2.6 Years",
+      "Experience in Managing the Fund: 2.0 Years",
+      "6Aditya Birla Sun Life US Treasury 3-10 Year Bonds ETFs Passive FOF234"
     ],
     "managingSince": "2022-10-01",
     "managingSinceInception": false,
@@ -594,8 +611,8 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
     }
   },
   {
@@ -605,7 +622,7 @@ export const GENERATED_MANAGER_REGISTRY = [
     "role": "Fund manager",
     "schemeAliases": [
       "Fund Snapshot",
-      "6Aditya Birla Sun Life CRISIL 10 Year Gilt ETF217"
+      "6Aditya Birla Sun Life CRISIL 10 Year Gilt ETF214"
     ],
     "managingSince": "2019-08-01",
     "managingSinceInception": false,
@@ -614,15 +631,591 @@ export const GENERATED_MANAGER_REGISTRY = [
     "sourceType": "Official AMC factsheet — automated extraction",
     "source": {
       "label": "mutualfund.adityabirlacapital.com official factsheet",
-      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_july-2026.pdf",
-      "asOf": "july-2026"
+      "url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/factsheets/2026/absl-factsheet_aug-2026.pdf",
+      "asOf": "aug-2026"
+    }
+  },
+  {
+    "id": "abhishek-singh-www-dspim-com",
+    "name": "Abhishek Singh.",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Please refer to Notice cum addendum dated April 28, 2025 for change of scheme name w.e.f. May 01, 2025.",
+      "Shantanu Godambe managing this scheme since August 2024.",
+      "this fund w.e.f. May 16, 2026."
+    ],
+    "managingSince": "2026-05-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "aparna-karnik-www-dspim-com",
+    "name": "Aparna Karnik",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "underlying Fund.",
+      "Kaivalya Nadkarni is managing the scheme since October 2024."
+    ],
+    "managingSince": "2026-05-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "bhavin-gandhi-is-www-dspim-com",
+    "name": "Bhavin Gandhi is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Comparative Performance of all schemes - Regular Plan",
+      "PeriodDSP Mid Cap FundGrowth of Rs 10,000",
+      "T.I.G.E.R. Fund"
+    ],
+    "managingSince": "2024-02-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "anish-tawakley-is-www-dspim-com",
+    "name": "Anish Tawakley is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "PeriodDSP Flexi Cap FundGrowth of Rs 10,000Nifty 500 (TRI)^Growth of Rs 10,000Nifty 50 (TRI)",
+      "Comparative Performance of all schemes - Regular Plan",
+      "Bank Index Fund"
+    ],
+    "managingSince": "2026-05-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "vinit-sambre-is-www-dspim-com",
+    "name": "Vinit Sambre is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "PeriodDSP Flexi Cap FundGrowth of Rs 10,000Nifty 500 (TRI)^Growth of Rs 10,000Nifty 50 (TRI)",
+      "& New Energy Fund",
+      "Comparative Performance of all schemes - Direct Plan"
+    ],
+    "managingSince": "2010-06-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "abhishek-singh-is-www-dspim-com",
+    "name": "Abhishek Singh is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "PeriodDSP Flexi Cap FundGrowth of Rs 10,000Nifty 500 (TRI)^Growth of Rs 10,000Nifty 50 (TRI)",
+      "Allocation Fund",
+      "Shantanu Godambe is managing the scheme since March 2025.",
+      "PeriodDSP Quant FundGrowth of Rs 10,000BSE 200 TRI^Growth of Rs 10,000Nifty 50 (TRI)",
+      "Nilesh Aiya is managing the scheme since September 2025.",
+      "PeriodDSP Strategic Bond FundGrowth of Rs 10,000",
+      "PeriodDSP Overnight FundGrowth of Rs 10,000"
+    ],
+    "managingSince": "2021-05-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "rohit-singhania-is-www-dspim-com",
+    "name": "Rohit Singhania is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Shantanu Godambe managing this scheme since August 2024.",
+      "PeriodDSP Mid Cap FundGrowth of Rs 10,000",
+      "Nilesh Aiya is managing the scheme since September 2025.",
+      "With effect from December 1, 2023, the scheme name has been changed from DSP Tax Saver Fund to DSP ELSS Tax Saver Fund.",
+      "Abhishek Ghosh is managing the scheme since September 2022.",
+      "T.I.G.E.R. Fund",
+      "Comparative Performance of all schemes - Direct Plan"
+    ],
+    "managingSince": "2012-07-01",
+    "managingSinceInception": true,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "kaivalya-nadkarni-is-www-dspim-com",
+    "name": "Kaivalya Nadkarni is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Allocation Fund",
+      "PeriodDSP Short Term FundGrowth of Rs 10,000",
+      "Kunal Khudania is managing the scheme since January 2026.",
+      "Comparative Performance of all schemes - Regular Plan",
+      "PeriodDSP Silver ETF",
+      "Comparative Performance of all schemes - Direct Plan",
+      "Savings Fund",
+      "DSP Nifty 50 Index Fund",
+      "50:50 Index Fund"
+    ],
+    "managingSince": "2024-10-01",
+    "managingSinceInception": true,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "karan-mundhra-is-www-dspim-com",
+    "name": "Karan Mundhra is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Shantanu Godambe managing this scheme since August 2024.",
+      "DSP Liquidity Fund",
+      "PeriodDSP Short Term FundGrowth of Rs 10,000",
+      "Sandeep Yadav is managing the scheme since August 2024.",
+      "Bond Fund",
+      "Comparative Performance of all schemes - Direct Plan",
+      "DSP World Mining Overseas Equity Omni FoF (Erstwhile known as DSP World Mining Fund of Fund)",
+      "PeriodDSP Ultra Short FundGrowth of Rs 10,000",
+      "DSP Bond Fund",
+      "PeriodDSP Quant FundGrowth of Rs 10,000BSE 200 TRI^Growth of Rs 10,000Nifty 50 (TRI)"
+    ],
+    "managingSince": "2021-05-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "shalini-vasanta-is-www-dspim-com",
+    "name": "Shalini Vasanta is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Comparative Performance of all schemes - Regular Plan",
+      "Comparative Performance of all schemes - Direct Plan"
+    ],
+    "managingSince": "2025-01-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "shantanu-godambe-is-www-dspim-com",
+    "name": "Shantanu Godambe is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Comparative Performance of all schemes - Regular Plan",
+      "Savings Fund",
+      "Shantanu Godambe is managing this scheme since August 2024.",
+      "Neha Rathi is managing this fund since May 2026.",
+      "PeriodDSP Value FundGrowth of Rs 10,000Nifty 500 TRI^Growth of Rs 10,000Nifty 50 TRI",
+      "DSP Nifty Next 50 Index Fund",
+      "PeriodDSP Nifty 50 ETFGrowth of Rs 10,000Nifty 50 TRI^Growth of Rs 10,000Nifty 50 TRI",
+      "Duration Fund",
+      "Shantanu Godambe is managing the scheme since March 2025.",
+      "Sandeep Yadav is managing the scheme since August 2024.",
+      "Comparative Performance of all schemes - Direct Plan",
+      "DSP Nifty SDL Plus G-Sec Jun 2028 30:70 Index Fund",
+      "Quality 50 Index Fund"
+    ],
+    "managingSince": "2023-06-01",
+    "managingSinceInception": true,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "vivekanand-ramakrishnan-is-www-dspim-com",
+    "name": "Vivekanand Ramakrishnan is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Shalini Vasanta managing this Scheme since August 2024.",
+      "Comparative Performance of all schemes - Regular Plan",
+      "PeriodDSP Short Term FundGrowth of Rs 10,000",
+      "Comparative Performance of all schemes - Direct Plan"
+    ],
+    "managingSince": "2021-07-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "sandeep-yadav-is-www-dspim-com",
+    "name": "Sandeep Yadav is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Karan Mundhra is managing the scheme since May 2021.",
+      "PSU Debt Fund"
+    ],
+    "managingSince": "2022-03-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "anil-ghelani-is-www-dspim-com",
+    "name": "Anil Ghelani is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "10Y G-Sec Fund",
+      "Karan Mundhra is managing this Scheme since August 2024.",
+      "PeriodDSP Floater FundGrowth of Rs 10,000",
+      "Jun 2028 30:70 Index Fund",
+      "Comparative Performance of all schemes - Regular Plan",
+      "150 Quality 50 ETF",
+      "DSP Global Innovation Overseas Equity Omni FoF (Erstwhile known as DSP Global Innovation Fund of Fund)",
+      "PeriodDSP Gold ETF",
+      "PeriodDSP NIFTY IT ETF",
+      "BANK ETF",
+      "PeriodDSP BSE SENSEX ETF",
+      "tion Fund",
+      "Services Fund",
+      "PeriodDSP Nifty Healthcare ETF",
+      "PeriodDSP BSE Liquid Rate ETF",
+      "Index Fund",
+      "PeriodDSP Business Cycle FundGrowth of Rs 10,000Nifty 500 TRI^Growth of Rs 10,000Nifty 50 TRI",
+      "Next 30 ETF",
+      "Next 30 Index Fund",
+      "Bank Index Fund",
+      "cap Quality 30 ETF",
+      "DSP Nifty IT Index Fund",
+      "care Index Fund",
+      "DSP Silver ETF Fund",
+      "option for DSP Flexi Cap Fund, assuming reinvestment of IDCW*. Different plans shall have a different expense structure.",
+      "Neha Rathi is managing this fund since May 2026.",
+      "DSP Nifty Midcap 150 ETF",
+      "DSP Nifty Smallcap 250 ETF",
+      "Comparative Performance of all schemes - Direct Plan",
+      "Weight Index Fund",
+      "DSP Healthcare Fund",
+      "PeriodDSP Value FundGrowth of Rs 10,000Nifty 500 TRI^Growth of Rs 10,000Nifty 50 TRI",
+      "2033 Index Fund",
+      "DSP Nifty Top 10 Equal Weight Index Fund",
+      "open-ended schemes."
+    ],
+    "managingSince": "2019-07-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "chirag-dagli-is-www-dspim-com",
+    "name": "Chirag Dagli is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Karan Mundhra is managing this Scheme since August 2024.",
+      "DSP US Specific Debt Passive FoF (Erstwhile known as DSP US Treasury Fund of Fund)",
+      "Neha Rathi is managing this fund since May 2026.",
+      "Quality 50 Index Fund"
+    ],
+    "managingSince": "2020-12-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "aparna-karnik-is-www-dspim-com",
+    "name": "Aparna Karnik is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Comparative Performance of all schemes - Regular Plan",
+      "PeriodDSP Gold ETF Fund of Fund",
+      "Bond Fund",
+      "PeriodDSP Multicap FundGrowth of Rs 10,000"
+    ],
+    "managingSince": "2023-09-01",
+    "managingSinceInception": true,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "ravi-gehani-is-www-dspim-com",
+    "name": "Ravi Gehani is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Quality 50 Index Fund",
+      "50:50 Index Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": true,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "shantanu-pradeep-godambe-is-www-dspim-com",
+    "name": "Shantanu Pradeep Godambe is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "PeriodDSP Nifty Bank ETFGrowth of Rs10,000Nifty Bank TRI^Growth of Rs10,000Nifty 50 TRI",
+      "tion Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": true,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "preethi-r-s-is-www-dspim-com",
+    "name": "Preethi R S is",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Quality 50 Index Fund",
+      "Comparative Performance of all schemes - Direct Plan"
+    ],
+    "managingSince": null,
+    "managingSinceInception": true,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "aparna-karnik-www-dspim-com",
+    "name": "Aparna Karnik.",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Kaivalya Nadkarni is managing the scheme since October 2024."
+    ],
+    "managingSince": "2026-05-01",
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "also-manages-www-dspim-com",
+    "name": "also manages",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Comparative Performance of all schemes - Direct Plan"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "vinit-sambre-www-dspim-com",
+    "name": "Vinit Sambre",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Comparative Performance of all schemes - Direct Plan"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "dsp-natural-resources-www-dspim-com",
+    "name": "DSP Natural Resources",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Scheme Return",
+      "of all Equity oriented schemes (as on June 30, 2026)"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "will-also-seek-www-dspim-com",
+    "name": "will also seek",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "this fund w.e.f. May 16, 2026.",
+      "Managing this Scheme since",
+      "years. Managing this Scheme since"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
+    }
+  },
+  {
+    "id": "please-visit-latest-addenda-available-on-www-dspim-com-www-dspim-com",
+    "name": "please visit latest addenda available on www.dspim.com",
+    "amc": "dspim.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "view while comparing it with other open ended schemes."
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.dspim.com official factsheet",
+      "url": "https://www.dspim.com/downloads/dsp-factsheet-june-2026.pdf",
+      "asOf": "june-2026"
     }
   }
 ];
 
 export const GENERATED_REGISTRY_META = {
-  "generatedAt": "2026-08-10T05:02:45.034Z",
-  "officialSourcesScanned": 7,
-  "records": 29,
+  "generatedAt": "2026-08-17T04:10:27.487Z",
+  "officialSourcesScanned": 8,
+  "records": 55,
   "officialSitesDiscovered": 41
 };
