@@ -2,7 +2,7 @@
 > managerlens@0.9.0 sync:vro
 > node scripts/sync-vro-sitemap-universe.mjs
 
-(node:2362) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/mf-tool/mf-tool/data/vro-universe.generated.js?t=1787196410648 is not specified and it doesn't parse as CommonJS.
+(node:2354) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/mf-tool/mf-tool/data/vro-universe.generated.js?t=1787542476275 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/runner/work/mf-tool/mf-tool/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
