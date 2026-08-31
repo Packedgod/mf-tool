@@ -2,28 +2,28 @@
 > managerlens@0.9.0 sync:vro
 > node scripts/sync-vro-sitemap-universe.mjs
 
-(node:2286) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/mf-tool/mf-tool/data/vro-universe.generated.js?t=1787835850528 is not specified and it doesn't parse as CommonJS.
+(node:2088) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/mf-tool/mf-tool/data/vro-universe.generated.js?t=1788166373056 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/runner/work/mf-tool/mf-tool/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
-Discovered 1810 direct-plan fund pages from 17 sitemaps.
-Processed 100/1810
-Processed 200/1810
-Processed 300/1810
-Processed 400/1810
-Processed 500/1810
-Processed 600/1810
-Processed 700/1810
-Processed 800/1810
-Processed 900/1810
-Processed 1000/1810
-Processed 1100/1810
-Processed 1200/1810
-Processed 1300/1810
-Processed 1400/1810
-Processed 1500/1810
-Processed 1600/1810
-Processed 1700/1810
-Processed 1800/1810
-Wrote 587 managers and 1810 funds across 52 fund houses.
+Discovered 1811 direct-plan fund pages from 17 sitemaps.
+Processed 100/1811
+Processed 200/1811
+Processed 300/1811
+Processed 400/1811
+Processed 500/1811
+Processed 600/1811
+Processed 700/1811
+Processed 800/1811
+Processed 900/1811
+Processed 1000/1811
+Processed 1100/1811
+Processed 1200/1811
+Processed 1300/1811
+Processed 1400/1811
+Processed 1500/1811
+Processed 1600/1811
+Processed 1700/1811
+Processed 1800/1811
+Wrote 586 managers and 1811 funds across 52 fund houses.
 Exit code: 0
