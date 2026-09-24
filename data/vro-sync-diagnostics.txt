@@ -2,7 +2,7 @@
 > managerlens@0.9.0 sync:vro
 > node scripts/sync-vro-sitemap-universe.mjs
 
-(node:2331) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/mf-tool/mf-tool/data/vro-universe.generated.js?t=1789978296623 is not specified and it doesn't parse as CommonJS.
+(node:2091) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/runner/work/mf-tool/mf-tool/data/vro-universe.generated.js?t=1790236050196 is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/runner/work/mf-tool/mf-tool/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
@@ -25,5 +25,5 @@ Processed 1500/1824
 Processed 1600/1824
 Processed 1700/1824
 Processed 1800/1824
-Wrote 592 managers and 1824 funds across 54 fund houses.
+Wrote 591 managers and 1824 funds across 54 fund houses.
 Exit code: 0
