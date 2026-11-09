@@ -56,12 +56,32 @@ export const GENERATED_MANAGER_REGISTRY = [
       "url": "https://amc.ppfas.com/downloads/factsheet/2021/ppfas-mf-factsheet-june-2021.pdf?10072021",
       "asOf": "june-2021"
     }
+  },
+  {
+    "id": "overseas-investment-is-www-icicipruamc-com",
+    "name": "overseas investment is",
+    "amc": "icicipruamc.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Note : The Scheme will have a lock in period of at least five years or till the Retirement age",
+      "Note : The Scheme will have a lock in period of at least five years or till the Retirement age, whichever is earlier."
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.icicipruamc.com official factsheet",
+      "url": "https://www.icicipruamc.com/blob/knowledgecentre/factsheet-schemes/Schemes/5.%20Solution%20Oriented%20Scheme%20s/ICICI%20Prudential%20Retirement%20Fund%20-%20Hybrid%20Conservative%20Plan.pdf",
+      "asOf": "2026-11-09"
+    }
   }
 ];
 
 export const GENERATED_REGISTRY_META = {
-  "generatedAt": "2026-11-02T11:29:45.666Z",
-  "officialSourcesScanned": 6,
-  "records": 3,
+  "generatedAt": "2026-11-09T11:52:47.395Z",
+  "officialSourcesScanned": 9,
+  "records": 4,
   "officialSitesDiscovered": 41
 };
