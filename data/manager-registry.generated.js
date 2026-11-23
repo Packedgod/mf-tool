@@ -56,12 +56,252 @@ export const GENERATED_MANAGER_REGISTRY = [
       "url": "https://amc.ppfas.com/downloads/factsheet/2021/ppfas-mf-factsheet-june-2021.pdf?10072021",
       "asOf": "june-2021"
     }
+  },
+  {
+    "id": "overseas-investment-is-www-icicipruamc-com",
+    "name": "overseas investment is",
+    "amc": "icicipruamc.com",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Note : The Scheme will have a lock in period of at least five years or till the Retirement age",
+      "Note : The Scheme will have a lock in period of at least five years or till the Retirement age, whichever is earlier."
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.icicipruamc.com official factsheet",
+      "url": "https://www.icicipruamc.com/blob/knowledgecentre/factsheet-schemes/Schemes/5.%20Solution%20Oriented%20Scheme%20s/ICICI%20Prudential%20Retirement%20Fund%20-%20Hybrid%20Conservative%20Plan.pdf",
+      "asOf": "2026-11-23"
+    }
+  },
+  {
+    "id": "please-refer-www-barodabnpparibasmf-in",
+    "name": "please refer",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Scheme Information Document"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "jitendra-sriram-www-barodabnpparibasmf-in",
+    "name": "Jitendra Sriram",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "EQUITY SCHEMES",
+      "2Baroda BNP Paribas Focused Fund",
+      "13Baroda BNP Paribas Banking and Financial Services Fund",
+      "HYBRID SCHEMES",
+      "1Baroda BNP Paribas Balanced Advantage Fund",
+      "2Baroda BNP Paribas Equity Savings Fund",
+      "3Baroda BNP Paribas Aggressive Hybrid Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "rohan-korde-www-barodabnpparibasmf-in",
+    "name": "Rohan Korde",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "4Baroda BNP Paribas Flexi Cap Fund",
+      "* Refer Performance of Schemes page ** Refer Performance of Schemes page † Refer Performance of Schemes page",
+      "18Baroda BNP Paribas ESG Best-in-Class Strategy Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "paresh-jain-www-barodabnpparibasmf-in",
+    "name": "Paresh Jain",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "7Baroda BNP Paribas Business Cycle Fund",
+      "Performance of Schemes"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "himanshu-singh-www-barodabnpparibasmf-in",
+    "name": "Himanshu Singh",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "10Baroda BNP Paribas India Consumption Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "silky-jain-www-barodabnpparibasmf-in",
+    "name": "Silky Jain",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "Baroda BNP Paribas Dividend Yield Fund",
+      "SOLUTION ORIENTED FUND",
+      "1Baroda BNP Paribas Retirement Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "kushant-arora-www-barodabnpparibasmf-in",
+    "name": "Kushant Arora",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "14Baroda BNP Paribas Innovation Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "kirtan-mehta-www-barodabnpparibasmf-in",
+    "name": "Kirtan Mehta",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "15Baroda BNP Paribas Manufacturing Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "ankeet-pandya-www-barodabnpparibasmf-in",
+    "name": "Ankeet Pandya",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "16Baroda BNP Paribas Energy Opportunities Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "neeraj-saxena-www-barodabnpparibasmf-in",
+    "name": "Neeraj Saxena",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "5Baroda BNP Paribas Conservative Hybrid Fund"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
+  },
+  {
+    "id": "swapna-shelar-www-barodabnpparibasmf-in",
+    "name": "Swapna Shelar",
+    "amc": "barodabnpparibasmf.in",
+    "role": "Fund manager",
+    "schemeAliases": [
+      "FUND OF FUND SCHEME"
+    ],
+    "managingSince": null,
+    "managingSinceInception": false,
+    "verified": true,
+    "confidence": 0.82,
+    "sourceType": "Official AMC factsheet — automated extraction",
+    "source": {
+      "label": "www.barodabnpparibasmf.in official factsheet",
+      "url": "https://www.barodabnpparibasmf.in/efactsheet/Sep2026/BBNPP_MF_Fund_Facts_September_2026.pdf",
+      "asOf": "Sep2026"
+    }
   }
 ];
 
 export const GENERATED_REGISTRY_META = {
-  "generatedAt": "2026-11-16T11:48:07.271Z",
-  "officialSourcesScanned": 6,
-  "records": 3,
+  "generatedAt": "2026-11-23T13:17:45.420Z",
+  "officialSourcesScanned": 10,
+  "records": 15,
   "officialSitesDiscovered": 41
 };
